@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_story_pages",
+  "info": {
+    "displayName": "Page",
+    "icon": "american-sign-language-interpreting"
+  },
+  "options": {},
+  "attributes": {
+    "slug": {
+      "type": "string",
+      "unique": true
+    },
+    "text": {
+      "type": "richtext",
+      "required": true
+    },
+    "background": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "answers": {
+      "type": "component",
+      "repeatable": true,
+      "component": "story.answer"
+    }
+  }
+}
