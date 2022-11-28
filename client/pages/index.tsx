@@ -19,6 +19,7 @@ export default function Home(props: any) {
       <main>
         <Header />
         <div className="relative bg-gray-800 pb-32">
+          å
           <div className="absolute inset-0">
             <img
               className="h-full w-full object-cover"
