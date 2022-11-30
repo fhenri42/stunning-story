@@ -3,7 +3,7 @@
 import React, { Fragment } from 'react';
 
 import { Dialog, Transition } from '@headlessui/react';
-import { XCircleIcon } from '@heroicons/react/24/solid'
+import { XCircleIcon } from '@heroicons/react/24/solid';
 
 export default function Modal(props: {
   children: any;
@@ -41,8 +41,8 @@ export default function Modal(props: {
         onClose={
           noClickOut
             ? () => {
-                console.log('No close');
-              }
+              console.log('No close');
+            }
             : onCancel
         }
       >
@@ -89,7 +89,7 @@ export default function Modal(props: {
                   {title && (
                     <Dialog.Title
                       as="h3"
-                      className="text-lg text-center leading-6 font-medium text-gray-900 pb-4 z-50"
+                      className="text-lg text-center leading-6 font-medium text-white pb-4 z-50"
                     >
                       {title}
                     </Dialog.Title>

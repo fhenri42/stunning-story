@@ -6,12 +6,8 @@ const MyDiagram = dynamic(() => import('@components/Diagram'), {
 
 export default function Builder() {
   return (
-    <div className="m-20">
-      <h1>Story</h1>
-
+    <div className="h-screen w-screen">
       <MyDiagram />
-
-      <h1>Story</h1>
 
     </div>
   );

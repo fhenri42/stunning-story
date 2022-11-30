@@ -1,8 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState } from 'react';
 
-import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid'
-
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid';
 
 interface InputProps {
   type?: string;
@@ -12,6 +11,8 @@ interface InputProps {
   error?: string;
   onFocus?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+
   placeholder?: string;
   defaultValue?: string;
   id?: string;
@@ -34,6 +35,7 @@ export default function Input(props: InputProps) {
     type,
     placeholder,
     defaultValue,
+    onChange,
     onFocus,
     onBlur,
     id,
@@ -47,11 +49,12 @@ export default function Input(props: InputProps) {
 
   return (
     <div className={className}>
-      <label htmlFor={type} className="block text-sm font-medium text-gray-700">
+      <label htmlFor={type} className="block text-sm font-medium text-white">
         {label}
       </label>
       <div className="w-full relative mt-1 rounded-md shadow-sm">
         <input
+          onChange={onChange}
           onFocus={onFocus}
           onBlur={onBlur}
           type={customType ?? type ?? 'text'}
