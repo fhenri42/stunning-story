@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2022-12-03T20:50:26.165Z"
+    "x-generation-date": "2022-12-03T21:36:18.811Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -1433,6 +1433,9 @@
                 "items": {
                   "$ref": "#/components/schemas/StoryAnswerComponent"
                 }
+              },
+              "coordinates": {
+                "type": "string"
               }
             }
           }
@@ -2079,6 +2082,9 @@
                 "items": {
                   "$ref": "#/components/schemas/StoryAnswerComponent"
                 }
+              },
+              "coordinates": {
+                "type": "string"
               },
               "createdAt": {
                 "type": "string",
@@ -2771,6 +2777,9 @@
                 "items": {
                   "$ref": "#/components/schemas/StoryAnswerComponent"
                 }
+              },
+              "coordinates": {
+                "type": "string"
               },
               "createdAt": {
                 "type": "string",
@@ -3497,6 +3506,9 @@
                   "$ref": "#/components/schemas/StoryAnswerComponent"
                 }
               },
+              "coordinates": {
+                "type": "string"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time"
@@ -4188,6 +4200,9 @@
                 "items": {
                   "$ref": "#/components/schemas/StoryAnswerComponent"
                 }
+              },
+              "coordinates": {
+                "type": "string"
               },
               "createdAt": {
                 "type": "string",
@@ -4929,6 +4944,9 @@
                             }
                           }
                         }
+                      },
+                      "coordinates": {
+                        "type": "string"
                       },
                       "createdAt": {
                         "type": "string",
@@ -6615,6 +6633,9 @@
                                   }
                                 }
                               }
+                            },
+                            "coordinates": {
+                              "type": "string"
                             },
                             "createdAt": {
                               "type": "string",
@@ -8316,6 +8337,9 @@
                                   }
                                 }
                               }
+                            },
+                            "coordinates": {
+                              "type": "string"
                             },
                             "createdAt": {
                               "type": "string",
@@ -10051,6 +10075,9 @@
                                 }
                               }
                             },
+                            "coordinates": {
+                              "type": "string"
+                            },
                             "createdAt": {
                               "type": "string",
                               "format": "date-time"
@@ -11751,6 +11778,9 @@
                                   }
                                 }
                               }
+                            },
+                            "coordinates": {
+                              "type": "string"
                             },
                             "createdAt": {
                               "type": "string",

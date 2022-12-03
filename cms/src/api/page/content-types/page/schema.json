@@ -34,6 +34,9 @@
       "type": "component",
       "repeatable": true,
       "component": "story.answer"
+    },
+    "coordinates": {
+      "type": "string"
     }
   }
 }

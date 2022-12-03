@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   swcMinify: true,
   publicRuntimeConfig: {
     SELF_URL: 'http://localhost:3000',
@@ -12,3 +12,9 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
+
+// TODO Save les ids dans les anwsers
+// TODO Save les cordinates
+// TODO Faire du sytle
+// TODO Ecrire l'histoire d'expemle
+// TODO Faire le google login.

@@ -9,11 +9,9 @@ const MyDiagram = dynamic(() => import('@components/Diagram'), {
 
 export default function Builder(props: any) {
   const { story } = props;
-  console.log('story', story);
   return (
     <div className="h-screen w-screen overflow-auto">
-
-      <MyDiagram story={story} />
+      {story && story.pages && <MyDiagram story={story} />}
 
     </div>
   );

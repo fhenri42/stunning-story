@@ -37,7 +37,7 @@ const initialSchema = createSchema({
 
 });
 
-export default function UncontrolledDiagram(props: any) {
+export default function CustomDiagram(props: any) {
   // create diagrams schema
   const { story } = props;
   const [buttonLoading, setButtonLoading] = useState(false);
@@ -53,18 +53,14 @@ export default function UncontrolledDiagram(props: any) {
   };
 
   useEffect(() => {
-    window.onbeforeunload = function () {
-      return 'Are you sure you want to leave?';
-    };
-  }, []);
-  useEffect(() => {
+    console.log('WTF ??');
     for (let index = 0; index < story.pages.data.length; index += 1) {
       const { attributes } = story.pages.data[index];
-      console.log('Page =>', attributes);
+      console.log('Page =>', attributes?.coordinates?.split(','));
       const nextNode: any = {
-        id: `node-${schema.nodes.length + 1}`,
+        id: attributes.slug,
         content: attributes.slug,
-        coordinates: [100, 100],
+        coordinates: attributes?.coordinates?.split(',').map((item: string) => parseInt(item, 10)) || [100, 100],
         data: { onClick: deleteNodeFromSchema, text: attributes.text },
         inputs: [{ id: attributes.slug }],
         outputs: attributes.answers, // answers.filter((e) => e !== null),
@@ -73,8 +69,10 @@ export default function UncontrolledDiagram(props: any) {
       };
       addNode(nextNode);
     }
+    //   window.onbeforeunload = function () {
+  //     return 'Are you sure you want to leave?';
+  //   };
   }, []);
-
   const {
     register,
     handleSubmit,
