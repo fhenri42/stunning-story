@@ -20,6 +20,7 @@ interface InputProps {
   required?: boolean;
   className?: string;
   textColor?: string;
+  disabled?: boolean;
 }
 
 const colors = {
@@ -43,6 +44,7 @@ export default function Input(props: InputProps) {
     register = () => {},
     required,
     className,
+    disabled,
     textColor = 'text-white',
   } = props;
   const [customType, setCustomType] = useState(type);
@@ -53,23 +55,47 @@ export default function Input(props: InputProps) {
         {label}
       </label>
       <div className="w-full relative mt-1 rounded-md shadow-sm">
-        <input
-          onChange={onChange}
-          onFocus={onFocus}
-          onBlur={onBlur}
-          type={customType ?? type ?? 'text'}
-          name={name}
-          id={id}
-          className={`
+        {type === 'textarea' ? (
+          <textarea
+            disabled={disabled}
+            rows={5}
+            onChange={onChange}
+            onFocus={onFocus}
+            onBlur={onBlur}
+            type={customType ?? type ?? 'text'}
+            name={name}
+            id={id}
+            className={`
+    ${textColor}
+    ${
+      error ? colors.error : colors.base
+    } block  w-full bg-transparent rounded-md border-[#bcbfbb] shadow-sm sm:text-sm`}
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+            aria-describedby="email-error"
+            {...register(name, { required })}
+          />
+        ) : (
+          <input
+            disabled={disabled}
+            onChange={onChange}
+            onFocus={onFocus}
+            onBlur={onBlur}
+            type={customType ?? type ?? 'text'}
+            name={name}
+            id={id}
+            className={`
           ${textColor}
           ${
             error ? colors.error : colors.base
           } block  w-full bg-transparent rounded-md border-[#bcbfbb] shadow-sm sm:text-sm`}
-          placeholder={placeholder}
-          defaultValue={defaultValue}
-          aria-describedby="email-error"
-          {...register(name, { required })}
-        />
+            placeholder={placeholder}
+            defaultValue={defaultValue}
+            aria-describedby="email-error"
+            {...register(name, { required })}
+          />
+        )}
+
         {customType === 'password' && (
           <div
             onClick={() => {

@@ -46,6 +46,9 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::page.page"
+    },
+    "slug": {
+      "type": "uid"
     }
   }
 }
