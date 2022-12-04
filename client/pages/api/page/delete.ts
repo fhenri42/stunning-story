@@ -9,12 +9,25 @@ const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();
 
 async function createPage(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const { body } = req;
-    console.log('Wtf ??', body);
-    const data = await fetchCMS(`/api/pages?story=${body.story_slug}`, 'POST', {
-      data: body,
-    });
-    console.log('data', data);
+    const { slug } = req.query;
+    const cmsQuery = qs.stringify(
+      {
+        filters: {
+          slug: {
+            $eq: slug,
+          },
+        },
+
+      },
+      {
+        encodeValuesOnly: true,
+      },
+    );
+    console.log(cmsQuery, cmsQuery);
+    const [page] = await fetchCMS(`/api/pages?${cmsQuery}`, 'GET');
+    console.log('page', page);
+    const data = await fetchCMS(`/api/pages/${page.id}`, 'DELETE');
+
     res.json(data);
   } catch (error) {
     console.log(error);

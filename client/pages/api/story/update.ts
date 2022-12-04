@@ -2,40 +2,37 @@
 import { fetchCMS } from '@lib/cms';
 import { NextApiRequest, NextApiResponse } from 'next';
 import getConfig from 'next/config';
+import qs from 'qs';
 
 const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();
 
 async function updateStorySchema(req: NextApiRequest, res: NextApiResponse) {
   try {
     console.log('AAAA');
-    const { body, query } = req;
+    const { body } = req;
     console.log(body);
 
+    const cmsQuery = qs.stringify(
+      {
+        filters: {
+          slug: {
+            $eq: body.slug,
+          },
+        },
+
+      },
+      {
+        encodeValuesOnly: true,
+      },
+    );
+    const [story] = await fetchCMS(`/api/stories?${cmsQuery}`, 'GET');
+    console.log(story);
     // TODO create the data
-    // const data = fetchCMS('/api/stories', 'POST', {
-    //   data: body,
+    const data = await fetchCMS(`/api/stories/${story.id}`, 'PUT', {
+      data: body,
+    });
+    console.log('BBBBBBBBB', data);
 
-    // });
-    console.log('BBBBBBBBB');
-    // const reponse: any = await fetch(
-
-    //   `${publicRuntimeConfig.POWERZ_ROCKETCHAT_HTTP_URI}api/v1/login`,
-    //   {
-    //     method: 'POST',
-    //     body: JSON.stringify({
-    //       user: 'backoffice@powerz.tech',
-    //       password: serverRuntimeConfig.RC_ADMIN_PASSWORD,
-    //     }),
-    //     headers: {
-    //       'content-type': 'application/json',
-    //     },
-    //   },
-    // );
-    // if (!reponse.ok) {
-    //   const { detail } = await reponse.json();
-    //   throw { detail, status: reponse.status };
-    // }
-    // const data = await reponse.json();
     res.json('OK');
   } catch (error) {
     console.log(error);

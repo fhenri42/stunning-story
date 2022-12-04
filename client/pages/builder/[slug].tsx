@@ -19,7 +19,6 @@ export default function Builder(props: any) {
 
 export async function getServerSideProps({ query }) {
   try {
-    console.log(query);
     const cmsQuery = qs.stringify(
       {
         filters: {
@@ -39,11 +38,18 @@ export async function getServerSideProps({ query }) {
         encodeValuesOnly: true,
       },
     );
-    const story = await fetchCMS(`/api/stories?${cmsQuery}`);
+    const [story] = await fetchCMS(`/api/stories?${cmsQuery}`);
+    story.attributes.pages = story.attributes.pages.data;
+    story.attributes.pages = story.attributes.pages.map((p:any) => {
+      const obj = p;
+      obj.attributes.coordinates = p.attributes?.coordinates?.split(',').map((item: string) => parseInt(item, 10)) || [100, 100];
+      return obj;
+    });
+    console.log('page =>', story.attributes.pages);
 
     return {
       props: {
-        story: story[0].attributes,
+        story: story.attributes,
       },
     };
   } catch (error) {

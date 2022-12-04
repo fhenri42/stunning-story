@@ -40,11 +40,28 @@ export async function updateStory(data: any) {
 
 export async function createPage(data:any) {
   try {
-    console.log('startPage');
     const res = await fetch(`${selfUrl}/api/page/create`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
+    });
+    if (res.status !== 200) {
+      console.log('res', res.message);
+
+      throw new Error(res.message);
+    }
+    const json = await res.json();
+    return json;
+  } catch (e) {
+    console.log('Mais non =>', e);
+    throw e;
+  }
+}
+export async function deletePage(slug) {
+  try {
+    const res = await fetch(`${selfUrl}/api/page/delete?slug=${slug}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
     });
     if (res.status !== 200) {
       console.log('res', res.message);

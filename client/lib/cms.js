@@ -28,15 +28,6 @@ export function formatMarkdownToHTML(md) {
 
 // Helper to make GET requests to Strapi
 export async function fetchCMS(path, method, payload) {
-  if (
-    cache[path]
-    && cache[path].data
-    && Date.now() - cache[path].time < 10 * 60 * 1000
-  ) {
-    // 10-min cache
-    return cache[path].data;
-  }
-
   try {
     const headers = new Headers();
 
@@ -55,23 +46,21 @@ export async function fetchCMS(path, method, payload) {
     });
 
     const { data, error } = await response.json();
-
-    cache[path] = {};
-    if (data && data.length > 0) {
-      // Collection type
-      cache[path].data = data;
-      cache[path].time = Date.now();
-    } else if (data && data.attributes) {
-      // Single type
-      cache[path].data = data.attributes;
-      cache[path].time = Date.now();
-    } else {
-      throw error;
-    }
+    return data;
+    // cache[path] = {};
+    // if (data && data.length > 0) {
+    //   // Collection type
+    //   cache[path].data = data;
+    //   cache[path].time = Date.now();
+    // } else if (data && data.attributes) {
+    //   // Single type
+    //   cache[path].data = data.attributes;
+    //   cache[path].time = Date.now();
+    // } else {
+    //   throw error;
+    // }
   } catch (err) {
     console.error('An error occurred: ', err);
     throw err;
   }
-
-  return cache[path] && cache[path].data ? cache[path].data : {};
 }

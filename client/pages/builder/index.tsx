@@ -19,10 +19,9 @@ export default function Builder() {
 
   const onFinishForm = async (data) => {
     setButtonLoading(true);
-    console.log(data);
     const res = await createStory(data);
-    console.log('Res =>', res);
-    router.push(`builder/${res.slug}`);
+    console.log(res);
+    router.push(`builder/${res.attributes.slug}`);
     setButtonLoading(false);
     setOpenModalStory(false);
   };

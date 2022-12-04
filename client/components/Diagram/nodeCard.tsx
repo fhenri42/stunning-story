@@ -16,9 +16,8 @@ export default function nodeCard({
 
     <div className="w-[170px] h-[110px] bg-gray-300 rounded flex flex-col">
       <div className="flex flex-row items-center justify-between">
-        <p className="text-black text-xs text-center pt-2">
-          {content}
-
+        <p className="text-black text-xs line-clamp-2 text-ellipsis">
+          {data.text}
         </p>
         <div className="flex flex-row">
           <PencilIcon className=" h-4 w-4 text-black" onClick={() => setOpen(true)} />
@@ -32,9 +31,7 @@ export default function nodeCard({
 
           {inputs.map((port) => (
             <div className="flex flex-col items-start justify-start w-3/4">
-              <p className="text-black text-xs line-clamp-3 text-ellipsis">
-                {data.text}
-              </p>
+
               <div className="flex flex-row items-center justify-center pt-1">
 
                 {cloneElement(port, {
