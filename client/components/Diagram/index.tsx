@@ -9,7 +9,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 import Divider from '@components/Divider';
 import Switch from '@components/Switch';
-import { createPage, deletePage, updateStory } from 'http/self';
+import {
+  createPage, deletePage, updatePage, updateStory,
+} from 'http/self';
 import { toast } from 'react-toastify';
 import nodeCard from './nodeCard';
 
@@ -71,9 +73,9 @@ export default function CustomDiagram(props: any) {
       addNode(nextNode);
     }
     schema.links = story.links;
-    //   window.onbeforeunload = function () {
-  //     return 'Are you sure you want to leave?';
-  //   };
+    window.onbeforeunload = function () {
+      return 'Are you sure you want to leave?';
+    };
   }, []);
   const {
     register,
@@ -123,16 +125,28 @@ export default function CustomDiagram(props: any) {
   };
 
   useEffect(() => {
+    setInterval(() => {
+      for (let index = 0; index < schema.nodes.length; index += 1) {
+        const page = schema.nodes[index];
+        updatePage({
+          // ...page,
+          slug: page.content,
+          coordinates: page.coordinates.join(','),
+
+        });
+      }
+    }, 3000);
+  }, []);
+
+  useEffect(() => {
     (async () => {
-      if (story?.links?.length !== schema?.links?.length) {
+      if (schema?.links?.length > 0 && story?.links?.length !== schema?.links?.length) {
         await updateStory({
           slug: story.slug,
           links: schema.links,
         });
       }
     })();
-    // console.log(story.pages.map((n) => n.attributes.coordinates), schema.nodes.map((n) => n.coordinates));
-    console.log(schema.nodes);
   }, [schema]);
   return (
     <div

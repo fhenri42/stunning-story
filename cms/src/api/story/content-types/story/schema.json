@@ -48,7 +48,10 @@
       "target": "api::page.page"
     },
     "slug": {
-      "type": "uid"
+      "type": "string"
+    },
+    "links": {
+      "type": "json"
     }
   }
 }

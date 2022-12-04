@@ -13,8 +13,9 @@ const nextConfig = {
 
 module.exports = nextConfig;
 
-// TODO Save les ids dans les anwsers
-// TODO Save les cordinates
+// TODO Save les cordinates faire un timer qui save tout les 5 secondes
+// TODO connecter logiquement les page entre elle quand on connect un link
+// Ajouter les bolean first and las page
 // TODO Faire du sytle
 // TODO Ecrire l'histoire d'expemle
 // TODO Faire le google login.

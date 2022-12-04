@@ -57,6 +57,22 @@ export async function createPage(data:any) {
     throw e;
   }
 }
+export async function updatePage(data: any) {
+  try {
+    console.log('startRequest');
+    const res = await fetch(`${selfUrl}/api/page/update`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+
+    const json = await res.json();
+    return json;
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+}
 export async function deletePage(slug) {
   try {
     const res = await fetch(`${selfUrl}/api/page/delete?slug=${slug}`, {

@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2022-12-03T21:36:18.811Z"
+    "x-generation-date": "2022-12-04T13:55:36.689Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -4941,6 +4941,9 @@
                                   }
                                 }
                               }
+                            },
+                            "node_id": {
+                              "type": "string"
                             }
                           }
                         }
@@ -5250,6 +5253,9 @@
                 }
               }
             }
+          },
+          "node_id": {
+            "type": "string"
           }
         }
       },
@@ -5319,7 +5325,8 @@
               },
               "slug": {
                 "type": "string"
-              }
+              },
+              "links": {}
             }
           }
         }
@@ -6630,6 +6637,9 @@
                                         }
                                       }
                                     }
+                                  },
+                                  "node_id": {
+                                    "type": "string"
                                   }
                                 }
                               }
@@ -6978,6 +6988,7 @@
               "slug": {
                 "type": "string"
               },
+              "links": {},
               "createdAt": {
                 "type": "string",
                 "format": "date-time"
@@ -8334,6 +8345,9 @@
                                         }
                                       }
                                     }
+                                  },
+                                  "node_id": {
+                                    "type": "string"
                                   }
                                 }
                               }
@@ -8682,6 +8696,7 @@
               "slug": {
                 "type": "string"
               },
+              "links": {},
               "createdAt": {
                 "type": "string",
                 "format": "date-time"
@@ -10071,6 +10086,9 @@
                                         }
                                       }
                                     }
+                                  },
+                                  "node_id": {
+                                    "type": "string"
                                   }
                                 }
                               }
@@ -10419,6 +10437,7 @@
               "slug": {
                 "type": "string"
               },
+              "links": {},
               "createdAt": {
                 "type": "string",
                 "format": "date-time"
@@ -11775,6 +11794,9 @@
                                         }
                                       }
                                     }
+                                  },
+                                  "node_id": {
+                                    "type": "string"
                                   }
                                 }
                               }
@@ -12123,6 +12145,7 @@
               "slug": {
                 "type": "string"
               },
+              "links": {},
               "createdAt": {
                 "type": "string",
                 "format": "date-time"
