@@ -13,9 +13,17 @@ const nextConfig = {
 
 module.exports = nextConfig;
 
-// TODO Save les cordinates faire un timer qui save tout les 5 secondes
 // TODO connecter logiquement les page entre elle quand on connect un link
 // Ajouter les bolean first and las page
 // TODO Faire du sytle
 // TODO Ecrire l'histoire d'expemle
 // TODO Faire le google login.
+// TODO fix link when deltete
+
+// https://react-dnd.github.io/react-dnd/examples/nesting/drag-sources
+// https://anseki.github.io/leader-line/
+/*
+
+1) quand tu cree une tu a mis les reponse
+
+*/

@@ -37,7 +37,6 @@ export default function Builder() {
   });
   return (
     <div className="h-screen w-screen overflow-auto">
-
       <Modal
         visible={openModalStory}
         closable={false}

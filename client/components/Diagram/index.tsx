@@ -13,49 +13,34 @@ import {
   createPage, deletePage, updatePage, updateStory,
 } from 'http/self';
 import { toast } from 'react-toastify';
-import nodeCard from './nodeCard';
 
-// const initialSchema = createSchema({
-//   nodes: [
-//     {
-//       id: 'start',
-//       content: 'Story start',
-//       coordinates: [15, 15],
-//       outputs: [{ id: 'port-start', alignment: 'right' }],
-//     },
-//     {
-//       id: 'restart',
-//       content: 'Story restart',
-//       coordinates: [15, 85],
-//       inputs: [{ id: 'port-restart', alignment: 'right' }],
-//     },
-//     {
-//       id: 'end',
-//       content: 'Story end',
-//       coordinates: [15, 160],
-//       inputs: [{ id: 'port-end', alignment: 'right' }],
-//     },
-//   ],
-
-// });
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import _ from 'loadsh';
+import NodeCard from './nodeCard';
+import Target from './target';
 
 export default function CustomDiagram(props: any) {
   // create diagrams schema
   const { story } = props;
+  const [storyGraph, setSoryGraph] = useState({});
   const [buttonLoading, setButtonLoading] = useState(false);
-
-  const [schema, {
-    onChange, addNode, removeNode,
-  }] = useSchema({ nodes: [] });
+  const [nodes, setNodes] = useState([]);
+  // const [schema, {
+  //   onChange, addNode, removeNode,
+  // }] = useSchema({ nodes: [] });
   const [addNewNodeModal, setAddNewNodeModal] = useState(false);
 
   const [answers, setAnswers] = useState([null, null, null, null]);
 
   const deleteNodeFromSchema = async (id: string) => {
     const nodeToRemove = schema.nodes.find((node) => node.id === id);
-    await deletePage(nodeToRemove?.content);
-
     removeNode(nodeToRemove);
+    await deletePage(nodeToRemove?.content);
+    await updateStory({
+      slug: story.slug,
+      links: schema.links || [],
+    });
   };
 
   useEffect(() => {
@@ -67,15 +52,17 @@ export default function CustomDiagram(props: any) {
         coordinates: attributes.coordinates,
         data: { onClick: deleteNodeFromSchema, text: attributes.text },
         inputs: [{ id: attributes.slug }],
-        outputs: attributes.answers.map((e) => ({ answer: e.answer, id: e.node_id })),
-        render: nodeCard,
+        outputs: attributes.answers.map((e:any) => ({ answer: e.answer, id: e.node_id })),
+        // render: nodeCard,
       };
-      addNode(nextNode);
+      setNodes([...nodes, nextNode]);
     }
-    schema.links = story.links;
-    window.onbeforeunload = function () {
-      return 'Are you sure you want to leave?';
-    };
+    // addNode(nextNode);
+
+    // schema.links = story.links;
+    // window.onbeforeunload = function () {
+    //   return 'Are you sure you want to leave?';
+    // };
   }, []);
   const {
     register,
@@ -92,62 +79,131 @@ export default function CustomDiagram(props: any) {
   const addNewNode = async (data: any) => {
     try {
       data.slug = uuidv4();
-      console.log('CReate a new one ?:', data);
-
       const nextNode: any = {
-        id: `node-${schema.nodes.length + 1}`,
+        // id: `node-${schema.nodes.length + 1}`,
         content: data.slug,
         coordinates: [100, 100],
         data: { onClick: deleteNodeFromSchema, text: data.text },
         inputs: [{ id: data.slug }],
         outputs: answers.filter((e) => e !== null),
-        render: nodeCard,
+        // render: nodeCard,
 
       };
-      console.log('A ?');
       await createPage({
         ...data,
         coordinates: [100, 100].join(','),
         answers: answers.filter((e) => e !== null).map((e) => ({ answer: e.answer, node_id: e.id })),
         story_slug: story.slug,
       });
-      addNode(nextNode);
+      setNodes([...nodes, nextNode]);
 
       setAnswers([null, null, null, null]);
 
       setAddNewNodeModal(false);
       reset();
     } catch (error) {
-      console.log('E =>', error);
+      console.log(error);
       // TODO add good message
       toast.error('Slug must be unique');
     }
   };
 
-  useEffect(() => {
-    setInterval(() => {
-      for (let index = 0; index < schema.nodes.length; index += 1) {
-        const page = schema.nodes[index];
-        updatePage({
-          // ...page,
-          slug: page.content,
-          coordinates: page.coordinates.join(','),
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     for (let index = 0; index < schema.nodes.length; index += 1) {
+  //       const page = schema.nodes[index];
+  //       updatePage({
+  //         // ...page,
+  //         slug: page.content,
+  //         coordinates: page.coordinates.join(','),
 
-        });
-      }
-    }, 3000);
-  }, []);
+  //       });
+  //     }
+  //   }, 3000);
+  // }, []);
 
-  useEffect(() => {
-    (async () => {
-      if (schema?.links?.length > 0 && story?.links?.length !== schema?.links?.length) {
-        await updateStory({
-          slug: story.slug,
-          links: schema.links,
-        });
-      }
-    })();
-  }, [schema]);
+  // useEffect(() => {
+  //   (async () => {
+  //     console.log(schema.links);
+  //     await updateStory({
+  //       slug: story.slug,
+  //       links: schema.links,
+  //     });
+  //   })();
+  // }, [schema.links]);
+  const addingNode = (item, path, answerIndex) => {
+    console.log('item= >', item);
+    const _storyGraph = { ...storyGraph };
+
+    if (!storyGraph.nodes) {
+      console.log('ICIC MAN');
+      _storyGraph.nodes = [{
+        node: item,
+        answers: [
+          { type: 'answer', value: 1, id: Math.random() },
+          { type: 'answer', value: 1, id: Math.random() },
+
+        ],
+      }];
+      console.log('This work no ? ');
+      setSoryGraph(_storyGraph);
+      return;
+    }
+    console.log(_storyGraph);
+    console.log(path);
+    // debugger;
+    console.log(answerIndex);
+    let request = path;
+
+    request += `.answers[${answerIndex}]`;
+    console.log([request]);
+
+    _.set(
+      _storyGraph,
+      request,
+      {
+        type: 'node',
+        node: item,
+        answers: [
+          { type: 'answer', value: 1, id: Math.random() },
+          { type: 'answer', value: 1, id: Math.random() },
+
+        ],
+      },
+    );
+
+    setSoryGraph(_storyGraph);
+  };
+
+  console.log(storyGraph);
+  const grapRecursif = (n: any, path: number) => {
+    /* Sa c'est le return de basse
+    Si dans le n l'answer c'est un target on renvoi sa
+    Si no on renvoi une Nade avec c'set target
+*/
+    console.log('Recursif n =>', n);
+    return (
+      <div key={n.node.id} className="flex flex-row items-center">
+        <NodeCard {...n.node} />
+
+        <div key={n.node.id} className="flex flex-col">
+          {n.answers && n.answers.map((e: any, answerIndex: number) => {
+            if (e.type === 'node') {
+              return grapRecursif(e, `${path}.answers[${answerIndex}]`);
+            }
+            return (
+              <Target
+                key={e.id}
+                path={path}
+                answerIndex={answerIndex}
+                addingNode={addingNode}
+              />
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
   return (
     <div
       className="h-full w-full"
@@ -166,7 +222,44 @@ export default function CustomDiagram(props: any) {
 
       {/* Work-space */}
       <Divider />
-      <Diagram schema={schema} onChange={onChange} />
+      <DndProvider backend={HTML5Backend}>
+        <div className="flex flex-row items-center justify-center">
+
+          <div className="flex flex-col items-center justify-start w-[15%] bg-green-400 h-screen">
+            {nodes.map((node: any) => <NodeCard {...node} />)}
+          </div>
+          <div className="w-[85%] bg-red-400 h-screen">
+            {!storyGraph.nodes && (
+            <Target
+              addingNode={addingNode}
+            />
+            )}
+
+            <div className="flex flex-row items-center">
+
+              {storyGraph.nodes && grapRecursif(storyGraph.nodes[0], 'nodes[0]') }
+            </div>
+          </div>
+        </div>
+      </DndProvider>
+      {/* <Diagram schema={schema} onChange={onChange} />
+
+      storyGraph.nodes.map((n: any) => (
+                <div key={n.node.id} className="flex flex-row items-center">
+                  <NodeCard {...n.node} />
+
+                  <div key={n.node.id} className="flex flex-col">
+
+                    {n.answers && n.answers.map((e) => (
+                      <Target
+                        key={e}
+                        addingNode={addingNode}
+                      />
+                    )) }
+                  </div>
+                </div>
+              ))
+      */}
       {addNewNodeModal && (
 
       <Modal
