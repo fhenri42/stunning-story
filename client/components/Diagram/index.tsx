@@ -134,7 +134,7 @@ export default function CustomDiagram(props: any) {
   const addingNode = (item, path, answerIndex) => {
     console.log('item= >', item);
     const _storyGraph = { ...storyGraph };
-
+    item.id = Math.random();
     if (!storyGraph.nodes) {
       console.log('ICIC MAN');
       _storyGraph.nodes = [{
@@ -183,7 +183,7 @@ export default function CustomDiagram(props: any) {
 */
     console.log('Recursif n =>', n);
     return (
-      <div key={n.node.id} className="flex flex-row items-center">
+      <div key={n.node.id} className="flex flex-row items-center justify-center">
         <NodeCard {...n.node} />
 
         <div key={n.node.id} className="flex flex-col">
