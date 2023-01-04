@@ -227,7 +227,7 @@
   resolved "https://registry.npmjs.org/@types/node/-/node-18.11.9.tgz"
   integrity sha512-CRpX21/kGdzjOpFsZSkcrXMGIBWMGNIHXXBVFSH+ggkftxg+XYP20TESbh+zFvFj3EQOl5byk0HTRn1IL6hbqg==
 
-"@types/prop-types@*":
+"@types/prop-types@*", "@types/prop-types@^15.7.3":
   version "15.7.5"
   resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.5.tgz"
   integrity sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==
@@ -1589,6 +1589,11 @@ language-tags@^1.0.5:
   dependencies:
     language-subtag-registry "~0.3.2"
 
+leader-line@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/leader-line/-/leader-line-1.0.7.tgz#c197268d8346d73f7ac10fe568d677d119c656c1"
+  integrity sha512-PhJpQLV7XychSIuGPD0TEqR9PgRYBbrhReaOcmHFOVtTw4dWKfUMAtOb7UP7xTsoib6sFzq2giQeOUHy7LCuJQ==
+
 levn@^0.4.1:
   version "0.4.1"
   resolved "https://registry.npmjs.org/levn/-/levn-0.4.1.tgz"
@@ -1638,6 +1643,11 @@ lodash.throttle@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
   integrity sha512-wIkUCfVKpVsWo3JSZlc+8MB5it+2AN5W8J7YVMST30UrvcQNZ1Okbj+rbVniijTWE6FGYy4XJq/rHkas8qJMLQ==
+
+lodash@^4.17.21:
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
 loose-envify@^1.1.0, loose-envify@^1.4.0:
   version "1.4.0"
@@ -2076,12 +2086,26 @@ react-is@^16.13.1, react-is@^16.7.0:
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-leader-line@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-leader-line/-/react-leader-line-1.0.5.tgz#fc98316d862c4f6b6ace1206a6b18543acc1c629"
+  integrity sha512-oSFQ8M/ByqE7VSlV4Oetze9OdDR3iyPAToeCj940ON0o72m3MPuQ0fOgKHgoJ9ggk15PSzh8zHsZHMc9hV22uw==
+
 react-toastify@^9.1.1:
   version "9.1.1"
   resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-9.1.1.tgz#9280caea4a13dc1739c350d90660a630807bf10b"
   integrity sha512-pkFCla1z3ve045qvjEmn2xOJOy4ZciwRXm1oMPULVkELi5aJdHCN/FHnuqXq8IwGDLB7PPk2/J6uP9D8ejuiRw==
   dependencies:
     clsx "^1.1.1"
+
+react-xarrows@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/react-xarrows/-/react-xarrows-2.0.2.tgz#7555687612339eaefd4ed55fc5c63f2302726d9c"
+  integrity sha512-tDlAqaxHNmy0vegW/6NdhoWyXJq1LANX/WUAlHyzoHe9BwFVnJPPDghmDjYeVr7XWFmBrVTUrHsrW7GKYI6HtQ==
+  dependencies:
+    "@types/prop-types" "^15.7.3"
+    lodash "^4.17.21"
+    prop-types "^15.7.2"
 
 react@18.2.0:
   version "18.2.0"
