@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import dynamic from 'next/dynamic';
 import { fetchCMS } from '@lib/cms';
 import qs from 'qs';
 
-const MyDiagram = dynamic(() => import('@components/Diagram'), {
+const Diagram = dynamic(() => import('@components/Diagram'), {
   ssr: false,
 });
 
 export default function Builder(props: any) {
   const { story } = props;
+  console.log(story);
   return (
     <div className="h-screen w-screen overflow-auto">
-      {story && story.pages && <MyDiagram story={story} />}
+      {story && <Diagram story={story} />}
 
     </div>
   );
@@ -29,7 +30,7 @@ export async function getServerSideProps({ query }) {
         populate: [
           'cover',
           'first_page',
-          'pages',
+          'nodes',
           'pages.answers',
 
         ],
@@ -39,13 +40,6 @@ export async function getServerSideProps({ query }) {
       },
     );
     const [story] = await fetchCMS(`/api/stories?${cmsQuery}`);
-    story.attributes.pages = story.attributes.pages.data;
-    story.attributes.pages = story.attributes.pages.map((p:any) => {
-      const obj = p;
-      obj.attributes.coordinates = p.attributes?.coordinates?.split(',').map((item: string) => parseInt(item, 10)) || [100, 100];
-      return obj;
-    });
-    console.log('page =>', story.attributes.pages);
 
     return {
       props: {

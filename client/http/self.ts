@@ -38,56 +38,21 @@ export async function updateStory(data: any) {
   }
 }
 
-export async function createPage(data:any) {
-  try {
-    const res = await fetch(`${selfUrl}/api/page/create`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-    if (res.status !== 200) {
-      console.log('res', res.message);
+// export async function deleteStory(slug) {
+//   try {
+//     const res = await fetch(`${selfUrl}/api/page/delete?slug=${slug}`, {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/json' },
+//     });
+//     if (res.status !== 200) {
+//       console.log('res', res.message);
 
-      throw new Error(res.message);
-    }
-    const json = await res.json();
-    return json;
-  } catch (e) {
-    console.log('Mais non =>', e);
-    throw e;
-  }
-}
-export async function updatePage(data: any) {
-  try {
-    console.log('startRequest');
-    const res = await fetch(`${selfUrl}/api/page/update`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-
-    const json = await res.json();
-    return json;
-  } catch (e) {
-    console.log(e);
-    throw e;
-  }
-}
-export async function deletePage(slug) {
-  try {
-    const res = await fetch(`${selfUrl}/api/page/delete?slug=${slug}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-    });
-    if (res.status !== 200) {
-      console.log('res', res.message);
-
-      throw new Error(res.message);
-    }
-    const json = await res.json();
-    return json;
-  } catch (e) {
-    console.log('Mais non =>', e);
-    throw e;
-  }
-}
+//       throw new Error(res.message);
+//     }
+//     const json = await res.json();
+//     return json;
+//   } catch (e) {
+//     console.log('Mais non =>', e);
+//     throw e;
+//   }
+// }

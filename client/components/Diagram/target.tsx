@@ -4,26 +4,30 @@ import { v4 as uuidv4 } from 'uuid';
 import NodeCard from './nodeCard';
 
 const style = {
-  border: '1px solid gray',
-  height: '50px',
+  border: '2px dashed green',
+  height: '70px',
   width: '100px',
   zIndex: 100,
 };
 const TargetBox = memo(({
-  onDrop, addingNode, input, targetId,
+  onDrop, addingNode, input, targetId, value,
 }) => {
   const [node, setNode] = useState({});
   const [{ isOver }, drop] = useDrop(
     () => ({
       accept: ['yellow', 'blue'],
-      drop(item, monitor) {
+      drop(item: any, monitor) {
         const newItem = { ...item };
         newItem.id = targetId || uuidv4();
         newItem.input = input;
-        newItem.outputs = [
-          { type: 'target', id: uuidv4() },
-          { type: 'target', id: uuidv4() }];
-
+        const outputs = [...newItem.outputs];
+        for (let i = 0; i < outputs.length; i += 1) {
+          const tmpData = { ...outputs[i] };
+          tmpData.id = uuidv4();
+          tmpData.type = 'target';
+          outputs[i] = tmpData;
+        }
+        newItem.outputs = [...outputs];
         onDrop(monitor.getItemType());
         setNode(newItem);
         addingNode(newItem, targetId);
@@ -38,16 +42,18 @@ const TargetBox = memo(({
     [onDrop],
   );
   const opacity = isOver ? 1 : 0.8;
-
   return (
     <div
       id={targetId}
+      key={targetId}
       ref={drop}
       className="bg-red-400 p-2 ml-14 mt-10"
       style={{ ...style, opacity }}
     >
       {!node.content && (
+
       <p className="p-0 m-0">Drop here.</p>
+
       )}
 
       {node && node.content && (
@@ -62,6 +68,7 @@ export default function StatefulTargetBox(props) {
   const handleDrop = useCallback((color) => setLastDroppedColor(color), []);
   return (
     <TargetBox
+      key={props.targetId}
       {...props}
       lastDroppedColor={lastDroppedColor}
       onDrop={handleDrop}

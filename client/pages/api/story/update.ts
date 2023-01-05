@@ -11,7 +11,6 @@ async function updateStorySchema(req: NextApiRequest, res: NextApiResponse) {
     console.log('AAAA');
     const { body } = req;
     console.log(body);
-
     const cmsQuery = qs.stringify(
       {
         filters: {
@@ -26,7 +25,7 @@ async function updateStorySchema(req: NextApiRequest, res: NextApiResponse) {
       },
     );
     const [story] = await fetchCMS(`/api/stories?${cmsQuery}`, 'GET');
-    console.log(story);
+    console.log('story ==>', story);
     // TODO create the data
     const data = await fetchCMS(`/api/stories/${story.id}`, 'PUT', {
       data: body,

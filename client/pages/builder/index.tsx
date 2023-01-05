@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@components/Button';
-import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 
 import { createStory } from '@http/self';
 import Modal from '@components/Modal';
 import Input from '@components/Input';
 import { useRouter } from 'next/router';
-
-const MyDiagram = dynamic(() => import('@components/Diagram'), {
-  ssr: false,
-});
 
 export default function Builder() {
   const [openModalStory, setOpenModalStory] = useState(true);
@@ -20,7 +15,6 @@ export default function Builder() {
   const onFinishForm = async (data) => {
     setButtonLoading(true);
     const res = await createStory(data);
-    console.log(res);
     router.push(`builder/${res.attributes.slug}`);
     setButtonLoading(false);
     setOpenModalStory(false);

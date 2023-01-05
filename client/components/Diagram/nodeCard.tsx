@@ -10,13 +10,12 @@ import { PencilIcon } from '@heroicons/react/24/solid';
 import Divider from '@components/Divider';
 
 export default function NodeCard({
-  sourceId, content, data, input, outputs, outputsNbr,
+  sourceId, text, input, outputs, outputsNbr,
 }: any) {
-  const [open, setOpen] = useState(false);
   const [{ isDragging }, drag] = useDrag(
     () => ({
       item: {
-        data, input, outputs, outputsNbr,
+        text, input, outputs, outputsNbr,
       },
       type: 'blue',
       collect: (monitor) => ({
@@ -25,12 +24,11 @@ export default function NodeCard({
     }),
     [],
   );
-
   return (
 
     <div key={sourceId} ref={drag} className="bg-blue-400 p-2 my-2 mx-2 rounded-lg">
       <p className="text-black text-xs line-clamp-2 text-ellipsis">
-        {data.text}
+        {text}
       </p>
 
       {/* <Modal visible={open} onCancel={() => { setOpen(false); }}>
