@@ -2,6 +2,8 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import { fetchCMS } from '@lib/cms';
 import qs from 'qs';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const Diagram = dynamic(() => import('@components/Diagram'), {
   ssr: false,
@@ -9,10 +11,12 @@ const Diagram = dynamic(() => import('@components/Diagram'), {
 
 export default function Builder(props: any) {
   const { story } = props;
-  console.log(story);
   return (
-    <div className="h-screen w-screen overflow-auto">
-      {story && <Diagram story={story} />}
+    <div className="h-screen w-screen overflow-hidden">
+      <DndProvider backend={HTML5Backend}>
+
+        {story && <Diagram story={story} />}
+      </DndProvider>
 
     </div>
   );

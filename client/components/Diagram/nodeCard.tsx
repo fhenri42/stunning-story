@@ -1,5 +1,4 @@
 import React, { useState, cloneElement, useEffect } from 'react';
-import Diagram, { createSchema, useSchema } from 'beautiful-react-diagrams';
 import Button from '@components/Button';
 import Modal from '@components/Modal';
 import Input from '@components/Input';
@@ -12,6 +11,7 @@ import Divider from '@components/Divider';
 export default function NodeCard({
   sourceId, text, input, outputs, outputsNbr,
 }: any) {
+  const [open, setOpen] = useState(false);
   const [{ isDragging }, drag] = useDrag(
     () => ({
       item: {
@@ -26,17 +26,22 @@ export default function NodeCard({
   );
   return (
 
-    <div key={sourceId} ref={drag} className="bg-blue-400 p-2 my-2 mx-2 rounded-lg">
+    <div
+      className="bg-blue-400 p-2 my-2 mx-2 rounded-lg h-20  cursor-pointer"
+      onClick={() => { setOpen(true); }}
+      key={sourceId}
+      ref={drag}
+    >
       <p className="text-black text-xs line-clamp-2 text-ellipsis">
         {text}
       </p>
 
-      {/* <Modal visible={open} onCancel={() => { setOpen(false); }}>
+      <Modal visible={open} onCancel={() => { setOpen(false); }}>
         <div className="flex flex-col items-center justify-center">
           <h1 className="text-2xl font-bold">Edit your node</h1>
         </div>
 
-      </Modal> */}
+      </Modal>
     </div>
 
   );

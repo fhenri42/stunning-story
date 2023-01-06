@@ -11,6 +11,7 @@ const style = {
 };
 const TargetBox = memo(({
   onDrop, addingNode, input, targetId, value,
+  left, top,
 }) => {
   const [node, setNode] = useState({});
   const [{ isOver }, drop] = useDrop(
@@ -19,7 +20,11 @@ const TargetBox = memo(({
       drop(item: any, monitor) {
         const newItem = { ...item };
         newItem.id = targetId || uuidv4();
+        newItem.left = left;
+        newItem.top = top;
+
         newItem.input = input;
+        newItem.question = value;
         const outputs = [...newItem.outputs];
         for (let i = 0; i < outputs.length; i += 1) {
           const tmpData = { ...outputs[i] };
