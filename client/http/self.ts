@@ -1,4 +1,6 @@
+import axios from 'axios';
 import getConfig from 'next/config';
+import { v4 as uuidv4 } from 'uuid';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -32,6 +34,25 @@ export async function updateStory(data: any) {
 
     const json = await res.json();
     return json;
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+}
+export async function fileUpload(formData: any) {
+  try {
+    console.log('startRequest');
+
+    const config = {
+      headers: { 'content-type': 'multipart/form-data' },
+      onUploadProgress: (event) => {
+        console.log('Current progress:', Math.round((event.loaded * 100) / event.total));
+      },
+    };
+
+    const response = await axios.post(`${selfUrl}/api/upload?fileName=${uuidv4()}`, formData, config);
+    console.log(response);
+    return response.data;
   } catch (e) {
     console.log(e);
     throw e;

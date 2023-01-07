@@ -8,9 +8,7 @@ const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();
 
 async function updateStorySchema(req: NextApiRequest, res: NextApiResponse) {
   try {
-    console.log('AAAA');
     const { body } = req;
-    console.log(body);
     const cmsQuery = qs.stringify(
       {
         filters: {

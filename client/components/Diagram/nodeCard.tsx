@@ -7,11 +7,12 @@ import { useDrag } from 'react-dnd';
 import XCircleIcon from '@heroicons/react/24/solid/XCircleIcon';
 import { PencilIcon } from '@heroicons/react/24/solid';
 import Divider from '@components/Divider';
+import EditNode from '@components/editNode';
 
 export default function NodeCard({
-  sourceId, text, input, outputs, outputsNbr,
+  sourceId, text, input, outputs, outputsNbr, isVictory, story, bgUrl, setStory,
 }: any) {
-  const [open, setOpen] = useState(false);
+  const [editNodeModal, setEditNodeModal] = useState(false);
   const [{ isDragging }, drag] = useDrag(
     () => ({
       item: {
@@ -24,24 +25,41 @@ export default function NodeCard({
     }),
     [],
   );
+  console.log('story =>', bgUrl);
   return (
-
     <div
-      className="bg-blue-400 p-2 my-2 mx-2 rounded-lg h-20  cursor-pointer"
-      onClick={() => { setOpen(true); }}
+      className="mx-2 rounded-lg h-20 cursor-pointer relative"
+      onClick={() => { setEditNodeModal(true); }}
       key={sourceId}
       ref={drag}
+
     >
-      <p className="text-black text-xs line-clamp-2 text-ellipsis">
-        {text}
-      </p>
+      {bgUrl !== '' && (
+      <img className="absolute w-full h-full opacity-30" src={bgUrl} alt="bg-bgUrl" />
+      )}
+      <div
+        className="p-2 my-2 bg-blue-400 h-full rounded-lg"
 
-      <Modal visible={open} onCancel={() => { setOpen(false); }}>
-        <div className="flex flex-col items-center justify-center">
-          <h1 className="text-2xl font-bold">Edit your node</h1>
-        </div>
+      >
 
-      </Modal>
+        <p className="text-black text-xs line-clamp-2 text-ellipsis">
+          {text}
+        </p>
+
+        {editNodeModal && (
+        <EditNode
+          sourceId={sourceId}
+          setStory={setStory}
+          text={text}
+          outputs={outputs}
+          isVictory={isVictory}
+          story={story}
+          editNodeModal={editNodeModal}
+          setEditNodeModal={setEditNodeModal}
+        />
+        )}
+
+      </div>
     </div>
 
   );
