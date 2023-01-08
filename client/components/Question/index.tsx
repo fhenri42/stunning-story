@@ -15,7 +15,7 @@ export default function Question(props: Props) {
   } = props;
 
   return (
-    <div className={` ${className} rounded-lg border-[#eaeaea] border-2 p-5 bg-black bg-opacity-60 relative`}>
+    <div className={` ${className} rounded-lg border-[#eaeaea] border-2 p-8 bg-black bg-opacity-60 relative`}>
       <SpeakerWaveIcon
         onClick={() => {
           const msg = new SpeechSynthesisUtterance();

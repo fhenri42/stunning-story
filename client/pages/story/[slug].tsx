@@ -10,24 +10,86 @@ import Button from '@components/Button';
 import { useRouter } from 'next/router';
 
 export default function Page(props: any) {
+  const [story, setStory] = useState(props.story);
+  const [storyGraph, setStoryGraph] = useState(story.storyGraph || []);
+  const [currentNode, setCurrentNode] = useState(storyGraph[0]);
   const router = useRouter();
   const variables = useStoreState((state) => state.variables);
   const setVariables = useStoreActions((actions) => actions.setVariables);
-  const { page } = props;
 
-  console.log('DID NOT RERERANDE =>', variables);
   return (
     <div
-      className="w-screnn h-screen flex flex-col items-center justify-between"
-      style={{
-        backgroundImage: `url(http://localhost:1337${page?.background.data?.attributes?.url})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-      }}
+      className="w-screnn h-screen "
     >
-      <div />
-      {variables.length > 0 && (
+
+      <div className="h-3/4  flex flex-col items-center justify-center relative">
+        <div className="absolute top-3 right-10">
+          <Button
+            label="Quit"
+            type="danger"
+            size="small"
+            onClick={() => {
+              router.replace('/');
+            }}
+          />
+        </div>
+        {currentNode.bgUrl && (
+          <img
+            className="absolute opacity-50 -z-10  h-full flex flec-col items-center justify-center bg-black"
+            src={currentNode.bgUrl}
+            alt="bg-bgUrl"
+          />
+
+        )}
+        <Question text={currentNode.text} className="w-1/2 text-lg text-center mb-10 mt-auto">
+          {currentNode.text}
+        </Question>
+      </div>
+
+      <div className="flex flex-row w-full bottom-0 bg-black bg-opacity-60 p-10 h-1/4">
+        {}
+        <div className="flex flex-row w-full px-3 justify-evenly flex-wrap">
+          {currentNode.outputs.map((a: any) => (
+            <Answer
+              key={a.id}
+              className="w-[47%]"
+              onClick={() => {
+                const index = storyGraph.findIndex((n) => n.id === a.id);
+                setCurrentNode(storyGraph[index]);
+              }}
+            >
+              {a.value}
+            </Answer>
+          ))}
+          {currentNode.outputs.length === 0 && (
+            <>
+              <Answer
+                className="w-[47%]"
+                onClick={() => {
+                  setCurrentNode(storyGraph[0]);
+                }}
+              >
+                Play Again
+              </Answer>
+              <Answer
+                className="w-[47%]"
+                onClick={() => {
+                  router.replace('/');
+                }}
+              >
+                Quit
+              </Answer>
+
+            </>
+          )}
+
+        </div>
+      </div>
+    </div>
+  );
+}
+
+{ /* {variables.length > 0 && (
 
       <div className="rounded-lg border-[#eaeaea] border-2 p-5 bg-black bg-opacity-60 absolute top-5 left-5">
         { variables.map((v) => (
@@ -38,86 +100,41 @@ export default function Page(props: any) {
           </p>
         ))}
       </div>
-      )}
-      <div className="absolute top-3 right-3">
-
-        <Button
-          label="Quit"
-          type="danger"
-          size="small"
-          onClick={() => {
-            router.replace('/');
-          }}
-        />
-      </div>
-      <Question text={page.text} className="w-1/2">
-        {page.text}
-      </Question>
-      <div className="flex flex-row w-full bottom-0 bg-black bg-opacity-60 p-10 ">
-
-        <div className="flex flex-row w-full px-3 justify-evenly flex-wrap">
-          {page.answers.map((a: any) => (
-            <Link
-              className="w-[47%]"
-              href={`/story/${a.go_to_page?.data?.attributes?.slug}`}
-              key={a.id}
-            >
-
-              <Answer
-                onClick={() => {
-                  if (a.variable) {
-                    const key = Object.keys(a.variable)[0];
-                    const index = variables.length <= 0 ? -1
-                      : variables.findIndex((i) => Object.keys(i)[0] === key);
-                    if (index !== -1) {
-                      const newVariables = [...variables];
-                      newVariables[index][key] = a.variable[key];
-                      setVariables([...newVariables]);
-                      return;
-                    }
-                    setVariables([...variables, a.variable]);
-                  }
-                }}
-              >
-                {a.answer}
-              </Answer>
-
-            </Link>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
+      )} */ }
 
 export async function getServerSideProps({ query }) {
-  const cmsQuery = qs.stringify(
-    {
-      filters: {
-        slug: {
-          $eq: query.slug,
+  try {
+    const cmsQuery = qs.stringify(
+      {
+        filters: {
+          slug: {
+            $eq: query.slug,
+          },
         },
+        populate: [
+          'cover',
+          'first_page',
+          'nodes',
+          'pages.answers',
+
+        ],
       },
-      populate: [
-        'background',
-        'answers',
-        'answers.go_to_page',
-        'answers.go_to_page.slug',
+      {
+        encodeValuesOnly: true,
+      },
+    );
+    const [story] = await fetchCMS(`/api/stories?${cmsQuery}`);
 
-      ],
-    },
-    {
-      encodeValuesOnly: true,
-    },
-  );
-  console.log(query);
-  const result = await fetchCMS(`/api/pages?${cmsQuery}`);
-  console.log('result =>', result);
-
-  const [{ attributes }] = result;
-  return {
-    props: {
-      page: attributes,
-    },
-  };
+    return {
+      props: {
+        story: story.attributes,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        story: {},
+      },
+    };
+  }
 }

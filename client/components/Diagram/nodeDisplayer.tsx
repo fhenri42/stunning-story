@@ -31,7 +31,7 @@ export default function DisplayNodes(props: any) {
         }}
       >
         {currentNode.bgUrl && (
-        <img className="absolute rounded-lg w-full h-full opacity-30" src={currentNode.bgUrl} alt="bg-bgUrl" />
+          <img className="absolute rounded-lg w-full h-full opacity-30" src={currentNode.bgUrl} alt="bg-bgUrl" />
         )}
         {currentNode.outputs.findIndex((n: any) => n.type === 'node') === -1 && (
         <TrashIcon

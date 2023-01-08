@@ -7,7 +7,7 @@ import Header from '@components/Header';
 /* Hum :?  */
 export default function Home(props: any) {
   const { stories } = props;
-
+  console.log('stories =>', stories);
   return (
     <div>
       <Head>
@@ -45,13 +45,13 @@ export default function Home(props: any) {
             Contact us
           </h2>
           <div className="grid grid-cols-1 gap-y-20 lg:grid-cols-3 lg:gap-y-0 lg:gap-x-8">
-            {[...stories, ...stories, ...stories, ...stories].map((story) => (
+            {stories.map((story) => (
               <Link
-                key={story.id}
+                key={story.attributes.slug}
                 className="flex flex-col rounded-2xl  shadow-xl mb-5 cursor-pointer"
-                href={`/story/${story.attributes.first_page.data.attributes.slug}`}
+                href={`/story/${story.attributes.slug}`}
               >
-                <img className="h-full w-full" src={`http://localhost:1337${story.attributes.cover.data.attributes.url}`} alt="" />
+                {/* <img className="h-full w-full" src={`http://localhost:1337${story.attributes.cover.data.attributes.url}`} alt="" /> */}
                 <div className="rounded-bl-2xl rounded-br-2xl bg-[#2e2e2e] p-6 md:px-8">
                   <p className="text-base font-medium">
                     {story.attributes.title}
@@ -80,7 +80,8 @@ export async function getServerSideProps({ query }) {
         },
         populate: [
           'cover',
-          'first_page',
+          'slug',
+
         ],
       },
       {
