@@ -17,7 +17,7 @@ export default function NodeCard(props: any) {
   const [{ isDragging }, drag] = useDrag(
     () => ({
       item: {
-        text, input, outputs, outputsNbr, isSameOutcome,
+        text, input, outputs, outputsNbr, isSameOutcome, bgUrl,
       },
       type: 'blue',
       collect: (monitor) => ({
@@ -28,21 +28,24 @@ export default function NodeCard(props: any) {
   );
   return (
     <div
-      className="mx-2 rounded-lg h-20 cursor-pointer relative"
+      className="mx-2 rounded-lg h-28 cursor-pointer relative"
       onClick={() => { setEditNodeModal(true); }}
       key={sourceId}
       ref={drag}
 
     >
       {bgUrl && (
-        <img className="absolute w-full h-full opacity-30" src={bgUrl} alt="bg-bgUrl" />
+        <img className="absolute rounded-lg w-full h-full opacity-30" src={bgUrl} alt="bg-bgUrl" />
       )}
       <div
-        className="p-2 my-2 bg-blue-400 h-full rounded-lg"
+        className="p-2 my-2 bg-blue-400 h-full rounded-lg flex flex-col items-center justify-center"
+        style={{
+          backgroundColor: '#1B263B',
+        }}
 
       >
 
-        <p className="text-black text-xs line-clamp-2 text-ellipsis">
+        <p className="text-white text-xs line-clamp-2 text-ellipsis">
           {text}
         </p>
 

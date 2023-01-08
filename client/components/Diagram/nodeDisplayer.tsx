@@ -22,13 +22,16 @@ export default function DisplayNodes(props: any) {
     >
       <div
         id={currentNode.id}
-        className="h-28 bg-blue-600 p-2 ml-10 mr-20 mt-10 relative rounded-lg w-[150px] flex flex-col items-center justify-center cursor-pointer"
+        style={{
+          backgroundColor: '#1B263B',
+        }}
+        className="h-28  p-2 ml-10 mr-20 mt-10 relative rounded-lg w-[150px] flex flex-col items-center justify-center cursor-pointer"
         onClick={() => {
           setOpenDetails(!openDetails);
         }}
       >
         {currentNode.bgUrl && (
-        <img className="absolute w-full h-full opacity-30" src={currentNode.bgUrl} alt="bg-bgUrl" />
+        <img className="absolute rounded-lg w-full h-full opacity-30" src={currentNode.bgUrl} alt="bg-bgUrl" />
         )}
         {currentNode.outputs.findIndex((n: any) => n.type === 'node') === -1 && (
         <TrashIcon
