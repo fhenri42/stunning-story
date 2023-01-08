@@ -32,26 +32,16 @@
     "variables": {
       "type": "json"
     },
-    "pages": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::page.page"
-    },
-    "first_page": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::page.page"
-    },
-    "last_page": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::page.page"
-    },
     "slug": {
       "type": "string"
     },
-    "links": {
+    "storyGraph": {
       "type": "json"
+    },
+    "nodes": {
+      "type": "component",
+      "repeatable": true,
+      "component": "story.page"
     }
   }
 }

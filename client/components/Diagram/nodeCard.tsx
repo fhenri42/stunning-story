@@ -9,14 +9,15 @@ import { PencilIcon } from '@heroicons/react/24/solid';
 import Divider from '@components/Divider';
 import EditNode from '@components/editNode';
 
-export default function NodeCard({
-  sourceId, text, input, outputs, outputsNbr, isVictory, story, bgUrl, setStory,
-}: any) {
+export default function NodeCard(props: any) {
+  const {
+    sourceId, text, input, outputs, outputsNbr, isVictory, story, bgUrl, setStory, isSameOutcome,
+  } = props;
   const [editNodeModal, setEditNodeModal] = useState(false);
   const [{ isDragging }, drag] = useDrag(
     () => ({
       item: {
-        text, input, outputs, outputsNbr,
+        text, input, outputs, outputsNbr, isSameOutcome,
       },
       type: 'blue',
       collect: (monitor) => ({
@@ -25,7 +26,6 @@ export default function NodeCard({
     }),
     [],
   );
-  console.log('story =>', bgUrl);
   return (
     <div
       className="mx-2 rounded-lg h-20 cursor-pointer relative"
@@ -34,8 +34,8 @@ export default function NodeCard({
       ref={drag}
 
     >
-      {bgUrl !== '' && (
-      <img className="absolute w-full h-full opacity-30" src={bgUrl} alt="bg-bgUrl" />
+      {bgUrl && (
+        <img className="absolute w-full h-full opacity-30" src={bgUrl} alt="bg-bgUrl" />
       )}
       <div
         className="p-2 my-2 bg-blue-400 h-full rounded-lg"
@@ -56,6 +56,7 @@ export default function NodeCard({
           story={story}
           editNodeModal={editNodeModal}
           setEditNodeModal={setEditNodeModal}
+
         />
         )}
 

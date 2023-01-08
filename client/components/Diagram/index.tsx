@@ -11,7 +11,9 @@ import Target from './target';
 
 let tmpStoryGraph = [];
 
-// TODO add variable to the builder
+/* TODO add variable to the builder
+  Add a oputut and outcom the the builder
+*/
 export default function Diagram(props: any) {
   const [story, setStory] = useState(props.story);
   const updateXarrow = useXarrow();
@@ -152,7 +154,7 @@ export default function Diagram(props: any) {
         <Xwrapper>
 
           {storyGraph.length > 0 && storyGraph.map((node) => node.outputs.map((output) => {
-            if (output.type === 'target') {
+            if (output.type === 'target' && !node.isSameOutcome) {
               return (
                 <Xarrow
                   labels={<p className="text-xs  text-ellipsis w-10 text-center">{output.value}</p>}
@@ -165,13 +167,50 @@ export default function Diagram(props: any) {
             }
             return null;
           }))}
-
           {storyGraph.length > 0 && storyGraph.map((node) => {
+            if (node.isSameOutcome && node.outputs[0].id && node.outputs[0].type === 'target') {
+              return (
+                <Xarrow
+                  labels={(
+                    <div className="flex flex-col">
+                      {node.outputs.map((o: any) => (
+                        <p className="text-xs  text-ellipsis w-10 text-center">{`${o.value}`}</p>
+                      ))}
+                    </div>
+                    )}
+                  start={node.id}
+                  end={node.outputs[0].id}
+                  color="yellow"
+                  key={`${node.outputs[0].id}`}
+                />
+              );
+            }
+          })}
+          {storyGraph.length > 0 && storyGraph.map((node) => {
+            // if (node.isSameOutcome && node.input !== 'null') {
+            //   console.log('WTF ??', node);
+            //   return (
+            //     <Xarrow
+            //       labels={(
+            //         <div className="flex flex-col">
+            //           {node.outputs.map((o: any) => (
+            //             <p className="text-xs  text-ellipsis w-10 text-center">{`${o.value}`}</p>
+            //           ))}
+
+            //         </div>
+            //         )}
+
+            //       key={`${node.id}`}
+            //       start={node.input}
+            //       end={node.id}
+            //       color="blue"
+            //     />
+            //   );
+            // }
             if (node.input !== 'null') {
               return (
                 <Xarrow
                   labels={<p className="text-xs  text-ellipsis w-10 text-center">{node.question}</p>}
-
                   key={`${node.id}`}
                   start={node.input}
                   end={node.id}

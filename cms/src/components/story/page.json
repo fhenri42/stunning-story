@@ -1,33 +1,35 @@
 {
   "collectionName": "components_story_pages",
   "info": {
-    "displayName": "Page",
-    "icon": "american-sign-language-interpreting"
+    "displayName": "node",
+    "icon": "american-sign-language-interpreting",
+    "description": ""
   },
   "options": {},
   "attributes": {
-    "slug": {
-      "type": "string",
-      "unique": true
-    },
     "text": {
       "type": "richtext",
       "required": true
     },
-    "background": {
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ],
-      "type": "media",
-      "multiple": false
+    "outputsNbr": {
+      "type": "integer"
     },
-    "answers": {
-      "type": "component",
-      "repeatable": true,
-      "component": "story.answer"
+    "sourceId": {
+      "type": "string"
+    },
+    "outputs": {
+      "type": "json"
+    },
+    "bgUrl": {
+      "type": "string"
+    },
+    "isVictory": {
+      "type": "boolean",
+      "default": false
+    },
+    "isSameOutcome": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

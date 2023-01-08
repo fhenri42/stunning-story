@@ -10,7 +10,6 @@ import { TrashIcon } from '@heroicons/react/24/solid';
 import { fileUpload, updateStory } from '@http/self';
 import Switch from '@components/Switch';
 import { InputFile } from '@components/Input/inputFile';
-import { url } from 'inspector';
 
 export default function NewNode(props: any) {
   const {
@@ -20,6 +19,7 @@ export default function NewNode(props: any) {
   const [buttonLoadingImage, setButtonLoadingImage] = useState(false);
   const [outputs, setAnswers] = useState([]);
   const [isVictory, setIsVictory] = useState(false);
+  const [isSameOutcome, setIsSameOutcome] = useState(false);
   const [image, setImage] = useState('');
 
   const {
@@ -39,6 +39,8 @@ export default function NewNode(props: any) {
         ...story,
         nodes: [...story.nodes, {
           ...data,
+          isSameOutcome,
+          isVictory,
           outputs,
           outputsNbr: outputs.length,
           sourceId: uuidv4(),
@@ -50,6 +52,8 @@ export default function NewNode(props: any) {
         nodes: [...story.nodes, {
           ...data,
           outputs,
+          isSameOutcome,
+          isVictory,
           outputsNbr: outputs.length,
           sourceId: uuidv4(),
         }],
@@ -144,6 +148,15 @@ export default function NewNode(props: any) {
                 />
               </div>
             ))}
+            {outputs.length > 0 && (
+            <Switch
+              checked={isSameOutcome}
+              onChange={(e) => {
+                setIsSameOutcome(e);
+              }}
+              label="Have the same outcome"
+            />
+            )}
           </div>
 
           <Button

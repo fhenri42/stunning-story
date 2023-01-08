@@ -70,7 +70,6 @@ export default function EditNode(props: any) {
       toast.error('Error on updating node');
     }
   };
-  console.log('outputs =>', outputs);
   return (
     <Modal
       visible={editNodeModal}
@@ -103,7 +102,6 @@ export default function EditNode(props: any) {
                   className="text-red-400 h-5 w-5 mr-2 cursor-pointer"
                   onClick={() => {
                     const index = outputs.findIndex((a) => a.id === answer.id);
-                    console.log(index);
                     outputs.splice(index, 1);
                     setOutputs([...outputs]);
                   }}

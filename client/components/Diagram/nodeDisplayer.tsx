@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable consistent-return */
 
 import Divider from '@components/Divider';
@@ -14,22 +15,21 @@ export default function DisplayNodes(props: any) {
   const [openDetails, setOpenDetails] = useState(false);
   if (currentNode === undefined) return <div />;
 
-  console.log('currentNode =>', currentNode);
-
   return (
     <div
       key={currentNode.id}
       className="flex flex-row items-center justify-start"
     >
       <div
-        // ref={drag}
         id={currentNode.id}
-        className="bg-blue-600 p-2 ml-10 mr-20 mt-10 relative rounded-lg w-[300px] flex flex-col items-center justify-center  h-20 cursor-pointer"
+        className="h-28 bg-blue-600 p-2 ml-10 mr-20 mt-10 relative rounded-lg w-[150px] flex flex-col items-center justify-center cursor-pointer"
         onClick={() => {
           setOpenDetails(!openDetails);
         }}
-        // style={{ backgroundColor: '#F5F5F5', border: '1px solid #E0E0E0' }}
       >
+        {currentNode.bgUrl && (
+        <img className="absolute w-full h-full opacity-30" src={currentNode.bgUrl} alt="bg-bgUrl" />
+        )}
         {currentNode.outputs.findIndex((n: any) => n.type === 'node') === -1 && (
         <TrashIcon
           className="text-red-400 h-5 w-5 mr-2 cursor-pointer z-50 absolute top-1 left-1"
@@ -43,32 +43,64 @@ export default function DisplayNodes(props: any) {
 
         </p>
       </div>
-      <div
-        className="flex flex-col"
-      >
-        {currentNode.outputs.map((output: any) => {
-          if (output.type === 'target') {
+      {currentNode.isSameOutcome ? (
+        <div
+          className="flex flex-col"
+        >
+          {(() => {
+            const output = currentNode.outputs[0];
+            if (output.type === 'target') {
+              return (
+                <Target
+                  value={currentNode.outputs.map((v) => v.value).join(', ')}
+                  key={output.id}
+                  targetId={output.id}
+                  input={currentNode.id}
+                  addingNode={addingNode}
+                  isSameOutcome={currentNode.isSameOutcome}
+                />
+              );
+            }
+            const outputIndex = storyGraph.findIndex((n) => n.id === output.id);
             return (
-              <Target
-                value={output.value}
-                key={output.id}
-                targetId={output.id}
-                input={currentNode.id}
+              <DisplayNodes
+                currentNode={storyGraph[outputIndex]}
+                storyGraph={storyGraph}
                 addingNode={addingNode}
+                removeNode={removeNode}
               />
             );
-          }
-          const outputIndex = storyGraph.findIndex((n) => n.id === output.id);
-          return (
-            <DisplayNodes
-              currentNode={storyGraph[outputIndex]}
-              storyGraph={storyGraph}
-              addingNode={addingNode}
-              removeNode={removeNode}
-            />
-          );
-        })}
-      </div>
+          })()}
+        </div>
+      ) : (
+        <div
+          className="flex flex-col"
+        >
+          {currentNode.outputs.map((output: any) => {
+            if (output.type === 'target') {
+              return (
+                <Target
+                  value={output.value}
+                  key={output.id}
+                  targetId={output.id}
+                  input={currentNode.id}
+                  addingNode={addingNode}
+                />
+              );
+            }
+            const outputIndex = storyGraph.findIndex((n) => n.id === output.id);
+            return (
+              <DisplayNodes
+                currentNode={storyGraph[outputIndex]}
+                storyGraph={storyGraph}
+                addingNode={addingNode}
+                removeNode={removeNode}
+              />
+            );
+          })}
+        </div>
+      )}
+
       <Modal
         visible={openDetails}
         onCancel={() => { setOpenDetails(false); }}
@@ -82,7 +114,7 @@ export default function DisplayNodes(props: any) {
 
           {currentNode.outputs.map((output: any) => (
             <p
-              className="p-2 bg-red-400 rounded-lg"
+              className="p-2 m-2 bg-red-400 rounded-lg"
               key={output.id}
             >
               {output.value}
