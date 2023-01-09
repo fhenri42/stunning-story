@@ -136,7 +136,7 @@ export default function EditNode(props: any) {
           onChange={(e) => {
             setIsVictory(e);
           }}
-          label={isVictory ? 'Defeat' : 'Victory'}
+          label={isVictory ? 'Victory' : 'Defeat'}
         />
         )}
         <Divider />

@@ -11,6 +11,15 @@ module.exports = {
   },
   purge: false,
   theme: {
+    // colors: {
+    //   transparent: 'transparent',
+    //   current: 'currentColor',
+    //   black: '#212121',
+    //   grey: '#3a4042',
+    //   blue: '#50717b',
+    //   cyan: '#8ecccc',
+    // },
+
     extend: {
       keyframes: {
         float01: {

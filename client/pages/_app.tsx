@@ -3,16 +3,21 @@ import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { StoreProvider } from 'easy-peasy';
 import store from './store';
-import 'beautiful-react-diagrams/styles.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { SessionProvider } from 'next-auth/react';
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps) {
   return (
     <StoreProvider store={store}>
-      <ToastContainer autoClose={2000} />
+      <SessionProvider session={session}>
+        <ToastContainer autoClose={2000} />
 
-      <Component {...pageProps} />
+        <Component {...pageProps} />
+      </SessionProvider>
     </StoreProvider>
   );
 }

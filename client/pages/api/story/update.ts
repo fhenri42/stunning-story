@@ -4,8 +4,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import getConfig from 'next/config';
 import qs from 'qs';
 
-const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();
-
 async function updateStorySchema(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { body } = req;
@@ -23,8 +21,6 @@ async function updateStorySchema(req: NextApiRequest, res: NextApiResponse) {
       },
     );
     const [story] = await fetchCMS(`/api/stories?${cmsQuery}`, 'GET');
-    console.log('story ==>', story);
-    // TODO create the data
     const data = await fetchCMS(`/api/stories/${story.id}`, 'PUT', {
       data: body,
     });

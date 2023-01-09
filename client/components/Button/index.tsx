@@ -30,7 +30,7 @@ export default function Button(props: Props) {
     ref = null,
     label = 'button',
     onClick,
-    background = 'bg-blue-400',
+    background = 'bg-[#8ecccc]',
     hoverBackground = 'bg-blue-700',
     count = 0,
     disabled = false,
@@ -98,11 +98,10 @@ export default function Button(props: Props) {
         if (onClick) onClick(e);
       }}
       style={{
-        letterSpacing: '2px',
         background,
       }}
       disabled={disabled}
-      className={`${className} border-solid relative inline-flex items-center justify-center ${
+      className={`${className} font-semibold border-solid relative inline-flex items-center justify-center ${
         sizes[indexSize].style
       } ${
         types[indexType].style

@@ -1,0 +1,11 @@
+{
+   "header": {
+      "story": "Stories",
+      "builder": "Builder",
+      "doc": "Docs",
+      "signin": "Sign in"
+   },
+   "home": {
+      "title": "Take control of your stories"
+   }
+}

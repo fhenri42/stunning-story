@@ -21,6 +21,7 @@
     "@lib/*": ["lib/*"],
     "@http": ["http"],
     "@http/*": ["http/*"],
+    "@i18n": ["./i18n.json"]
   },
   "incremental": true,
 

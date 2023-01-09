@@ -7,7 +7,7 @@ import { useDrag } from 'react-dnd';
 import XCircleIcon from '@heroicons/react/24/solid/XCircleIcon';
 import { PencilIcon } from '@heroicons/react/24/solid';
 import Divider from '@components/Divider';
-import EditNode from '@components/editNode';
+import EditNode from '@components/EditNode';
 
 export default function NodeCard(props: any) {
   const {
@@ -17,7 +17,7 @@ export default function NodeCard(props: any) {
   const [{ isDragging }, drag] = useDrag(
     () => ({
       item: {
-        text, input, outputs, outputsNbr, isSameOutcome, bgUrl,
+        text, input, outputs, outputsNbr, isSameOutcome, bgUrl, isVictory,
       },
       type: 'blue',
       collect: (monitor) => ({

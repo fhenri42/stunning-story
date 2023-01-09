@@ -180,7 +180,7 @@ export default function NewNode(props: any) {
               onChange={(e) => {
                 setIsVictory(e);
               }}
-              label={isVictory ? 'Defeat' : 'Victory'}
+              label={isVictory ? 'Victory' : 'Defeat'}
             />
           ) : <div />}
           <Button

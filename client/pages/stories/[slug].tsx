@@ -14,8 +14,7 @@ export default function Page(props: any) {
   const [storyGraph, setStoryGraph] = useState(story.storyGraph || []);
   const [currentNode, setCurrentNode] = useState(storyGraph[0]);
   const router = useRouter();
-  const variables = useStoreState((state) => state.variables);
-  const setVariables = useStoreActions((actions) => actions.setVariables);
+  console.log(currentNode);
 
   return (
     <div
@@ -35,7 +34,7 @@ export default function Page(props: any) {
         </div>
         {currentNode.bgUrl && (
           <img
-            className="absolute opacity-50 -z-10  h-full flex flec-col items-center justify-center bg-black"
+            className="absolute    h-full flex flec-col items-center justify-center bg-black"
             src={currentNode.bgUrl}
             alt="bg-bgUrl"
           />
@@ -46,13 +45,18 @@ export default function Page(props: any) {
         </Question>
       </div>
 
-      <div className="flex flex-row w-full bottom-0 bg-black bg-opacity-60 p-10 h-1/4">
-        {}
-        <div className="flex flex-row w-full px-3 justify-evenly flex-wrap">
+      <div className="flex flex-col w-full  items-center justify-evenly bg-black bg-opacity-50 p-10 h-1/4">
+        {currentNode.outputs.length === 0 && currentNode.isVictory && (
+        <h1 className="text-green-300 text-3xl text-center ">Vicotory</h1>
+        )}
+        {currentNode.outputs.length === 0 && !currentNode.isVictory && (
+        <h1 className="text-red-300 text-3xl text-center ">Defeat</h1>
+        )}
+        <div className="flex flex-row w-full px-3 justify-evenly items-center flex-wrap h-full">
           {currentNode.outputs.map((a: any) => (
             <Answer
               key={a.id}
-              className="w-[47%]"
+              className="w-[47%] h-1/3"
               onClick={() => {
                 const index = storyGraph.findIndex((n) => n.id === a.id);
                 setCurrentNode(storyGraph[index]);
@@ -64,7 +68,7 @@ export default function Page(props: any) {
           {currentNode.outputs.length === 0 && (
             <>
               <Answer
-                className="w-[47%]"
+                className="w-[47%] bg-green-500"
                 onClick={() => {
                   setCurrentNode(storyGraph[0]);
                 }}
@@ -72,7 +76,7 @@ export default function Page(props: any) {
                 Play Again
               </Answer>
               <Answer
-                className="w-[47%]"
+                className="w-[47%] bg-red-500"
                 onClick={() => {
                   router.replace('/');
                 }}

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import NodeCard from '@components/Diagram/nodeCard';
 import Button from '@components/Button';
 import Xarrow, { Xwrapper, useXarrow } from 'react-xarrows';
-import NewNode from '@components/newNode';
+import NewNode from '@components/NewNode';
 import { MinusCircleIcon, PlusCircleIcon } from '@heroicons/react/24/solid';
 import { updateStory } from '@http/self';
 import DisplayNodes from './nodeDisplayer';
@@ -91,6 +91,10 @@ export default function Diagram(props: any) {
             });
           }}
         />
+        <h1 className="text-2xl mx-auto">
+          {story.title}
+
+        </h1>
       </div>
       <div className="flex flex-row items-start justify-start">
         <div className="flex flex-col items-center  w-1/6 h-screen ">
@@ -152,7 +156,6 @@ export default function Diagram(props: any) {
       >
 
         <Xwrapper>
-
           {storyGraph.length > 0 && storyGraph.map((node) => node.outputs.map((output) => {
             if (output.type === 'target' && !node.isSameOutcome) {
               return (
@@ -187,30 +190,10 @@ export default function Diagram(props: any) {
             }
           })}
           {storyGraph.length > 0 && storyGraph.map((node) => {
-            // if (node.isSameOutcome && node.input !== 'null') {
-            //   console.log('WTF ??', node);
-            //   return (
-            //     <Xarrow
-            //       labels={(
-            //         <div className="flex flex-col">
-            //           {node.outputs.map((o: any) => (
-            //             <p className="text-xs  text-ellipsis w-10 text-center">{`${o.value}`}</p>
-            //           ))}
-
-            //         </div>
-            //         )}
-
-            //       key={`${node.id}`}
-            //       start={node.input}
-            //       end={node.id}
-            //       color="blue"
-            //     />
-            //   );
-            // }
             if (node.input !== 'null') {
               return (
                 <Xarrow
-                  labels={<p className="text-xs  text-ellipsis w-10 text-center">{node.question}</p>}
+                  labels={<p className="text-xs  text-ellipsis w-10 text-center line-clamp-2">{node.question}</p>}
                   key={`${node.id}`}
                   start={node.input}
                   end={node.id}
