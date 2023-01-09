@@ -36,7 +36,7 @@ export default function Header() {
               <p>
                 {session.user.name}
               </p>
-              <img className="h-16 w-auto rounded-lg" src={session?.user?.image} referrerPolicy="no-referrer" alt="wtf" />
+              <img className="h-14 w-auto rounded-lg" src={session?.user?.image} referrerPolicy="no-referrer" alt="wtf" />
             </div>
           ) : (
 
