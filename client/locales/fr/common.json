@@ -6,6 +6,17 @@
       "signin": "Sign in"
    },
    "home": {
-      "title": "Take control of your stories"
+      "title": "Take control of your stories",
+      "subTitle": "Start playing with our imersive stories",
+      "stories": {
+         "descriptionTitle": "Chosse the story that fit your style",
+         "descriptionBody": "Semper curabitur ullamcorper posuere nunc sed. Ornare iaculis bibendum malesuada faucibus lacinia",
+         "button": "Browse stories"
+      },
+      "builder": {
+         "descriptionTitle": "Build your own stories",
+         "descriptionBody": "Start building your own stories with our easy to use builder",
+         "button": "Start building"
+      }
    }
 }

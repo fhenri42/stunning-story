@@ -30,16 +30,24 @@ export default function Page(props: any) {
             onClick={() => {
               router.replace('/');
             }}
+            className="z-10"
           />
         </div>
         {currentNode.bgUrl && (
+        <img
+          className="absolute h-full w-full  blur-xl flex flec-col items-center justify-center bg-black"
+          src={currentNode.bgUrl}
+          alt="bg-bgUrl"
+        />
+        )}
+        {currentNode.bgUrl && (
           <img
-            className="absolute    h-full flex flec-col items-center justify-center bg-black"
+            className="absolute h-full flex flec-col items-center justify-center bg-black"
             src={currentNode.bgUrl}
             alt="bg-bgUrl"
           />
-
         )}
+
         <Question text={currentNode.text} className="w-1/2 text-lg text-center mb-10 mt-auto">
           {currentNode.text}
         </Question>
