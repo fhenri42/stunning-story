@@ -48,7 +48,7 @@ const TargetBox = memo(({
       id={targetId}
       key={targetId}
       ref={drop}
-      className="bg-red-400 p-2 ml-14 mt-10"
+      className="bg-red-400 p-2 ml-14 mt-14"
       style={{ ...style, opacity }}
     >
       {!node.content && (

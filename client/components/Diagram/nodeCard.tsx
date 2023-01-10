@@ -7,7 +7,7 @@ import { useDrag } from 'react-dnd';
 import XCircleIcon from '@heroicons/react/24/solid/XCircleIcon';
 import { PencilIcon } from '@heroicons/react/24/solid';
 import Divider from '@components/Divider';
-import EditNode from '@components/EditNode';
+import EditNode from '@components/Node/EditNode';
 
 export default function NodeCard(props: any) {
   const {

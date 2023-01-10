@@ -10,12 +10,9 @@ import TopStories from '@components/Home/TopStories';
 import Footer from '@components/Home/Footer';
 
 export default function Home(props: any) {
-  const { data: session, status } = useSession();
+  const { data: session, status, token } = useSession();
   const { stories } = props;
-  console.log('stories =>', stories);
-  console.log('session =>', session);
-  // #a7a9a2
-  // #d1d1c7
+  console.log(stories);
   return (
     <div className="bg-[#212121]">
       <Head>
@@ -27,53 +24,8 @@ export default function Home(props: any) {
       <main>
         <Header />
         <FeatureDisplay />
-        <TopStories />
+        <TopStories stories={stories} />
         <Footer />
-        {/*
-        <div className="relative bg-gray-800 pb-32">
-          <div className="absolute inset-0">
-            <img
-              className="h-full w-full object-cover"
-              src="/home-bg.png"
-              alt=""
-            />
-            <div className="absolute inset-0 bg-gray-800 mix-blend-multiply" aria-hidden="true" />
-          </div>
-          <div className="relative mx-auto max-w-7xl py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
-            <h1 className="text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">Chosse your story</h1>
-            <p className="mt-6 max-w-3xl text-xl text-gray-300">
-              Welecome to the beta of your are the hero chosse your story and start your adventure
-            </p>
-          </div>
-        </div>
-
-        <section
-          className="relative z-10 mx-auto -mt-32 max-w-7xl px-4 pb-32 sm:px-6 lg:px-8"
-          aria-labelledby="contact-heading"
-        >
-          <h2 className="sr-only" id="contact-heading">
-            Contact us
-          </h2>
-          <div className="grid grid-cols-1 gap-y-20 lg:grid-cols-3 lg:gap-y-0 lg:gap-x-8">
-            {stories.map((story) => (
-              <Link
-                key={story.attributes.slug}
-                className="flex flex-col rounded-2xl  shadow-xl mb-5 cursor-pointer"
-                href={`/story/${story.attributes.slug}`}
-              >
-                {/* <img className="h-full w-full" src={`http://localhost:1337${story.attributes.cover.data.attributes.url}`} alt="" />
-                <div className="rounded-bl-2xl rounded-br-2xl bg-[#2e2e2e] p-6 md:px-8">
-                  <p className="text-base font-medium">
-                    {story.attributes.title}
-                    <span aria-hidden="true"> &rarr;</span>
-                  </p>
-                </div>
-              </Link>
-            ))}
-
-          </div>
-        </section> */}
-
       </main>
     </div>
   );
@@ -91,6 +43,7 @@ export async function getServerSideProps({ query }) {
         populate: [
           'cover',
           'slug',
+          'author',
 
         ],
       },

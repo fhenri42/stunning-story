@@ -2,26 +2,19 @@
 import { fetchCMS } from '@lib/cms';
 import { NextApiRequest, NextApiResponse } from 'next';
 import getConfig from 'next/config';
+import { getToken } from 'next-auth/jwt';
+
 import qs from 'qs';
+
+const { serverRuntimeConfig } = getConfig();
 
 async function updateStorySchema(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const { body } = req;
-    const cmsQuery = qs.stringify(
-      {
-        filters: {
-          slug: {
-            $eq: body.slug,
-          },
-        },
+    const session = await getToken({ req, secret: serverRuntimeConfig.SECRET });
 
-      },
-      {
-        encodeValuesOnly: true,
-      },
-    );
-    const [story] = await fetchCMS(`/api/stories?${cmsQuery}`, 'GET');
-    const data = await fetchCMS(`/api/stories/${story.id}`, 'PUT', {
+    const { body } = req;
+    console.log('BODY', body);
+    const data = await fetchCMS(`/api/stories/${body.id}`, 'PUT', session.jwt, {
       data: body,
     });
     console.log('BBBBBBBBB', data);

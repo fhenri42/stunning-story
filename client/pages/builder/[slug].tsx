@@ -14,13 +14,13 @@ export default function Builder(props: any) {
   return (
     <div className="h-screen w-screen overflow-hidden">
       <DndProvider backend={HTML5Backend}>
-
         {story && <Diagram story={story} />}
       </DndProvider>
 
     </div>
   );
 }
+Builder.auth = true;
 
 export async function getServerSideProps({ query }) {
   try {
@@ -43,11 +43,12 @@ export async function getServerSideProps({ query }) {
         encodeValuesOnly: true,
       },
     );
-    const [story] = await fetchCMS(`/api/stories?${cmsQuery}`);
-
+    const [story] = await fetchCMS(`/api/stories?${cmsQuery}&publicationState=preview`);
+    console.log('story', story);
+    console.log('story', story.id);
     return {
       props: {
-        story: story.attributes,
+        story: { id: story.id, ...story.attributes },
       },
     };
   } catch (error) {

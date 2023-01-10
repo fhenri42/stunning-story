@@ -26,17 +26,17 @@ export function formatMarkdownToHTML(md) {
   return marked.parse(md);
 }
 
-// Helper to make GET requests to Strapi
-export async function fetchCMS(path, method, payload) {
+// Helper to make requests to Strapi
+export async function fetchCMS(path, method, jwt, payload) {
   try {
     const headers = new Headers();
 
     headers.append(
       'Authorization',
-      `Bearer ${serverRuntimeConfig.STRAPI_TOKEN}`,
+      `Bearer ${jwt || serverRuntimeConfig.STRAPI_TOKEN}`,
     );
-    headers.append('Content-Type', 'application/json');
 
+    headers.append('Content-Type', 'application/json');
     const requestUrl = getStrapiURL(path);
 
     const response = await fetch(requestUrl, {
@@ -45,8 +45,13 @@ export async function fetchCMS(path, method, payload) {
       body: JSON.stringify(payload),
     });
 
-    const { data, error } = await response.json();
-    return data;
+    console.log(requestUrl, {
+      method,
+      headers,
+      body: JSON.stringify(payload),
+    });
+    const res = await response.json();
+    return res.data;
     // cache[path] = {};
     // if (data && data.length > 0) {
     //   // Collection type

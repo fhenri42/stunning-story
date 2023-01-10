@@ -19,6 +19,7 @@
     "@types/react-dom": "18.0.9",
     "aws-sdk": "^2.1290.0",
     "axios": "^1.2.2",
+    "dayjs": "^1.11.7",
     "easy-peasy": "^5.2.0",
     "immutability-helper": "^3.1.1",
     "loadsh": "^0.0.4",

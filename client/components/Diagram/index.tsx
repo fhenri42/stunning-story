@@ -3,9 +3,10 @@ import React, { useState, useEffect } from 'react';
 import NodeCard from '@components/Diagram/nodeCard';
 import Button from '@components/Button';
 import Xarrow, { Xwrapper, useXarrow } from 'react-xarrows';
-import NewNode from '@components/NewNode';
-import { MinusCircleIcon, PlusCircleIcon } from '@heroicons/react/24/solid';
+import NewNode from '@components/Node/NewNode';
+import { MagnifyingGlassMinusIcon, MagnifyingGlassPlusIcon } from '@heroicons/react/24/solid';
 import { updateStory } from '@http/self';
+import { DocumentPlusIcon, MinusIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
 import DisplayNodes from './nodeDisplayer';
 import Target from './target';
 
@@ -65,7 +66,8 @@ export default function Diagram(props: any) {
   }, []);
   return (
     <div className="flex flex-col">
-      <div className="flex flex-row items-center h-16 w-full bg-slate-700">
+      {/*
+      <div className="flex flex-row items-center h-16  bg-slate-700 px-20">
         <Button
           size="small"
           label="Add node"
@@ -73,32 +75,45 @@ export default function Diagram(props: any) {
             setAddNewNodeModal(true);
           }}
         />
-        <PlusCircleIcon
-          className="w-10 h-10"
+        <Button
+          size="small"
+          label="Edit"
           onClick={() => {
-            setZoom((zoom) => {
-              const newZoom = parseFloat(zoom) + 10;
-              return `${newZoom}%`;
-            });
+            setAddNewNodeModal(true);
           }}
         />
-        <MinusCircleIcon
-          className="w-10 h-10"
-          onClick={() => {
-            setZoom((zoom) => {
-              const newZoom = parseFloat(zoom) - 10;
-              return `${newZoom}%`;
-            });
-          }}
-        />
+
         <h1 className="text-2xl mx-auto">
           {story.title}
-
         </h1>
-      </div>
+        <Button
+          size="small"
+          label="Go live"
+          onClick={() => {
+            setAddNewNodeModal(true);
+          }}
+        />
+      </div> */}
       <div className="flex flex-row items-start justify-start">
         <div className="flex flex-col items-center  w-1/6 h-screen ">
-          <h1 className="text-2xl"> All your nodes:</h1>
+          <div className="flex flex-row items-center h-16  bg-slate-700 w-full relative">
+            <h1 className="text-lg mx-auto">
+              {story.title}
+            </h1>
+            <PencilSquareIcon className="w-6 h-6 absolute top-5 right-5 cursor-pointer" />
+          </div>
+          <div className="flex flex-row justify-between items-center w-full px-5 pt-5">
+            <h1 className="text-2xl">Nodes:</h1>
+            <Button
+              size="small"
+              icon={<DocumentPlusIcon className="w-4 h-4 mr-2" />}
+              label="Add"
+              onClick={() => {
+                setAddNewNodeModal(true);
+              }}
+            />
+          </div>
+
           <div className="overflow-auto w-full pb-20">
             {story.nodes.length > 0 && [...story.nodes].map((node) => (
               <NodeCard
@@ -112,14 +127,35 @@ export default function Diagram(props: any) {
 
         </div>
         <div
-          className="h-screen w-5/6 overflow-auto pb-20"
+          className="h-screen w-5/6 overflow-auto"
           onScroll={(e) => {
             updateXarrow();
           }}
         >
+          <div className="absolute bottom-2 ml-3 flex flex-row bg-gray-500 rounded-xl p-2">
+            <MagnifyingGlassMinusIcon
+              className="w-7 h-7 mr-2 cursor-pointer"
+              onClick={() => {
+                setZoom((zoom) => {
+                  const newZoom = parseFloat(zoom) - 10;
+                  return `${newZoom}%`;
+                });
+              }}
+            />
+            <MinusIcon className=" w-7 h-7" />
+            <MagnifyingGlassPlusIcon
+              className="ml-2 w-7 h-7 cursor-pointer"
+              onClick={() => {
+                setZoom((zoom) => {
+                  const newZoom = parseFloat(zoom) + 10;
+                  return `${newZoom}%`;
+                });
+              }}
+            />
 
+          </div>
           <div
-            className="bg-opacity-10 relative"
+            className="bg-opacity-10"
             style={{
               height: '100000px',
               width: '100000px',
@@ -160,7 +196,7 @@ export default function Diagram(props: any) {
             if (output.type === 'target' && !node.isSameOutcome) {
               return (
                 <Xarrow
-                  labels={<p className="text-xs  text-ellipsis w-10 text-center">{output.value}</p>}
+                  labels={<p className="text-xs  text-ellipsis w-7 te7-center">{output.value}</p>}
                   start={node.id}
                   end={output.id}
                   color="green"

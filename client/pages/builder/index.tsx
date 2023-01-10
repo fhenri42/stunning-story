@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@components/Button';
+import { signIn, useSession } from 'next-auth/react';
+import { getToken } from 'next-auth/jwt';
 import { useForm } from 'react-hook-form';
 import Header from '@components/Header';
 import { fetchCMS } from '@lib/cms';
@@ -12,15 +14,22 @@ import Input from '@components/Input';
 import { useRouter } from 'next/router';
 import StroyCard from '@components/StoryCard';
 import { InputFile } from '@components/Input/inputFile';
+import { unstable_getServerSession } from 'next-auth/next';
+import { authOptions } from '@api/auth/[...nextauth]';
 
+import getConfig from 'next/config';
+import { fetchMe } from '@lib/me';
+
+const { serverRuntimeConfig } = getConfig();
 export default function Builder(props: any) {
   const { stories } = props;
+  const { data: session, status } = useSession();
+  console.log('session', stories);
 
   const [openModalStory, setOpenModalStory] = useState(false);
   const [image, setImage] = useState('');
   const [buttonLoading, setButtonLoading] = useState(false);
   const router = useRouter();
-  console.log('stories =>', stories);
 
   const onFinishForm = async (data: any) => {
     setButtonLoading(true);
@@ -48,15 +57,15 @@ export default function Builder(props: any) {
       <div className="flex flex-row items-center justify-between mx-20 mt-10">
         <h1 className="text-3xl">List of all your stories</h1>
         <Button onClick={() => setOpenModalStory(true)} label="Create a new story" />
-
       </div>
       <div className="flex flex-row items-center justify-start flex-wrap p-20">
         {stories?.length > 0 && stories.map((story: any) => (
           <Link
-            key={story.attributes.slug}
-            href={`/builder/${story.attributes.slug}`}
+            className="w-1/4 m-5"
+            key={story.slug}
+            href={`/builder/${story.slug}`}
           >
-            <StroyCard story={story.attributes} />
+            <StroyCard story={story} />
 
           </Link>
         ))}
@@ -73,10 +82,10 @@ export default function Builder(props: any) {
         onCancel={() => { setOpenModalStory(false); }}
       >
         {image !== '' && (
-        <img className="absolute w-full h-full opacity-30 -z-10" src={image} alt="bg-image" />
+          <img className="absolute w-full h-full opacity-30 -z-10" src={image} alt="bg-image" />
         )}
         <form
-          className="w-4/5 p-10"
+          className="w-full p-10"
           onSubmit={handleSubmit(onFinishForm)}
         >
           <Input
@@ -93,6 +102,13 @@ export default function Builder(props: any) {
             placeholder="the description of your story"
             required
             error={errors.password ? 'description is required' : ''}
+          />
+          <Input
+            register={register}
+            name="tags"
+            placeholder="Add tags separated by commas"
+            required
+            error={errors.title ? 'Title is required' : ''}
           />
           <div className="flex flex-row w-full items-start justify-between p-5">
             <p className="w-4/6">
@@ -130,18 +146,18 @@ export default function Builder(props: any) {
     </div>
   );
 }
-export async function getServerSideProps({ query }) {
+Builder.auth = true;
+export async function getServerSideProps({ query, req, res }) {
   try {
+    const session = await getToken({ req, secret: serverRuntimeConfig.SECRET });
     const cmsQuery = qs.stringify(
       {
-        filters: {
-          slug: {
-            $eq: query.slug,
-          },
-        },
+
         populate: [
-          'cover',
-          'slug',
+          'stories',
+          'stories.cover',
+          'stories.slug',
+          'stories.author',
 
         ],
       },
@@ -149,11 +165,11 @@ export async function getServerSideProps({ query }) {
         encodeValuesOnly: true,
       },
     );
-    const stories = await fetchCMS(`/api/stories?${cmsQuery}`);
-
+    const me = await fetchMe(`/api/users/me??${cmsQuery}`, 'GET', session.jwt);
+    console.log('me', me);
     return {
       props: {
-        stories,
+        stories: me.stories,
       },
     };
   } catch (error) {

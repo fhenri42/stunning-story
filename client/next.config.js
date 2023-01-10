@@ -17,12 +17,18 @@ module.exports = nextTranslate(
       GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
       STRAPI_URL: process.env.STRAPI_URL,
       STRAPI_TOKEN: process.env.STRAPI_TOKEN,
+      DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
+      DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_ID,
+      SECRET: process.env.SECRET,
     },
   },
 );
 
-// TODO Faire du sytle
-// TODO Faire le menu pour allez sur la builder/ story
-// TODO Ajouter la posibiliter dajouter une image a une histoire et de povoir modifier les information sur cette hitoire
-// TODO Ecrire l'histoire d'expemle
-// TODO I18n all the text
+// TODO Ajouter la posibiliter dajouter une image a une histoire et de povoir modifier les information sur cette hitoire.
+// TODO Ecrire l'histoire d'expemle.
+// TODO I18n all the text.
+// TODO add tags to story.
+// TODO add difficulty to story.
+// TODO add disclaimer builder not good for mobile.
+// TODO add docs part.
+// TODO add roadmap part.

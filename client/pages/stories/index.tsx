@@ -16,9 +16,13 @@ export default function Home(props: any) {
   return (
     <div className="bg-[#212121]">
       <Header />
+      <div className="flex flex-row items-center justify-between mx-20 mt-10">
+        <h1 className="text-3xl">Chosse the story you like to play</h1>
+      </div>
       <div className="flex flex-row items-center justify-start flex-wrap p-20">
         {stories?.length > 0 && stories.map((story: any) => (
           <Link
+            className="w-1/4 mx-5"
             key={story.attributes.slug}
             href={`/stories/${story.attributes.slug}`}
           >
@@ -43,6 +47,7 @@ export async function getServerSideProps({ query }) {
         populate: [
           'cover',
           'slug',
+          'author',
 
         ],
       },

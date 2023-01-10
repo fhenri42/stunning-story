@@ -2,10 +2,22 @@ import '../styles/globals.css';
 
 import type { AppProps } from 'next/app';
 import { StoreProvider } from 'easy-peasy';
-import store from './store';
+import { useSession, SessionProvider } from 'next-auth/react';
+
 import { ToastContainer } from 'react-toastify';
+import store from './store';
 import 'react-toastify/dist/ReactToastify.css';
-import { SessionProvider } from 'next-auth/react';
+
+function Auth({ children }) {
+  // if `{ required: true }` is supplied, `status` can only be "loading" or "authenticated"
+  const { status } = useSession({ required: true });
+
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  return children;
+}
 
 export default function App({
   Component,
@@ -16,7 +28,13 @@ export default function App({
       <SessionProvider session={session}>
         <ToastContainer autoClose={2000} />
 
-        <Component {...pageProps} />
+        {Component.auth ? (
+          <Auth>
+            <Component {...pageProps} />
+          </Auth>
+        ) : (
+          <Component {...pageProps} />
+        )}
       </SessionProvider>
     </StoreProvider>
   );

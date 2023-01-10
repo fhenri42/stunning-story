@@ -1,7 +1,8 @@
 {
+   "name": "Stunning-story",
    "header": {
-      "story": "Stories",
-      "builder": "Builder",
+      "story": "Play",
+      "builder": "Build",
       "doc": "Docs",
       "signin": "Sign in"
    },
@@ -17,6 +18,10 @@
          "descriptionTitle": "Build your own stories",
          "descriptionBody": "Start building your own stories with our easy to use builder",
          "button": "Start building"
+      },
+      "topStories": {
+         "descriptionTitle": "Are most played story",
+         "descriptionBody": "Check out the mosted played story of the platform"
       }
-   }
+      }
 }

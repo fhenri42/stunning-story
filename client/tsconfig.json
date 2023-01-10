@@ -19,6 +19,8 @@
     "@components/*": ["components/*"],
     "@lib": ["lib"],
     "@lib/*": ["lib/*"],
+    "@api": ["pages/api"],
+    "@api/*": ["pages/api/*"],
     "@http": ["http"],
     "@http/*": ["http/*"],
     "@i18n": ["./i18n.json"]
