@@ -4,7 +4,7 @@ import { Switch as Toggle } from '@headlessui/react';
 interface ISwitch {
   checked?: boolean;
   onChange?: any;
-  label?: string;
+  label?: any;
   color?: string;
   colorEnabled?: string;
 }
