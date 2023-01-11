@@ -8,23 +8,13 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": true,
+    "populateCreatorFields": true
   },
   "pluginOptions": {},
   "attributes": {
     "title": {
       "type": "string"
-    },
-    "cover": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
     },
     "description": {
       "type": "richtext"
@@ -42,6 +32,18 @@
       "type": "component",
       "repeatable": true,
       "component": "story.page"
+    },
+    "cover": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "string"
+    },
+    "author": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "stories"
     }
   }
 }
