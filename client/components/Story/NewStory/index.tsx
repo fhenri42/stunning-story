@@ -33,7 +33,7 @@ export default function NewStory(props: any) {
       ...data,
       cover: image,
     });
-    router.push(`builder/${res.attributes.slug}`);
+    router.push(`/builder/${res.attributes.slug}`);
     setButtonLoading(false);
     setOpenModalStory(false);
   };

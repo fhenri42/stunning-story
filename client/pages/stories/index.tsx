@@ -8,22 +8,31 @@ import StroyCard from '@components/StoryCard';
 export default function Home(props: any) {
   const { stories } = props;
   return (
-    <div className="bg-[#212121]">
+    <div className="bg-[#212121] h-screen">
       <Header />
-      <div className="flex flex-row items-center justify-between mx-20 mt-10">
-        <h1 className="text-3xl">Chosse the story you like to play</h1>
+      <div className="flex flex-row items-center justify-center mx-20 mt-10">
+        <h1 className="text-3xl text-center">Chosse the story you like to play</h1>
       </div>
-      <div className="flex flex-row items-center justify-start flex-wrap p-20">
-        {stories?.length > 0 && stories.map((story: any) => (
-          <Link
-            className="w-1/4 mx-5"
-            key={story.attributes.slug}
-            href={`/stories/${story.attributes.slug}`}
-          >
-            <StroyCard story={story.attributes} />
-          </Link>
-        ))}
+      <div className="relative mt-14 px-6 lg:px-8 lg:mx-16">
+        <div className="absolute inset-0">
+          <div className="h-1/3  sm:h-2/3" />
+        </div>
+        <div className="max-w-8xl">
+          <div className="grid  mx-auto max-w-lg gap-5 lg:max-w-none lg:grid-cols-4">
+            {stories?.length > 0 && stories.map((story: any) => (
+              <Link
+                key={story.attributes.slug}
+                href={`/stories/${story.attributes.slug}`}
+              >
+                <StroyCard story={story.attributes} />
+              </Link>
+            ))}
+            {stories?.length === 0 && (
+            <h1> No story yet.</h1>
+            )}
+          </div>
 
+        </div>
       </div>
     </div>
   );

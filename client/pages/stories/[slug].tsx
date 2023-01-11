@@ -1,99 +1,15 @@
-import React, { useState } from 'react';
-import Answer from '@components/Answer';
-import Question from '@components/Question';
+import React from 'react';
 import qs from 'qs';
 import { fetchCMS } from '@lib/cms';
-import Button from '@components/Button';
-import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 
-export default function Page(props: any) {
+const Reader = dynamic(() => import('@components/Story/Reader'), {
+  ssr: false,
+});
+export default function OneStory(props: any) {
   const { story } = props;
-  const storyGraph = story.storyGraph || [];
-  const [currentNode, setCurrentNode] = useState(storyGraph[0]);
-  const router = useRouter();
-
   return (
-    <div
-      className="w-screnn h-screen "
-    >
-
-      <div className="h-3/4  flex flex-col items-center justify-center relative">
-        <div className="absolute top-3 right-10">
-          <Button
-            label="Quit"
-            type="danger"
-            size="small"
-            onClick={() => {
-              router.replace('/');
-            }}
-            className="z-10"
-          />
-        </div>
-        {currentNode.bgUrl && (
-        <img
-          className="absolute h-full w-full  blur-xl flex flec-col items-center justify-center bg-black"
-          src={currentNode.bgUrl}
-          alt="bg-bgUrl"
-        />
-        )}
-        {currentNode.bgUrl && (
-          <img
-            className="absolute h-full flex flec-col items-center justify-center bg-black"
-            src={currentNode.bgUrl}
-            alt="bg-bgUrl"
-          />
-        )}
-
-        <Question text={currentNode.text} className="w-1/2 text-lg text-center mb-10 mt-auto">
-          {currentNode.text}
-        </Question>
-      </div>
-
-      <div className="flex flex-col w-full  items-center justify-evenly bg-black bg-opacity-50 p-10 h-1/4">
-        {currentNode.outputs.length === 0 && currentNode.isVictory && (
-        <h1 className="text-green-300 text-3xl text-center ">Vicotory</h1>
-        )}
-        {currentNode.outputs.length === 0 && !currentNode.isVictory && (
-        <h1 className="text-red-300 text-3xl text-center ">Defeat</h1>
-        )}
-        <div className="flex flex-row w-full px-3 justify-evenly items-center flex-wrap h-full">
-          {currentNode.outputs.map((a: any) => (
-            <Answer
-              key={a.id}
-              className="w-[47%] h-1/3"
-              onClick={() => {
-                const index = storyGraph.findIndex((n) => n.id === a.id);
-                setCurrentNode(storyGraph[index]);
-              }}
-            >
-              {a.value}
-            </Answer>
-          ))}
-          {currentNode.outputs.length === 0 && (
-            <>
-              <Answer
-                className="w-[47%] bg-green-500"
-                onClick={() => {
-                  setCurrentNode(storyGraph[0]);
-                }}
-              >
-                Play Again
-              </Answer>
-              <Answer
-                className="w-[47%] bg-red-500"
-                onClick={() => {
-                  router.replace('/');
-                }}
-              >
-                Quit
-              </Answer>
-
-            </>
-          )}
-
-        </div>
-      </div>
-    </div>
+    <Reader story={story} />
   );
 }
 

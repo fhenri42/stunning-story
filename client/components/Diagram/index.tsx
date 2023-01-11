@@ -9,6 +9,7 @@ import { MagnifyingGlassMinusIcon, MagnifyingGlassPlusIcon } from '@heroicons/re
 import { updateStory } from '@http/self';
 import { DocumentPlusIcon, MinusIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
 import EditStory from '@components/Story/EditStory';
+import Switch from '@components/Switch';
 import DisplayNodes from './nodeDisplayer';
 import Target from './target';
 
@@ -111,6 +112,23 @@ export default function Diagram(props: any) {
             updateXarrow();
           }}
         >
+
+          <div className={`absolute top-0 flex flex-row ${!story.publishedAt ? 'bg-gray-500' : 'bg-green-600'} rounded-br-xl p-2`}>
+            <Switch
+              checked={story.publishedAt}
+              onChange={() => {
+                updateStory({
+                  ...story,
+                  publishedAt: !story.publishedAt ? new Date() : null,
+                });
+                setStory({
+                  ...story,
+                  publishedAt: !story.publishedAt ? new Date() : null,
+                });
+              }}
+              label={!story.publishedAt ? <p className="w-20">Draft</p> : <p className="w-20">Published</p>}
+            />
+          </div>
           <div className="absolute bottom-2 ml-3 flex flex-row bg-gray-500 rounded-xl p-2">
             <MagnifyingGlassMinusIcon
               className="w-7 h-7 mr-2 cursor-pointer"

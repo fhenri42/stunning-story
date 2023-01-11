@@ -25,7 +25,6 @@ export default function TopStories(props: any) {
               href={`/stories/${story.attributes.slug}`}
             >
               <StroyCard story={story.attributes} />
-
             </Link>
           ))}
         </div>
