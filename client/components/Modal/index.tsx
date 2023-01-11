@@ -15,7 +15,6 @@ export default function Modal(props: {
   iconColor?: string;
   closable?: boolean;
   noClickOut?: boolean;
-  bgUrl?: string;
   bodyMain?: any;
 }) {
   const {
@@ -28,7 +27,6 @@ export default function Modal(props: {
     iconColor,
     closable = true,
     noClickOut = false,
-    bgUrl,
     bodyMain,
   } = props;
 
@@ -73,15 +71,6 @@ export default function Modal(props: {
                 style={{ width, ...bodyMain }}
                 className="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all w-1/2"
               >
-                {/* {bgUrl && (
-                  <img
-                    className="absolute w-full h-full"
-                    src={bgUrl}
-                    alt={bgUrl}
-                    width={1080}
-                    style={{ zIndex: -1 }}
-                  />
-                )} */}
                 <div
                   className="px-4 pt-5 pb-4 z-50 w-full"
                   style={{ ...bodyStyle }}

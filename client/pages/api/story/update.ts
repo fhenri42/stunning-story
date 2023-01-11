@@ -4,20 +4,16 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import getConfig from 'next/config';
 import { getToken } from 'next-auth/jwt';
 
-import qs from 'qs';
-
 const { serverRuntimeConfig } = getConfig();
 
 async function updateStorySchema(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const session = await getToken({ req, secret: serverRuntimeConfig.SECRET });
+    const session: any = await getToken({ req, secret: serverRuntimeConfig.SECRET });
 
     const { body } = req;
-    console.log('BODY', body);
-    const data = await fetchCMS(`/api/stories/${body.id}`, 'PUT', session.jwt, {
+    await fetchCMS(`/api/stories/${body.id}`, 'PUT', session.jwt, {
       data: body,
     });
-    console.log('BBBBBBBBB', data);
 
     res.json('OK');
   } catch (error) {

@@ -1,20 +1,16 @@
-import { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Answer from '@components/Answer';
-import { ArrowRightIcon, ArrowLeftIcon } from '@heroicons/react/24/solid';
 import Question from '@components/Question';
 import qs from 'qs';
 import { fetchCMS } from '@lib/cms';
-import Link from 'next/link';
-import { useStoreActions, useStoreState } from 'easy-peasy';
 import Button from '@components/Button';
 import { useRouter } from 'next/router';
 
 export default function Page(props: any) {
-  const [story, setStory] = useState(props.story);
-  const [storyGraph, setStoryGraph] = useState(story.storyGraph || []);
+  const { story } = props;
+  const storyGraph = story.storyGraph || [];
   const [currentNode, setCurrentNode] = useState(storyGraph[0]);
   const router = useRouter();
-  console.log(currentNode);
 
   return (
     <div
@@ -100,19 +96,6 @@ export default function Page(props: any) {
     </div>
   );
 }
-
-{ /* {variables.length > 0 && (
-
-      <div className="rounded-lg border-[#eaeaea] border-2 p-5 bg-black bg-opacity-60 absolute top-5 left-5">
-        { variables.map((v) => (
-          <p>
-            {Object.keys(v)[0]}
-            {': '}
-            {v[Object.keys(v)[0]]}
-          </p>
-        ))}
-      </div>
-      )} */ }
 
 export async function getServerSideProps({ query }) {
   try {

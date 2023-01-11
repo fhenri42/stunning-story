@@ -1,12 +1,13 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable import/prefer-default-export */
 import React from 'react';
-import { useRouter } from 'next/router';
 
 interface Props {
   icon?: any;
   label: string | React.ReactNode;
+  // eslint-disable-next-line no-unused-vars
   onClick?: (event: React.MouseEvent<HTMLElement>) => void;
   background?: string;
   hoverBackground?: string;
@@ -19,7 +20,6 @@ interface Props {
   className?: string;
   id?: string;
   ref?: any;
-  href?: string;
   target?: string;
   labelColor?: string;
 }
@@ -40,12 +40,9 @@ export default function Button(props: Props) {
     htmlType = 'button',
     className = 'string',
     id = '',
-    href = '',
     target = '',
     labelColor = 'text-white',
   } = props;
-
-  const router = useRouter();
 
   const sizes = [
     { name: 'extra-small', style: 'px-1 py-0 text-[10px]' },

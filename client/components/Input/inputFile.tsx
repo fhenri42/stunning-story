@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Button from '@components/Button';
 import React, { useRef } from 'react';
 

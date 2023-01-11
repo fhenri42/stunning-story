@@ -1,10 +1,8 @@
-/* eslint-disable compat/compat */
 import { marked } from 'marked';
 import getConfig from 'next/config';
 import fetch from 'node-fetch';
 
 const { serverRuntimeConfig } = getConfig();
-const cache = {};
 
 marked.setOptions({
   gfm: true,
@@ -45,25 +43,8 @@ export async function fetchCMS(path, method, jwt, payload) {
       body: JSON.stringify(payload),
     });
 
-    console.log(requestUrl, {
-      method,
-      headers,
-      body: JSON.stringify(payload),
-    });
     const res = await response.json();
     return res.data;
-    // cache[path] = {};
-    // if (data && data.length > 0) {
-    //   // Collection type
-    //   cache[path].data = data;
-    //   cache[path].time = Date.now();
-    // } else if (data && data.attributes) {
-    //   // Single type
-    //   cache[path].data = data.attributes;
-    //   cache[path].time = Date.now();
-    // } else {
-    //   throw error;
-    // }
   } catch (err) {
     console.error('An error occurred: ', err);
     throw err;

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState } from 'react';
 
@@ -31,7 +32,6 @@ const colors = {
 export default function Input(props: InputProps) {
   const {
     label,
-    help,
     error,
     type,
     placeholder,

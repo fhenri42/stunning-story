@@ -45,9 +45,9 @@ export default function Builder(props: any) {
 }
 
 Builder.auth = true;
-export async function getServerSideProps({ query, req, res }) {
+export async function getServerSideProps({ req }: any) {
   try {
-    const session = await getToken({ req, secret: serverRuntimeConfig.SECRET });
+    const session: any = await getToken({ req, secret: serverRuntimeConfig.SECRET });
     const cmsQuery = qs.stringify(
       {
 
@@ -63,8 +63,7 @@ export async function getServerSideProps({ query, req, res }) {
         encodeValuesOnly: true,
       },
     );
-    const me = await fetchMe(`/api/users/me??${cmsQuery}`, 'GET', session.jwt);
-    console.log('me', me);
+    const me: any = await fetchMe(`/api/users/me??${cmsQuery}`, 'GET', session.jwt);
     return {
       props: {
         stories: me.stories,

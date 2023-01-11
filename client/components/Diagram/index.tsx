@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable consistent-return */
 import React, { useState, useEffect } from 'react';
 import NodeCard from '@components/Diagram/nodeCard';
@@ -11,7 +12,7 @@ import EditStory from '@components/Story/EditStory';
 import DisplayNodes from './nodeDisplayer';
 import Target from './target';
 
-let tmpStoryGraph = [];
+let tmpStoryGraph: any = [];
 
 export default function Diagram(props: any) {
   const [story, setStory] = useState(props.story);
@@ -23,9 +24,10 @@ export default function Diagram(props: any) {
 
   const addingNode = (node: any, targetId: any) => {
     if (node.input !== 'null') {
-      const indexInput = tmpStoryGraph.findIndex((n) => n.id === node.input);
+      const indexInput = tmpStoryGraph.findIndex((n: any) => n.id === node.input);
       if (indexInput !== -1) {
-        const outputIndex = tmpStoryGraph[indexInput].outputs.findIndex((n) => n.id === targetId);
+        const outputIndex = tmpStoryGraph[indexInput]
+          .outputs.findIndex((n: any) => n.id === targetId);
         if (outputIndex === -1) return;
         tmpStoryGraph[indexInput].outputs[outputIndex].id = targetId;
         tmpStoryGraph[indexInput].outputs[outputIndex].type = 'node';
@@ -41,12 +43,13 @@ export default function Diagram(props: any) {
   };
 
   const removeNode = (nodeId: any) => {
-    const index = tmpStoryGraph.findIndex((n) => n.id === nodeId);
+    const index = tmpStoryGraph.findIndex((n:any) => n.id === nodeId);
     if (index !== -1) {
-      const indexParent = tmpStoryGraph.findIndex((n) => n.id === tmpStoryGraph[index].input);
+      const indexParent = tmpStoryGraph.findIndex((n:any) => n.id === tmpStoryGraph[index].input);
 
       if (indexParent !== -1) {
-        const indexOutput = tmpStoryGraph[indexParent].outputs.findIndex((n) => n.id === nodeId);
+        const indexOutput = tmpStoryGraph[indexParent]
+          .outputs.findIndex((n:any) => n.id === nodeId);
         tmpStoryGraph[indexParent].outputs[indexOutput].type = 'target';
       }
 
@@ -64,35 +67,7 @@ export default function Diagram(props: any) {
     }
   }, []);
   return (
-    <div className="flex flex-col">
-      {/*
-      <div className="flex flex-row items-center h-16  bg-slate-700 px-20">
-        <Button
-          size="small"
-          label="Add node"
-          onClick={() => {
-            setAddNewNodeModal(true);
-          }}
-        />
-        <Button
-          size="small"
-          label="Edit"
-          onClick={() => {
-            setAddNewNodeModal(true);
-          }}
-        />
-
-        <h1 className="text-2xl mx-auto">
-          {story.title}
-        </h1>
-        <Button
-          size="small"
-          label="Go live"
-          onClick={() => {
-            setAddNewNodeModal(true);
-          }}
-        />
-      </div> */}
+    <div>
       <div className="flex flex-row items-start justify-start">
         <div className="flex flex-col items-center  w-1/6 h-screen ">
           <div className="flex flex-row items-center h-16  bg-slate-700 w-full relative">
@@ -132,7 +107,7 @@ export default function Diagram(props: any) {
         </div>
         <div
           className="h-screen w-5/6 overflow-auto"
-          onScroll={(e) => {
+          onScroll={() => {
             updateXarrow();
           }}
         >
@@ -140,8 +115,8 @@ export default function Diagram(props: any) {
             <MagnifyingGlassMinusIcon
               className="w-7 h-7 mr-2 cursor-pointer"
               onClick={() => {
-                setZoom((zoom) => {
-                  const newZoom = parseFloat(zoom) - 10;
+                setZoom((value) => {
+                  const newZoom = parseFloat(value) - 10;
                   return `${newZoom}%`;
                 });
               }}
@@ -150,8 +125,8 @@ export default function Diagram(props: any) {
             <MagnifyingGlassPlusIcon
               className="ml-2 w-7 h-7 cursor-pointer"
               onClick={() => {
-                setZoom((zoom) => {
-                  const newZoom = parseFloat(zoom) + 10;
+                setZoom((value) => {
+                  const newZoom = parseFloat(value) + 10;
                   return `${newZoom}%`;
                 });
               }}
@@ -196,21 +171,22 @@ export default function Diagram(props: any) {
       >
 
         <Xwrapper>
-          {storyGraph.length > 0 && storyGraph.map((node) => node.outputs.map((output) => {
-            if (output.type === 'target' && !node.isSameOutcome) {
-              return (
-                <Xarrow
-                  labels={<p className="text-xs  text-ellipsis w-7 te7-center">{output.value}</p>}
-                  start={node.id}
-                  end={output.id}
-                  color="green"
-                  key={`${output.id}`}
-                />
-              );
-            }
-            return null;
-          }))}
-          {storyGraph.length > 0 && storyGraph.map((node) => {
+          {storyGraph.length > 0
+            && storyGraph.map((node: any) => node.outputs.map((output: any) => {
+              if (output.type === 'target' && !node.isSameOutcome) {
+                return (
+                  <Xarrow
+                    labels={<p className="text-xs  text-ellipsis w-7 te7-center">{output.value}</p>}
+                    start={node.id}
+                    end={output.id}
+                    color="green"
+                    key={`${output.id}`}
+                  />
+                );
+              }
+              return null;
+            }))}
+          {storyGraph.length > 0 && storyGraph.map((node: any) => {
             if (node.isSameOutcome && node.outputs[0].id && node.outputs[0].type === 'target') {
               return (
                 <Xarrow
@@ -228,8 +204,9 @@ export default function Diagram(props: any) {
                 />
               );
             }
+            return null;
           })}
-          {storyGraph.length > 0 && storyGraph.map((node) => {
+          {storyGraph.length > 0 && storyGraph.map((node: any) => {
             if (node.input !== 'null') {
               return (
                 <Xarrow
@@ -245,7 +222,6 @@ export default function Diagram(props: any) {
 
         </Xwrapper>
       </div>
-
       {addNewNodeModal && (
         <NewNode
           setStory={setStory}

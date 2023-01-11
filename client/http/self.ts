@@ -8,7 +8,6 @@ const selfUrl = publicRuntimeConfig.SELF_URL;
 
 export async function createStory(data: any) {
   try {
-    console.log('startRequest');
     const res = await fetch(`${selfUrl}/api/story/create`, {
       method: 'POST',
       headers: {
@@ -20,7 +19,7 @@ export async function createStory(data: any) {
     const json = await res.json();
     return json;
   } catch (e) {
-    console.log(e);
+    console.error(e);
     throw e;
   }
 }
@@ -35,7 +34,7 @@ export async function deleteStory(id: any) {
     const json = await res.json();
     return json;
   } catch (e) {
-    console.log(e);
+    console.error(e);
     throw e;
   }
 }
@@ -50,14 +49,12 @@ export async function updateStory(data: any) {
     const json = await res.json();
     return json;
   } catch (e) {
-    console.log(e);
+    console.error(e);
     throw e;
   }
 }
 export async function fileUpload(formData: any) {
   try {
-    console.log('startRequest');
-
     const config = {
       headers: { 'content-type': 'multipart/form-data' },
       onUploadProgress: (event) => {
@@ -66,29 +63,10 @@ export async function fileUpload(formData: any) {
     };
 
     const response = await axios.post(`${selfUrl}/api/upload?fileName=${uuidv4()}`, formData, config);
-    console.log(response);
     return response.data;
   } catch (e) {
-    console.log(e);
+    console.error(e);
+
     throw e;
   }
 }
-
-// export async function deleteStory(slug) {
-//   try {
-//     const res = await fetch(`${selfUrl}/api/page/delete?slug=${slug}`, {
-//       method: 'POST',
-//       headers: { 'Content-Type': 'application/json' },
-//     });
-//     if (res.status !== 200) {
-//       console.log('res', res.message);
-
-//       throw new Error(res.message);
-//     }
-//     const json = await res.json();
-//     return json;
-//   } catch (e) {
-//     console.log('Mais non =>', e);
-//     throw e;
-//   }
-// }

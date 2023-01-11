@@ -10,7 +10,7 @@ import { getToken } from 'next-auth/jwt';
 const { serverRuntimeConfig } = getConfig();
 async function createStory(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const session = await getToken({ req, secret: serverRuntimeConfig.SECRET });
+    const session : any = await getToken({ req, secret: serverRuntimeConfig.SECRET });
     const { body } = req;
     body.slug = uuidv4();
     body.publishedAt = null;
@@ -18,7 +18,7 @@ async function createStory(req: NextApiRequest, res: NextApiResponse) {
     const data = await fetchCMS('/api/stories?populate[0]=id', 'POST', session.jwt, {
       data: body,
     });
-    const me = await fetchMe('/api/users/me?populate[0]=stories', 'GET', session.jwt);
+    const me: any = await fetchMe('/api/users/me?populate[0]=stories', 'GET', session.jwt);
     await fetchCMS(`/api/users/${session.id}`, 'PUT', session.jwt, {
       ...session.user,
       image: session.picture,

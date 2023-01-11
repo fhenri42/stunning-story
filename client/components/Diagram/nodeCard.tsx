@@ -1,12 +1,6 @@
-import React, { useState, cloneElement, useEffect } from 'react';
-import Button from '@components/Button';
-import Modal from '@components/Modal';
-import Input from '@components/Input';
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
 import { useDrag } from 'react-dnd';
-
-import XCircleIcon from '@heroicons/react/24/solid/XCircleIcon';
-import { PencilIcon } from '@heroicons/react/24/solid';
-import Divider from '@components/Divider';
 import EditNode from '@components/Node/EditNode';
 
 export default function NodeCard(props: any) {
@@ -32,7 +26,6 @@ export default function NodeCard(props: any) {
       onClick={() => { setEditNodeModal(true); }}
       key={sourceId}
       ref={drag}
-
     >
       {bgUrl && (
         <img className="absolute rounded-lg w-full h-full opacity-30" src={bgUrl} alt="bg-bgUrl" />

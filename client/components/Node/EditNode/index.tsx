@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable consistent-return */
 import React, { useState } from 'react';
 import { fileUpload, updateStory } from '@http/self';
@@ -21,7 +22,6 @@ export default function EditNode(props: any) {
   const [isVictory, setIsVictory] = useState(props.isVictory);
   const [isSameOutcome, setIsSameOutcome] = useState(props.isSameOutcome);
   const [image, setImage] = useState(props.bgUrl);
-  console.log(image);
   const {
     register,
     handleSubmit,
@@ -88,7 +88,7 @@ export default function EditNode(props: any) {
       }}
     >
       {image !== '' && (
-        <img className="absolute w-full h-full opacity-30 " src={image} alt="bg-image" />
+        <img className="absolute w-full h-full opacity-30 " src={image} alt="node-bg" />
       )}
       <form
         className="flex flex-col items-center justify-center w-full p-5"

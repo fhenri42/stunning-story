@@ -1,8 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable consistent-return */
-
-import Divider from '@components/Divider';
-import Input from '@components/Input';
 import Modal from '@components/Modal';
 import { TrashIcon } from '@heroicons/react/24/solid';
 import React, { useState } from 'react';

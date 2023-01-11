@@ -1,4 +1,3 @@
-/* eslint-disable compat/compat */
 import getConfig from 'next/config';
 import fetch from 'node-fetch';
 

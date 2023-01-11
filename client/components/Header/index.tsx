@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 export default function Header() {
   const { t } = useTranslation('common');
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
   const navigation = [
     { name: t('header.home'), href: '/' },
@@ -15,7 +15,6 @@ export default function Header() {
     { name: t('header.doc'), href: '/docs' },
     { name: t('header.roadmap'), href: 'https://stunning-story.canny.io/', target: '_blank' },
   ];
-  console.log('session =>', router);
   return (
     <header className="bg-[#3a4042]">
       <div className="flex w-full items-center justify-between border-b border-indigo-500 py-3 lg:border-none px-20">
@@ -29,7 +28,6 @@ export default function Header() {
                 key={link.name}
                 target={link.target}
                 href={link.href}
-
                 className={`text-base font-medium text-white hover:text-indigo-50 ${link.href === router.pathname ? ' underline underline-offset-2 decoration-[#8ecccc]' : ''}`}
               >
                 {link.name}

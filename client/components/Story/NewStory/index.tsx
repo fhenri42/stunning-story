@@ -1,7 +1,6 @@
 /* eslint-disable consistent-return */
 import React, { useState } from 'react';
 import Button from '@components/Button';
-import { v4 as uuidv4 } from 'uuid';
 import Modal from '@components/Modal';
 import Input from '@components/Input';
 import { useForm } from 'react-hook-form';
@@ -12,7 +11,7 @@ import { useRouter } from 'next/router';
 
 export default function NewStory(props: any) {
   const {
-    openModalStory, setOpenModalStory, story, setStory,
+    openModalStory, setOpenModalStory,
   } = props;
   const [buttonLoading, setButtonLoading] = useState(false);
   const [image, setImage] = useState('');
@@ -50,7 +49,7 @@ export default function NewStory(props: any) {
       onCancel={() => { setOpenModalStory(false); }}
     >
       {image !== '' && (
-      <img className="absolute w-full h-full opacity-30 -z-10" src={image} alt="bg-image" />
+      <img className="absolute w-full h-full opacity-30 -z-10" src={image} alt="bg-story" />
       )}
       <form
         className="w-full p-10"

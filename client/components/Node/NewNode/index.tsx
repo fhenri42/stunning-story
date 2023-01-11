@@ -16,7 +16,6 @@ export default function NewNode(props: any) {
     addNewNodeModal, setAddNewNodeModal, story, setStory,
   } = props;
   const [buttonLoading, setButtonLoading] = useState(false);
-  const [buttonLoadingImage, setButtonLoadingImage] = useState(false);
   const [outputs, setOutputs] = useState([]);
   const [isVictory, setIsVictory] = useState(false);
   const [isSameOutcome, setIsSameOutcome] = useState(false);
@@ -81,7 +80,7 @@ export default function NewNode(props: any) {
       }}
     >
       {image !== '' && (
-      <img className="absolute w-full h-full opacity-30 -z-10" src={image} alt="bg-image" />
+      <img className="absolute w-full h-full opacity-30 -z-10" src={image} alt="bg-node" />
 
       )}
       <form
@@ -145,7 +144,6 @@ export default function NewNode(props: any) {
                     outputs[index].value = e.target.value;
                     setOutputs([...outputs]);
                   }}
-                  value={answer.value}
                   className="w-full"
                   placeholder={`Answer ${key}`}
                 />

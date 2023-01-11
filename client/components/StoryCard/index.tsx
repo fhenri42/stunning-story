@@ -1,11 +1,8 @@
-import { useSession } from 'next-auth/react';
 import dayjs from 'dayjs';
 
-export default function StroyCard(props) {
+export default function StroyCard(props: any) {
   const { story } = props;
-  const { data: session, status } = useSession();
   const author = story?.author?.data.attributes;
-  console.log(author);
   return (
     <div className="flex flex-col overflow-hidden rounded-lg shadow-lg  w-full relative">
       {story.publishedAt ? (
@@ -40,10 +37,7 @@ export default function StroyCard(props) {
                 dayjs(story.publishedAt || story.cretedAt).format('DD/MM/YYYY')
                 }
               >
-
-                {
-                         dayjs(story.publishedAt || story.cretedAt).format('DD/MM/YYYY')
-                }
+                { dayjs(story.publishedAt || story.cretedAt).format('DD/MM/YYYY')}
 
               </time>
               <span aria-hidden="true">&middot;</span>

@@ -22,7 +22,7 @@ export default function Builder(props: any) {
 }
 Builder.auth = true;
 
-export async function getServerSideProps({ query }) {
+export async function getServerSideProps({ query }: any) {
   try {
     const cmsQuery = qs.stringify(
       {
@@ -44,8 +44,6 @@ export async function getServerSideProps({ query }) {
       },
     );
     const [story] = await fetchCMS(`/api/stories?${cmsQuery}&publicationState=preview`);
-    console.log('story', story);
-    console.log('story', story.id);
     return {
       props: {
         story: { id: story.id, ...story.attributes },

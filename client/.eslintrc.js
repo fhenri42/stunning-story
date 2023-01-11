@@ -30,6 +30,9 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     'react/jsx-filename-extension': 'off',
     'react/react-in-jsx-scope': 'off',
+    'import/no-unresolved': 'off',
+    'jsx-a11y/no-static-element-interactions': 'off',
+    'import/extensions': 'off',
 
   },
 };

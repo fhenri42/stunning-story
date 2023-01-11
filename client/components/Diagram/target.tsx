@@ -11,8 +11,10 @@ const style = {
 };
 const TargetBox = memo(({
   onDrop, addingNode, input, targetId, value,
-}) => {
-  const [node, setNode] = useState({});
+}: any) => {
+  const [node, setNode] = useState({
+    content: null,
+  });
   const [{ isOver }, drop] = useDrop(
     () => ({
       accept: ['yellow', 'blue'],
@@ -64,12 +66,13 @@ const TargetBox = memo(({
   );
 });
 
-export default function StatefulTargetBox(props) {
+export default function StatefulTargetBox(props: any) {
+  const { targetId } = props;
   const [lastDroppedColor, setLastDroppedColor] = useState(null);
-  const handleDrop = useCallback((color) => setLastDroppedColor(color), []);
+  const handleDrop = useCallback((color: any) => setLastDroppedColor(color), []);
   return (
     <TargetBox
-      key={props.targetId}
+      key={targetId}
       {...props}
       lastDroppedColor={lastDroppedColor}
       onDrop={handleDrop}

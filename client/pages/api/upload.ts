@@ -1,11 +1,7 @@
 import nextConnect from 'next-connect';
 import multer from 'multer';
 import multerS3 from 'multer-s3';
-import getConfig from 'next/config';
-import { NextApiRequest, NextApiResponse } from 'next';
 import s3 from 'lib/s3';
-
-const { publicRuntimeConfig } = getConfig();
 
 const upload = multer({
   storage: multerS3({
@@ -13,13 +9,9 @@ const upload = multer({
     bucket: 'o-plums-staging',
     acl: 'public-read',
     metadata(req, file, cb) {
-      console.log('req.file', req.file);
-
       cb(null, { fieldName: file.fieldname });
     },
     key(req, file, cb) {
-      console.log('req.file', req.file);
-
       cb(null, `${req.query.fileName}`);
     },
 
@@ -43,7 +35,6 @@ apiRoute.use(upload.single('bg-image'));
 
 apiRoute.post(async (req, res) => {
   try {
-    console.log('req.file', req.file);
     res.status(200).json({
       data: 'success',
       url: `${req.file.location}`,
