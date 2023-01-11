@@ -15,6 +15,11 @@ import Target from './target';
 
 let tmpStoryGraph: any = [];
 
+/*
+Fix firs time use node bug.
+Eiting a node edit all node, Check if the answer can be remove.
+A node can connect back to the story.
+*/
 export default function Diagram(props: any) {
   const [story, setStory] = useState(props.story);
   const updateXarrow = useXarrow();
@@ -72,7 +77,7 @@ export default function Diagram(props: any) {
       <div className="flex flex-row items-start justify-start">
         <div className="flex flex-col items-center  w-1/6 h-screen ">
           <div className="flex flex-row items-center h-16  bg-slate-700 w-full relative">
-            <h1 className="text-lg mx-auto">
+            <h1 className="text-lg mx-auto text-center">
               {story.title}
             </h1>
             <PencilSquareIcon
@@ -194,7 +199,7 @@ export default function Diagram(props: any) {
               if (output.type === 'target' && !node.isSameOutcome) {
                 return (
                   <Xarrow
-                    labels={<p className="text-xs  text-ellipsis w-7 te7-center">{output.value}</p>}
+                    labels={<p className="text-xs  text-ellipsis w-20 text-center line-clamp-2">{output.value}</p>}
                     start={node.id}
                     end={output.id}
                     color="green"
@@ -211,7 +216,7 @@ export default function Diagram(props: any) {
                   labels={(
                     <div className="flex flex-col">
                       {node.outputs.map((o: any) => (
-                        <p className="text-xs  text-ellipsis w-10 text-center">{`${o.value}`}</p>
+                        <p className="text-xs  text-ellipsis w-20 text-center line-clamp-2">{`${o.value}`}</p>
                       ))}
                     </div>
                     )}
@@ -228,7 +233,7 @@ export default function Diagram(props: any) {
             if (node.input !== 'null') {
               return (
                 <Xarrow
-                  labels={<p className="text-xs  text-ellipsis w-10 text-center line-clamp-2">{node.question}</p>}
+                  labels={<p className="text-xs text-ellipsis w-20 text-center line-clamp-2">{node.question}</p>}
                   key={`${node.id}`}
                   start={node.input}
                   end={node.id}

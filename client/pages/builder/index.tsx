@@ -41,7 +41,7 @@ export default function Builder(props: any) {
               </Link>
             ))}
             {stories?.length === 0 && (
-            <h1> No story yet.</h1>
+            <h1> No story yet. Use the button to start bulding</h1>
             )}
           </div>
         </div>
