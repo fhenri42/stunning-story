@@ -4,12 +4,11 @@ import Button from '@components/Button';
 import { v4 as uuidv4 } from 'uuid';
 import Modal from '@components/Modal';
 import Input from '@components/Input';
-import Divider from '@components/Divider';
 import { useForm } from 'react-hook-form';
-import { TrashIcon } from '@heroicons/react/24/solid';
-import { createStory, fileUpload, updateStory } from '@http/self';
-import Switch from '@components/Switch';
+import { createStory, fileUpload } from '@http/self';
 import { InputFile } from '@components/Input/inputFile';
+import Divider from '@components/Divider';
+import { useRouter } from 'next/router';
 
 export default function NewStory(props: any) {
   const {
@@ -17,6 +16,7 @@ export default function NewStory(props: any) {
   } = props;
   const [buttonLoading, setButtonLoading] = useState(false);
   const [image, setImage] = useState('');
+  const router = useRouter();
 
   const {
     register,
@@ -56,30 +56,48 @@ export default function NewStory(props: any) {
         className="w-full p-10"
         onSubmit={handleSubmit(onFinishForm)}
       >
-        <Input
-          register={register}
-          name="title"
-          placeholder="Title"
-          required
-          error={errors.title ? 'Title is required' : ''}
-        />
-        <Input
-          type="textarea"
-          register={register}
-          name="description"
-          placeholder="the description of your story"
-          required
-          error={errors.password ? 'description is required' : ''}
-        />
-        <Input
-          register={register}
-          name="tags"
-          placeholder="Add tags separated by commas"
-          required
-          error={errors.title ? 'Title is required' : ''}
-        />
-        <div className="flex flex-row w-full items-start justify-between p-5">
-          <p className="w-4/6">
+        <div className="flex flex-col w-full my-5">
+          <p>
+            Title:
+          </p>
+          <Input
+            register={register}
+            name="title"
+            placeholder="Title of your story"
+            required
+            error={errors.title ? 'Title is required' : ''}
+          />
+        </div>
+
+        <div className="flex flex-col w-full my-5">
+          <p>
+            Description:
+          </p>
+          <Input
+            type="textarea"
+            register={register}
+            name="description"
+            placeholder="the description of your story"
+            required
+            error={errors.description ? 'description is required' : ''}
+          />
+        </div>
+
+        <div className="flex flex-col w-full my-5">
+          <p>
+            Add tags:
+          </p>
+          <Input
+            register={register}
+            name="tags"
+            placeholder="Tags must be separated by commas"
+            required
+            error={errors.title ? 'Title is required' : ''}
+          />
+        </div>
+
+        <div className="flex flex-col w-full my-5">
+          <p>
             Upload the Cover of your story:
           </p>
           <InputFile
@@ -97,16 +115,16 @@ export default function NewStory(props: any) {
             className="w-2/6"
           />
         </div>
-        <div className="flex flex-col">
-          <div className="py-2 mt-3">
-            <Button
-              loading={buttonLoading}
-              type="primary"
-              htmlType="submit"
-              label="Create story"
-              size="medium"
-            />
-          </div>
+        <Divider />
+        <div className="flex flex-row items-center justify-between w-full  py-2 mt-3">
+          <div />
+          <Button
+            loading={buttonLoading}
+            type="primary"
+            htmlType="submit"
+            label="Create story"
+            size="medium"
+          />
         </div>
       </form>
 

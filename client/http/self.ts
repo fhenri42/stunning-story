@@ -25,9 +25,22 @@ export async function createStory(data: any) {
   }
 }
 
+export async function deleteStory(id: any) {
+  try {
+    const res = await fetch(`${selfUrl}/api/story/delete/${id}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    const json = await res.json();
+    return json;
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+}
 export async function updateStory(data: any) {
   try {
-    console.log('startRequest');
     const res = await fetch(`${selfUrl}/api/story/update`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },

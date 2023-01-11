@@ -54,6 +54,7 @@ export default function NodeCard(props: any) {
           sourceId={sourceId}
           setStory={setStory}
           text={text}
+          bgUrl={bgUrl}
           outputs={outputs}
           isVictory={isVictory}
           story={story}

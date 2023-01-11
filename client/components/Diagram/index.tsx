@@ -7,19 +7,18 @@ import NewNode from '@components/Node/NewNode';
 import { MagnifyingGlassMinusIcon, MagnifyingGlassPlusIcon } from '@heroicons/react/24/solid';
 import { updateStory } from '@http/self';
 import { DocumentPlusIcon, MinusIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
+import EditStory from '@components/Story/EditStory';
 import DisplayNodes from './nodeDisplayer';
 import Target from './target';
 
 let tmpStoryGraph = [];
 
-/* TODO add variable to the builder
-  Add a oputut and outcom the the builder
-*/
 export default function Diagram(props: any) {
   const [story, setStory] = useState(props.story);
   const updateXarrow = useXarrow();
   const [storyGraph, setStoryGraph] = useState(story.storyGraph || []);
   const [addNewNodeModal, setAddNewNodeModal] = useState(false);
+  const [openModalStory, setOpenModalStory] = useState(false);
   const [zoom, setZoom] = useState('100%');
 
   const addingNode = (node: any, targetId: any) => {
@@ -100,7 +99,12 @@ export default function Diagram(props: any) {
             <h1 className="text-lg mx-auto">
               {story.title}
             </h1>
-            <PencilSquareIcon className="w-6 h-6 absolute top-5 right-5 cursor-pointer" />
+            <PencilSquareIcon
+              onClick={() => {
+                setOpenModalStory(true);
+              }}
+              className="w-6 h-6 absolute top-5 right-5 cursor-pointer"
+            />
           </div>
           <div className="flex flex-row justify-between items-center w-full px-5 pt-5">
             <h1 className="text-2xl">Nodes:</h1>
@@ -248,6 +252,14 @@ export default function Diagram(props: any) {
           story={story}
           addNewNodeModal={addNewNodeModal}
           setAddNewNodeModal={setAddNewNodeModal}
+        />
+      )}
+      {openModalStory && (
+        <EditStory
+          story={story}
+          setStory={setStory}
+          openModalStory={openModalStory}
+          setOpenModalStory={setOpenModalStory}
         />
       )}
     </div>

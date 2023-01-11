@@ -1,9 +1,11 @@
 {
    "name": "Stunning-story",
    "header": {
+      "home": "Home",
       "story": "Play",
       "builder": "Build",
       "doc": "Docs",
+      "roadmap": "Roadmap",
       "signin": "Sign in"
    },
    "home": {
