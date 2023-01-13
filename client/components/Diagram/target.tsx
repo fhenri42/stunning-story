@@ -54,13 +54,11 @@ const TargetBox = memo(({
       style={{ ...style, opacity }}
     >
       {!node.content && (
-
       <p className="p-0 m-0">Drop here.</p>
-
       )}
 
       {node && node.content && (
-      <NodeCard {...node} />
+      <NodeCard node={node} />
       )}
     </div>
   );

@@ -7,7 +7,9 @@ import Xarrow, { Xwrapper, useXarrow } from 'react-xarrows';
 import NewNode from '@components/Node/NewNode';
 import { MagnifyingGlassMinusIcon, MagnifyingGlassPlusIcon } from '@heroicons/react/24/solid';
 import { updateStory } from '@http/self';
-import { DocumentPlusIcon, MinusIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
+import {
+  DocumentPlusIcon, MinusIcon, PencilSquareIcon, TrashIcon,
+} from '@heroicons/react/24/outline';
 import EditStory from '@components/Story/EditStory';
 import Switch from '@components/Switch';
 import DisplayNodes from './nodeDisplayer';
@@ -29,39 +31,98 @@ export default function Diagram(props: any) {
   const [zoom, setZoom] = useState('100%');
 
   const addingNode = (node: any, targetId: any) => {
-    if (node.input !== 'null') {
-      const indexInput = tmpStoryGraph.findIndex((n: any) => n.id === node.input);
-      if (indexInput !== -1) {
-        const outputIndex = tmpStoryGraph[indexInput]
-          .outputs.findIndex((n: any) => n.id === targetId);
-        if (outputIndex === -1) return;
-        tmpStoryGraph[indexInput].outputs[outputIndex].id = targetId;
-        tmpStoryGraph[indexInput].outputs[outputIndex].type = 'node';
+    try {
+      const indexSourceId = tmpStoryGraph.findIndex((n: any) => n.sourceId === node.sourceId);
+
+      if (node.input !== 'null') {
+        const indexInput = tmpStoryGraph.findIndex((n: any) => n.sourceId === node.input);
+        if (indexInput !== -1) {
+          const outputIndex = tmpStoryGraph[indexInput]
+            .outputs.findIndex((n: any) => n.id === targetId);
+          if (outputIndex === -1) return;
+          tmpStoryGraph[indexInput].outputs[outputIndex].id = targetId;
+          tmpStoryGraph[indexInput].outputs[outputIndex].sourceId = node.sourceId;
+          tmpStoryGraph[indexInput].outputs[outputIndex].type = 'node';
+          if (indexSourceId !== -1) {
+            tmpStoryGraph[indexInput].outputs[outputIndex].canBeRemove = true;
+          }
+        }
+      }
+
+      if (indexSourceId !== -1) {
+        tmpStoryGraph = [...tmpStoryGraph];
+        updateStory({
+          ...story,
+          storyGraph: [...tmpStoryGraph],
+        });
+        setStory({
+          ...story,
+          storyGraph: [...tmpStoryGraph],
+        });
+        setStoryGraph([...tmpStoryGraph]);
+        return;
+      }
+      tmpStoryGraph = [...tmpStoryGraph, { ...node }];
+      updateStory({
+        ...story,
+        storyGraph: [...tmpStoryGraph],
+      });
+      setStory({
+        ...story,
+        storyGraph: [...tmpStoryGraph],
+      });
+      setStoryGraph([...tmpStoryGraph]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const cheackIfCanRemove = (sourceId: any) => {
+    for (let index = 0; index < tmpStoryGraph.length; index++) {
+      const node = tmpStoryGraph[index];
+      const outputIndex = node.outputs.findIndex((o) => o.sourceId === sourceId && o.type === 'node' && o.canBeRemove);
+      if (outputIndex !== -1) {
+        return false;
       }
     }
-    tmpStoryGraph = [...tmpStoryGraph, { ...node }];
-
-    updateStory({
-      ...story,
-      storyGraph: [...tmpStoryGraph],
-    });
-    setStoryGraph([...tmpStoryGraph]);
+    return true;
   };
+  const removeNode = (sourceId: any) => {
+    if (!cheackIfCanRemove(sourceId)) return;
 
-  const removeNode = (nodeId: any) => {
-    const index = tmpStoryGraph.findIndex((n:any) => n.id === nodeId);
+    const index = tmpStoryGraph.findIndex((n:any) => n.sourceId === sourceId);
     if (index !== -1) {
-      const indexParent = tmpStoryGraph.findIndex((n:any) => n.id === tmpStoryGraph[index].input);
+      const indexParent = tmpStoryGraph.findIndex(
+        (n:any) => n.sourceId === tmpStoryGraph[index].input,
+      );
 
       if (indexParent !== -1) {
         const indexOutput = tmpStoryGraph[indexParent]
-          .outputs.findIndex((n:any) => n.id === nodeId);
+          .outputs.findIndex((n:any) => n.sourceId === sourceId);
         tmpStoryGraph[indexParent].outputs[indexOutput].type = 'target';
       }
-
       tmpStoryGraph.splice(index, 1);
       setStoryGraph([...tmpStoryGraph]);
       updateStory({
+        ...story,
+        storyGraph: [...tmpStoryGraph],
+      });
+      setStory({
+        ...story,
+        storyGraph: [...tmpStoryGraph],
+      });
+    }
+  };
+
+  const removeDupicateNode = (nodeId: any, outputIndex) => {
+    const index = tmpStoryGraph.findIndex((n:any) => n.sourceId === nodeId);
+    if (index !== -1) {
+      tmpStoryGraph[index].outputs[outputIndex].type = 'target';
+      setStoryGraph([...tmpStoryGraph]);
+      updateStory({
+        ...story,
+        storyGraph: [...tmpStoryGraph],
+      });
+      setStory({
         ...story,
         storyGraph: [...tmpStoryGraph],
       });
@@ -100,10 +161,10 @@ export default function Diagram(props: any) {
           </div>
 
           <div className="overflow-auto w-full pb-20">
-            {story.nodes.length > 0 && [...story.nodes].map((node) => (
+            {story.nodes.length > 0 && story.nodes.map((node) => (
               <NodeCard
                 key={node.sourceId}
-                {...node}
+                node={node}
                 story={story}
                 setStory={setStory}
               />
@@ -117,12 +178,11 @@ export default function Diagram(props: any) {
             updateXarrow();
           }}
         >
-
           <div className={`absolute top-0 flex flex-row ${!story.publishedAt ? 'bg-gray-500' : 'bg-green-600'} rounded-br-xl p-2`}>
             <Switch
               checked={story.publishedAt}
-              onChange={() => {
-                updateStory({
+              onChange={async () => {
+                await updateStory({
                   ...story,
                   publishedAt: !story.publishedAt ? new Date() : null,
                 });
@@ -154,7 +214,6 @@ export default function Diagram(props: any) {
                 });
               }}
             />
-
           </div>
           <div
             className="bg-opacity-10"
@@ -182,67 +241,56 @@ export default function Diagram(props: any) {
 
           </div>
           <div className="absolute bg-grid opacity-50 top-0" />
-
         </div>
-
       </div>
-
       <div
         style={{
           zoom,
         }}
       >
-
         <Xwrapper>
           {storyGraph.length > 0
-            && storyGraph.map((node: any) => node.outputs.map((output: any) => {
-              if (output.type === 'target' && !node.isSameOutcome) {
-                return (
-                  <Xarrow
-                    labels={<p className="text-xs  text-ellipsis w-20 text-center line-clamp-2">{output.value}</p>}
-                    start={node.id}
-                    end={output.id}
-                    color="green"
-                    key={`${output.id}`}
-                  />
-                );
-              }
-              return null;
-            }))}
-          {storyGraph.length > 0 && storyGraph.map((node: any) => {
-            if (node.isSameOutcome && node.outputs[0].id && node.outputs[0].type === 'target') {
-              return (
-                <Xarrow
-                  labels={(
-                    <div className="flex flex-col">
-                      {node.outputs.map((o: any) => (
-                        <p className="text-xs  text-ellipsis w-20 text-center line-clamp-2">{`${o.value}`}</p>
-                      ))}
-                    </div>
-                    )}
-                  start={node.id}
-                  end={node.outputs[0].id}
-                  color="yellow"
-                  key={`${node.outputs[0].id}`}
-                />
-              );
-            }
-            return null;
-          })}
-          {storyGraph.length > 0 && storyGraph.map((node: any) => {
-            if (node.input !== 'null') {
-              return (
-                <Xarrow
-                  labels={<p className="text-xs text-ellipsis w-20 text-center line-clamp-2">{node.question}</p>}
-                  key={`${node.id}`}
-                  start={node.input}
-                  end={node.id}
-                />
-              );
-            }
-            return null;
-          })}
+            && storyGraph.map((node: any) => node.outputs.map(
+              (output: any, outputIndex: number) => {
+                if (output.type === 'target') {
+                  return (
+                    <Xarrow
+                      labels={<p className="text-xs  text-ellipsis w-20 text-center line-clamp-2">{output.value}</p>}
+                      start={node.sourceId}
+                      end={output.id}
+                      color="green"
+                      key={`${output.id}`}
+                    />
+                  );
+                }
+                if (output.type === 'node') {
+                  return (
+                    <Xarrow
+                      labels={(
+                        <div className="flex flex-row items-center justify-center w-20">
+                          {output.canBeRemove && (
+                          <TrashIcon
+                            className="text-red-400 h-5 w-5 mr-2 cursor-pointer z-50"
+                            onClick={() => {
+                              removeDupicateNode(node.sourceId, outputIndex);
+                            }}
+                          />
+                          )}
+                          <p className="text-xs  text-ellipsis  text-center line-clamp-2">{output.value}</p>
 
+                        </div>
+                  )}
+                      start={node.sourceId}
+                      end={output.sourceId}
+                      color="purple"
+                      key={`${output.id}`}
+                    />
+                  );
+                }
+
+                return null;
+              },
+            ))}
         </Xwrapper>
       </div>
       {addNewNodeModal && (

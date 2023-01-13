@@ -5,13 +5,16 @@ import EditNode from '@components/Node/EditNode';
 
 export default function NodeCard(props: any) {
   const {
-    sourceId, text, input, outputs, outputsNbr, isVictory, story, bgUrl, setStory, isSameOutcome,
+    node,
+    story,
+    setStory,
   } = props;
+
   const [editNodeModal, setEditNodeModal] = useState(false);
   const [{ isDragging }, drag] = useDrag(
     () => ({
       item: {
-        text, input, outputs, outputsNbr, isSameOutcome, bgUrl, isVictory,
+        ...node,
       },
       type: 'blue',
       collect: (monitor) => ({
@@ -24,11 +27,11 @@ export default function NodeCard(props: any) {
     <div
       className="mx-2 rounded-lg h-28 cursor-pointer relative"
       onClick={() => { setEditNodeModal(true); }}
-      key={sourceId}
+      key={node.sourceId}
       ref={drag}
     >
-      {bgUrl && (
-        <img className="absolute rounded-lg w-full h-full opacity-30" src={bgUrl} alt="bg-bgUrl" />
+      {node.bgUrl && (
+        <img className="absolute rounded-lg w-full h-full opacity-30" src={node.bgUrl} alt="bg-bgUrl" />
       )}
       <div
         className="p-2 my-2 bg-blue-400 h-full rounded-lg flex flex-col items-center justify-center"
@@ -39,21 +42,16 @@ export default function NodeCard(props: any) {
       >
 
         <p className="text-white text-xs line-clamp-2 text-ellipsis">
-          {text}
+          {node.text}
         </p>
 
         {editNodeModal && (
         <EditNode
-          sourceId={sourceId}
-          setStory={setStory}
-          text={text}
-          bgUrl={bgUrl}
-          outputs={outputs}
-          isVictory={isVictory}
+          node={node}
           story={story}
+          setStory={setStory}
           editNodeModal={editNodeModal}
           setEditNodeModal={setEditNodeModal}
-
         />
         )}
 

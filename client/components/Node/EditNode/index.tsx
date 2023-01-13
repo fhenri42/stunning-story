@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 /* eslint-disable consistent-return */
 import React, { useState } from 'react';
 import { fileUpload, updateStory } from '@http/self';
@@ -15,13 +14,14 @@ import { InputFile } from '@components/Input/inputFile';
 
 export default function EditNode(props: any) {
   const {
-    editNodeModal, setEditNodeModal, story, text, setStory, sourceId,
+    editNodeModal, setEditNodeModal, story, node, setStory,
   } = props;
+  const { sourceId } = node;
   const [buttonLoading, setButtonLoading] = useState(false);
-  const [outputs, setOutputs] = useState(props.outputs);
-  const [isVictory, setIsVictory] = useState(props.isVictory);
-  const [isSameOutcome, setIsSameOutcome] = useState(props.isSameOutcome);
-  const [image, setImage] = useState(props.bgUrl);
+  const [outputs, setOutputs] = useState(node.outputs);
+  const [isVictory, setIsVictory] = useState(node.isVictory);
+  const [isSameOutcome, setIsSameOutcome] = useState(node.isSameOutcome);
+  const [image, setImage] = useState(node.bgUrl);
   const {
     register,
     handleSubmit,
@@ -29,7 +29,7 @@ export default function EditNode(props: any) {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      text,
+      text: node.text,
 
     },
   });

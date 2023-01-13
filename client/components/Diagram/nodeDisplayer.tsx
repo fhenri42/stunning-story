@@ -16,11 +16,11 @@ export default function DisplayNodes(props: any) {
       className="flex flex-row items-center justify-start"
     >
       <div
-        id={currentNode.id}
+        id={currentNode.sourceId}
         style={{
           backgroundColor: '#1B263B',
         }}
-        className="h-28  p-2 ml-10 mr-20 mt-10 relative rounded-lg w-[150px] flex flex-col items-center justify-center cursor-pointer"
+        className="h-28  p-2 ml-10 mr-20 mt-20 relative rounded-lg w-[150px] flex flex-col items-center justify-center cursor-pointer"
         onClick={() => {
           setOpenDetails(!openDetails);
         }}
@@ -32,7 +32,7 @@ export default function DisplayNodes(props: any) {
         <TrashIcon
           className="text-red-400 h-5 w-5 mr-2 cursor-pointer z-50 absolute top-1 left-1"
           onClick={() => {
-            removeNode(currentNode.id);
+            removeNode(currentNode.sourceId);
           }}
         />
         )}
@@ -41,63 +41,32 @@ export default function DisplayNodes(props: any) {
 
         </p>
       </div>
-      {currentNode.isSameOutcome ? (
-        <div
-          className="flex flex-col"
-        >
-          {(() => {
-            const output = currentNode.outputs[0];
-            if (output.type === 'target') {
-              return (
-                <Target
-                  value={currentNode.outputs.map((v) => v.value).join(', ')}
-                  key={output.id}
-                  targetId={output.id}
-                  input={currentNode.id}
-                  addingNode={addingNode}
-                  isSameOutcome={currentNode.isSameOutcome}
-                />
-              );
-            }
-            const outputIndex = storyGraph.findIndex((n) => n.id === output.id);
+      <div
+        className="flex flex-col"
+      >
+        {currentNode.outputs.map((output: any) => {
+          if (output.type === 'target') {
             return (
-              <DisplayNodes
-                currentNode={storyGraph[outputIndex]}
-                storyGraph={storyGraph}
+              <Target
+                value={output.value}
+                key={output.id}
+                targetId={output.id}
+                input={currentNode.sourceId}
                 addingNode={addingNode}
-                removeNode={removeNode}
               />
             );
-          })()}
-        </div>
-      ) : (
-        <div
-          className="flex flex-col"
-        >
-          {currentNode.outputs.map((output: any) => {
-            if (output.type === 'target') {
-              return (
-                <Target
-                  value={output.value}
-                  key={output.id}
-                  targetId={output.id}
-                  input={currentNode.id}
-                  addingNode={addingNode}
-                />
-              );
-            }
-            const outputIndex = storyGraph.findIndex((n) => n.id === output.id);
-            return (
-              <DisplayNodes
-                currentNode={storyGraph[outputIndex]}
-                storyGraph={storyGraph}
-                addingNode={addingNode}
-                removeNode={removeNode}
-              />
-            );
-          })}
-        </div>
-      )}
+          }
+          const outputIndex = storyGraph.findIndex((n) => n.id === output.id);
+          return (
+            <DisplayNodes
+              currentNode={storyGraph[outputIndex]}
+              storyGraph={storyGraph}
+              addingNode={addingNode}
+              removeNode={removeNode}
+            />
+          );
+        })}
+      </div>
 
       <Modal
         visible={openDetails}
