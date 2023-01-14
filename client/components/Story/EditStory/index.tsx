@@ -17,6 +17,8 @@ export default function EditStory(props: any) {
   } = props;
   const [buttonLoading, setButtonLoading] = useState(false);
   const [image, setImage] = useState(story.cover);
+  const [audio, setAudio] = useState('');
+
   const router = useRouter();
 
   const {
@@ -36,11 +38,15 @@ export default function EditStory(props: any) {
       ...story,
       ...data,
       cover: image,
+      audio,
+
     });
     setStory({
       ...story,
       ...data,
       cover: image,
+      audio,
+
     });
     setButtonLoading(false);
     setOpenModalStory(false);
@@ -107,7 +113,24 @@ export default function EditStory(props: any) {
             error={errors.title ? 'Title is required' : ''}
           />
         </div>
-
+        <div className="flex flex-col w-full mb-5">
+          <p>
+            Upload an audio file as a music theme:
+          </p>
+          <InputFile
+            loading={buttonLoading}
+            label="Upload audio"
+            onChange={async (formData) => {
+              setButtonLoading(true);
+              const data = await fileUpload(formData);
+              setButtonLoading(false);
+              setAudio(data.url);
+            }}
+            allowMultipleFiles={false}
+            uploadFileName="bg-image"
+            className="w-2/6"
+          />
+        </div>
         <div className="flex flex-col w-full my-5">
           <p>
             Upload the Cover of your story:

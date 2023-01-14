@@ -5,6 +5,7 @@ interface Props {
   children: any;
   text: string;
   className: string;
+  audioUrl: string;
 }
 
 export default function Question(props: Props) {
@@ -12,19 +13,22 @@ export default function Question(props: Props) {
     text,
     children,
     className,
+    audioUrl,
   } = props;
 
   return (
     <div className={` ${className} rounded-lg border-[#eaeaea] border-2 p-8 bg-black bg-opacity-60 relative`}>
+      {audioUrl && (
+
       <SpeakerWaveIcon
         onClick={() => {
-          const msg = new SpeechSynthesisUtterance();
-          msg.text = text;
-          msg.lang = 'en-GB';
-          window.speechSynthesis.speak(msg);
+          const audio = new Audio(audioUrl);
+          audio.play();
         }}
         className="h-7 w-7 absolute top-2 right-4"
       />
+      )}
+
       {children}
     </div>
   );

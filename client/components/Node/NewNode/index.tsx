@@ -18,8 +18,8 @@ export default function NewNode(props: any) {
   const [buttonLoading, setButtonLoading] = useState(false);
   const [outputs, setOutputs] = useState([]);
   const [isVictory, setIsVictory] = useState(false);
-  const [isSameOutcome, setIsSameOutcome] = useState(false);
   const [image, setImage] = useState('');
+  const [audio, setAudio] = useState('');
 
   const {
     register,
@@ -34,16 +34,17 @@ export default function NewNode(props: any) {
   const addNewNode = async (data: any) => {
     try {
       setButtonLoading(true);
+      const sourcdId = uuidv4();
       await updateStory({
         ...story,
         nodes: [...story.nodes, {
           ...data,
-          isSameOutcome,
           isVictory,
           outputs,
           outputsNbr: outputs.length,
-          sourceId: uuidv4(),
+          sourceId: sourcdId,
           bgUrl: image,
+          audio,
         }],
       });
       setStory({
@@ -51,15 +52,15 @@ export default function NewNode(props: any) {
         nodes: [...story.nodes, {
           ...data,
           outputs,
-          isSameOutcome,
           isVictory,
           outputsNbr: outputs.length,
-          sourceId: uuidv4(),
+          sourceId: sourcdId,
+          audio,
+
         }],
       });
       setAddNewNodeModal(false);
       setButtonLoading(false);
-
       reset();
     } catch (error) {
       console.log(error);
@@ -101,7 +102,24 @@ export default function NewNode(props: any) {
             error={errors.text ? 'text is required' : ''}
           />
         </div>
-        {/* <input {...register('file', { required: true })} type="file" name="file" /> */}
+        <div className="flex flex-col w-full mb-5">
+          <p>
+            Upload an audio file read by the narrator:
+          </p>
+          <InputFile
+            loading={buttonLoading}
+            label="Upload audio"
+            onChange={async (formData) => {
+              setButtonLoading(true);
+              const data = await fileUpload(formData);
+              setButtonLoading(false);
+              setAudio(data.url);
+            }}
+            allowMultipleFiles={false}
+            uploadFileName="bg-image"
+            className="w-2/6"
+          />
+        </div>
         <div className="flex flex-col w-full mb-5">
           <p>
             Upload the image of your node:
@@ -113,7 +131,6 @@ export default function NewNode(props: any) {
               setButtonLoading(true);
               const data = await fileUpload(formData);
               setButtonLoading(false);
-
               setImage(data.url);
             }}
             allowMultipleFiles={false}
@@ -149,15 +166,6 @@ export default function NewNode(props: any) {
                 />
               </div>
             ))}
-            {outputs.length > 0 && (
-            <Switch
-              checked={isSameOutcome}
-              onChange={(e) => {
-                setIsSameOutcome(e);
-              }}
-              label="Have the same outcome"
-            />
-            )}
           </div>
 
           <Button

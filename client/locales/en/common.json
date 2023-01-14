@@ -18,7 +18,7 @@
       },
       "builder": {
          "descriptionTitle": "A gamebook builder",
-         "descriptionBody": "The builder will allows you to create interactive fiction stories in the format of a 'choose-your-own-adventure' book. Use the visual editor that allows you to organize and connect different sections of your story, as well as options for incorporating various types of multimedia, such as images and sound effects (comming soon). You are also  able to define conditions and results that branches the story path depending on the choice taken by the reader.",
+         "descriptionBody": "The builder will allows you to create interactive fiction stories in the format of a 'choose-your-own-adventure' book. Use the visual editor that allows you to organize and connect different sections of your story, as well as options for incorporating various types of multimedia, such as images and sound effects. You are also  able to define conditions and results that branches the story path depending on the choice taken by the reader.",
          "button": "Start building"
       },
       "topStories": {

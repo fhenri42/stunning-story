@@ -12,7 +12,7 @@ import {
 } from '@heroicons/react/24/outline';
 import EditStory from '@components/Story/EditStory';
 import Switch from '@components/Switch';
-import DisplayNodes from './nodeDisplayer';
+import DisplayNodes from './displayNode';
 import Target from './target';
 
 let tmpStoryGraph: any = [];
@@ -29,8 +29,7 @@ export default function Diagram(props: any) {
   const [addNewNodeModal, setAddNewNodeModal] = useState(false);
   const [openModalStory, setOpenModalStory] = useState(false);
   const [zoom, setZoom] = useState('100%');
-
-  const addingNode = (node: any, targetId: any) => {
+  const addingNode = (node: any, targetId: any, incStory:any) => {
     try {
       const indexSourceId = tmpStoryGraph.findIndex((n: any) => n.sourceId === node.sourceId);
 
@@ -51,26 +50,24 @@ export default function Diagram(props: any) {
 
       if (indexSourceId !== -1) {
         tmpStoryGraph = [...tmpStoryGraph];
-        updateStory({
-          ...story,
+        const newStory = {
+          ...incStory,
+          publishedAt: null,
           storyGraph: [...tmpStoryGraph],
-        });
-        setStory({
-          ...story,
-          storyGraph: [...tmpStoryGraph],
-        });
+        };
+        updateStory(newStory);
+        setStory(newStory);
         setStoryGraph([...tmpStoryGraph]);
         return;
       }
       tmpStoryGraph = [...tmpStoryGraph, { ...node }];
-      updateStory({
-        ...story,
+      const newStory = {
+        ...incStory,
+        publishedAt: null,
         storyGraph: [...tmpStoryGraph],
-      });
-      setStory({
-        ...story,
-        storyGraph: [...tmpStoryGraph],
-      });
+      };
+      updateStory(newStory);
+      setStory(newStory);
       setStoryGraph([...tmpStoryGraph]);
     } catch (error) {
       console.log(error);
@@ -104,10 +101,12 @@ export default function Diagram(props: any) {
       setStoryGraph([...tmpStoryGraph]);
       updateStory({
         ...story,
+        publishedAt: null,
         storyGraph: [...tmpStoryGraph],
       });
       setStory({
         ...story,
+        publishedAt: null,
         storyGraph: [...tmpStoryGraph],
       });
     }
@@ -120,10 +119,12 @@ export default function Diagram(props: any) {
       setStoryGraph([...tmpStoryGraph]);
       updateStory({
         ...story,
+        publishedAt: null,
         storyGraph: [...tmpStoryGraph],
       });
       setStory({
         ...story,
+        publishedAt: null,
         storyGraph: [...tmpStoryGraph],
       });
     }
@@ -226,6 +227,7 @@ export default function Diagram(props: any) {
 
             {storyGraph.length > 0 ? (
               <DisplayNodes
+                story={story}
                 currentNode={storyGraph[0]}
                 storyGraph={storyGraph}
                 addingNode={addingNode}

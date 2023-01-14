@@ -9,9 +9,10 @@ const style = {
   width: '100px',
   zIndex: 100,
 };
-const TargetBox = memo(({
+// TODO BUG why use a Memo here? ?
+function TargetBox({
   onDrop, addingNode, input, targetId, value,
-}: any) => {
+}: any) {
   const [node, setNode] = useState({
     content: null,
   });
@@ -19,7 +20,7 @@ const TargetBox = memo(({
     () => ({
       accept: ['yellow', 'blue'],
       drop(item: any, monitor) {
-        const newItem = { ...item };
+        const newItem = { ...item.node };
         newItem.id = targetId || uuidv4();
         newItem.input = input;
         newItem.question = value;
@@ -33,7 +34,7 @@ const TargetBox = memo(({
         newItem.outputs = [...outputs];
         onDrop(monitor.getItemType());
         setNode(newItem);
-        addingNode(newItem, targetId);
+        addingNode(newItem, targetId, item.story);
         return undefined;
       },
       collect: (monitor) => ({
@@ -45,6 +46,7 @@ const TargetBox = memo(({
     [onDrop],
   );
   const opacity = isOver ? 1 : 0.8;
+
   return (
     <div
       id={targetId}
@@ -62,7 +64,7 @@ const TargetBox = memo(({
       )}
     </div>
   );
-});
+}
 
 export default function StatefulTargetBox(props: any) {
   const { targetId } = props;

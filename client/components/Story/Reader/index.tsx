@@ -11,6 +11,7 @@ export default function Reader(props: any) {
   const storyGraph = story.storyGraph || [];
   const [changeNode, setChangeNode] = useState(true);
   const [currentNode, setCurrentNode] = useState(storyGraph[0]);
+  console.log('currentNode', currentNode);
   const router = useRouter();
   const variants = {
     hidden: { opacity: 0, x: 200, y: 0 },
@@ -50,7 +51,7 @@ export default function Reader(props: any) {
                   type="danger"
                   size="small"
                   onClick={() => {
-                    router.replace('/');
+                    router.replace('/stories');
                   }}
                   className="z-10"
                 />
@@ -70,7 +71,7 @@ export default function Reader(props: any) {
               />
               )}
 
-              <Question text={currentNode.text} className="w-3/4 lg:w-1/2 lg:text-lg text-sm text-center mb-5 lg:mb-10 mt-auto">
+              <Question audioUrl={currentNode.audio} text={currentNode.text} className="w-3/4 lg:w-1/2 lg:text-lg text-sm text-center mb-5 lg:mb-10 mt-auto">
                 {currentNode.text}
               </Question>
             </motion.div>
@@ -93,7 +94,7 @@ export default function Reader(props: any) {
                   key={a.id}
                   className="w-[47%] lg:h-1/3"
                   onClick={() => {
-                    const index = storyGraph.findIndex((n) => n.id === a.id);
+                    const index = storyGraph.findIndex((n) => n.sourceId === a.sourceId);
                     setChangeNode(false);
                     setCurrentNode(storyGraph[index]);
                   }}
@@ -119,7 +120,7 @@ export default function Reader(props: any) {
                 <Answer
                   className="w-[47%] bg-red-500"
                   onClick={() => {
-                    router.replace('/');
+                    router.replace('/stories');
                   }}
                 >
                   Quit

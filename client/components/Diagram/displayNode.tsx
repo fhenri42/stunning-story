@@ -6,10 +6,10 @@ import Target from './target';
 export default function DisplayNodes(props: any) {
   const {
     currentNode, storyGraph, addingNode, removeNode,
+    story,
   } = props;
   const [openDetails, setOpenDetails] = useState(false);
   if (currentNode === undefined) return <div />;
-
   return (
     <div
       key={currentNode.id}
@@ -48,6 +48,7 @@ export default function DisplayNodes(props: any) {
           if (output.type === 'target') {
             return (
               <Target
+                story={story}
                 value={output.value}
                 key={output.id}
                 targetId={output.id}

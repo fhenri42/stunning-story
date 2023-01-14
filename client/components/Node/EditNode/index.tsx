@@ -20,8 +20,9 @@ export default function EditNode(props: any) {
   const [buttonLoading, setButtonLoading] = useState(false);
   const [outputs, setOutputs] = useState(node.outputs);
   const [isVictory, setIsVictory] = useState(node.isVictory);
-  const [isSameOutcome, setIsSameOutcome] = useState(node.isSameOutcome);
   const [image, setImage] = useState(node.bgUrl);
+  const [audio, setAudio] = useState('');
+
   const {
     register,
     handleSubmit,
@@ -52,13 +53,24 @@ export default function EditNode(props: any) {
       const index = story.nodes.findIndex((n:any) => n.sourceId === sourceId);
       story.nodes[index] = {
         ...data,
-        isSameOutcome,
         isVictory,
         outputs,
+        sourceId,
         outputsNbr: outputs.length,
-        sourceId: uuidv4(),
         bgUrl: image,
+        audio,
       };
+      const indexStoryGraph = story.storyGraph.findIndex((n:any) => n.sourceId === sourceId);
+
+      if (indexStoryGraph !== -1) {
+        story.storyGraph[indexStoryGraph] = {
+          ...story.storyGraph[indexStoryGraph],
+          ...data,
+          isVictory,
+          bgUrl: image,
+          audio,
+        };
+      }
       await updateStory({
         ...story,
         nodes: [...story.nodes],
@@ -72,7 +84,6 @@ export default function EditNode(props: any) {
 
       reset();
     } catch (error) {
-      console.log(error);
       setButtonLoading(false);
       toast.error('Error on updating node');
     }
@@ -108,7 +119,24 @@ export default function EditNode(props: any) {
             error={errors.text ? 'text is required' : ''}
           />
         </div>
-        {/* <input {...register('file', { required: true })} type="file" name="file" /> */}
+        <div className="flex flex-col w-full mb-5">
+          <p>
+            Upload an audio file read by the narrator:
+          </p>
+          <InputFile
+            loading={buttonLoading}
+            label="Upload audio"
+            onChange={async (formData) => {
+              setButtonLoading(true);
+              const data = await fileUpload(formData);
+              setButtonLoading(false);
+              setAudio(data.url);
+            }}
+            allowMultipleFiles={false}
+            uploadFileName="bg-image"
+            className="w-2/6"
+          />
+        </div>
         <div className="flex flex-col w-full mb-5">
           <p>
             Upload the image of your node:
@@ -157,15 +185,6 @@ export default function EditNode(props: any) {
                 />
               </div>
             ))}
-            {outputs.length > 0 && (
-            <Switch
-              checked={isSameOutcome}
-              onChange={(e) => {
-                setIsSameOutcome(e);
-              }}
-              label="Have the same outcome"
-            />
-            )}
           </div>
 
           <Button

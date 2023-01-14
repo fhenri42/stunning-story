@@ -14,7 +14,8 @@ export default function NodeCard(props: any) {
   const [{ isDragging }, drag] = useDrag(
     () => ({
       item: {
-        ...node,
+        node,
+        story,
       },
       type: 'blue',
       collect: (monitor) => ({
