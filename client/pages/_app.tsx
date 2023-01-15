@@ -1,19 +1,16 @@
-import '../styles/globals.css';
-
+import React from 'react';
 import type { AppProps } from 'next/app';
-// import { StoreProvider } from 'easy-peasy';
 import { useSession, SessionProvider } from 'next-auth/react';
-
 import { ToastContainer } from 'react-toastify';
-// import store from './store';
 import 'react-toastify/dist/ReactToastify.css';
 import type { NextComponentType } from 'next';
-// Import Component type
+import '../styles/globals.css';
+import Script from 'next/script';
+
 type CustomAppProps = AppProps & {
   Component: NextComponentType & {auth?: boolean} // add auth type
 }
 function Auth({ children }: any) {
-  // if `{ required: true }` is supplied, `status` can only be "loading" or "authenticated"
   const { status } = useSession({ required: true });
 
   if (status === 'loading') {
@@ -30,6 +27,7 @@ export default function App({
   return (
   // <StoreProvider store={store}>
     <SessionProvider session={session}>
+
       <ToastContainer autoClose={2000} />
       {Component.auth ? (
         <Auth>
@@ -38,6 +36,19 @@ export default function App({
       ) : (
         <Component {...pageProps} />
       )}
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-5XFLKG8MTF"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'G-5XFLKG8MTF');
+        `}
+      </Script>
     </SessionProvider>
   // </StoreProvider>
   );

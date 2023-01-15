@@ -12,7 +12,7 @@ export default function Header() {
     { name: t('header.home'), href: '/' },
     { name: t('header.story'), href: '/stories' },
     { name: t('header.builder'), href: '/builder' },
-    { name: t('header.doc'), href: '/docs' },
+    { name: t('header.doc'), href: '/doc' },
     { name: t('header.roadmap'), href: 'https://stunning-story.canny.io/', target: '_blank' },
   ];
   return (
@@ -28,7 +28,7 @@ export default function Header() {
                 key={link.name}
                 target={link.target}
                 href={link.href}
-                className={`text-base font-medium text-white hover:text-indigo-50 ${link.href === router.pathname ? ' underline underline-offset-2 decoration-[#8ecccc]' : ''}`}
+                className={`text-base font-medium text-white hover:text-indigo-50 ${link.href === router.pathname ? 'underline underline-offset-2 decoration-[#8ecccc]' : ''}`}
               >
                 {link.name}
               </a>
@@ -37,12 +37,15 @@ export default function Header() {
         </div>
         {session && session.user && session.user.name ? (
 
-          <div className="ml-10 space-x-4 flex flex-row items-center justify-center">
+          <Link
+            href="/profil"
+            className="ml-10 space-x-4 flex flex-row items-center justify-center"
+          >
             <p>
               {session.user.name}
             </p>
             <img className="h-14 w-auto rounded-lg" src={session?.user?.image} referrerPolicy="no-referrer" alt="google_image" />
-          </div>
+          </Link>
         ) : (
 
           <div className="ml-10 space-x-4">

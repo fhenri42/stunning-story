@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
 import NodeCard from './nodeCard';
@@ -9,7 +9,6 @@ const style = {
   width: '100px',
   zIndex: 100,
 };
-// TODO BUG why use a Memo here? ?
 function TargetBox({
   onDrop, addingNode, input, targetId, value,
 }: any) {

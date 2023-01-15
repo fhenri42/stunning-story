@@ -24,11 +24,14 @@ module.exports = nextTranslate(
   },
 );
 
-// TODO Ajouter la posibiliter dajouter une image a une histoire et de povoir modifier les information sur cette hitoire.
+// Todo Ajouter un système d'inventaire.
+// TODO Comment faire pour l'edtion des iput des node ??
 // TODO Ecrire l'histoire d'expemle.
 // TODO I18n all the text.
-// TODO add tags to story.
 // TODO add difficulty to story.
-// TODO add disclaimer builder not good for mobile.
 // TODO add docs part.
 // TODO add roadmap part.
+// TODO add a Profile page.
+// TODO add legals part.
+// TODO change footer
+// TODO Instagram account

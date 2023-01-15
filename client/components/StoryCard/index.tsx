@@ -12,10 +12,10 @@ export default function StroyCard(props: any) {
         <p className="bg-gray-400 px-4 rounded-xl absolute top-3 right-3">Draft</p>
       )}
       <img className="h-64 w-full object-cover" src={story.cover} alt="" />
-      <div className="flex flex-col  bg-white p-6 h-[300px]">
-        <div className="flex flex-row">
+      <div className="flex flex-col  bg-white px-3 pt-3 h-[300px]">
+        <div className="flex flex-row py-2">
           {story.tags?.split(',').map((tag) => (
-            <p className="text-sm font-medium text-indigo-600 mr-2 capitalize">
+            <p className="text-xs font-medium text-white mr-2 capitalize bg-[#8ecccc] px-4 py-1 rounded-full">
               {tag}
             </p>
           ))}
