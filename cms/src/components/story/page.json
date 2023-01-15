@@ -27,9 +27,8 @@
       "type": "boolean",
       "default": false
     },
-    "isSameOutcome": {
-      "type": "boolean",
-      "default": false
+    "audio": {
+      "type": "string"
     }
   }
 }

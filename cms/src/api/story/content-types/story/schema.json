@@ -44,6 +44,9 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "stories"
+    },
+    "audio": {
+      "type": "string"
     }
   }
 }

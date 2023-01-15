@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2023-01-10T19:41:46.692Z"
+    "x-generation-date": "2023-01-15T10:09:15.410Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -1442,6 +1442,9 @@
                   }
                 ],
                 "example": "string or id"
+              },
+              "audio": {
+                "type": "string"
               }
             }
           }
@@ -1985,8 +1988,8 @@
                                               "isVictory": {
                                                 "type": "boolean"
                                               },
-                                              "isSameOutcome": {
-                                                "type": "boolean"
+                                              "audio": {
+                                                "type": "string"
                                               }
                                             }
                                           }
@@ -2013,6 +2016,9 @@
                                               }
                                             }
                                           }
+                                        },
+                                        "audio": {
+                                          "type": "string"
                                         },
                                         "createdAt": {
                                           "type": "string",
@@ -2117,6 +2123,9 @@
                     }
                   }
                 }
+              },
+              "audio": {
+                "type": "string"
               },
               "createdAt": {
                 "type": "string",
@@ -2706,8 +2715,8 @@
                                               "isVictory": {
                                                 "type": "boolean"
                                               },
-                                              "isSameOutcome": {
-                                                "type": "boolean"
+                                              "audio": {
+                                                "type": "string"
                                               }
                                             }
                                           }
@@ -2734,6 +2743,9 @@
                                               }
                                             }
                                           }
+                                        },
+                                        "audio": {
+                                          "type": "string"
                                         },
                                         "createdAt": {
                                           "type": "string",
@@ -2838,6 +2850,9 @@
                     }
                   }
                 }
+              },
+              "audio": {
+                "type": "string"
               },
               "createdAt": {
                 "type": "string",
@@ -3460,8 +3475,8 @@
                                               "isVictory": {
                                                 "type": "boolean"
                                               },
-                                              "isSameOutcome": {
-                                                "type": "boolean"
+                                              "audio": {
+                                                "type": "string"
                                               }
                                             }
                                           }
@@ -3488,6 +3503,9 @@
                                               }
                                             }
                                           }
+                                        },
+                                        "audio": {
+                                          "type": "string"
                                         },
                                         "createdAt": {
                                           "type": "string",
@@ -3592,6 +3610,9 @@
                     }
                   }
                 }
+              },
+              "audio": {
+                "type": "string"
               },
               "createdAt": {
                 "type": "string",
@@ -4181,8 +4202,8 @@
                                               "isVictory": {
                                                 "type": "boolean"
                                               },
-                                              "isSameOutcome": {
-                                                "type": "boolean"
+                                              "audio": {
+                                                "type": "string"
                                               }
                                             }
                                           }
@@ -4209,6 +4230,9 @@
                                               }
                                             }
                                           }
+                                        },
+                                        "audio": {
+                                          "type": "string"
                                         },
                                         "createdAt": {
                                           "type": "string",
@@ -4314,6 +4338,9 @@
                   }
                 }
               },
+              "audio": {
+                "type": "string"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time"
@@ -4396,8 +4423,8 @@
           "isVictory": {
             "type": "boolean"
           },
-          "isSameOutcome": {
-            "type": "boolean"
+          "audio": {
+            "type": "string"
           }
         }
       },
@@ -10017,8 +10044,8 @@
                                                             "isVictory": {
                                                               "type": "boolean"
                                                             },
-                                                            "isSameOutcome": {
-                                                              "type": "boolean"
+                                                            "audio": {
+                                                              "type": "string"
                                                             }
                                                           }
                                                         }
@@ -10045,6 +10072,9 @@
                                                             }
                                                           }
                                                         }
+                                                      },
+                                                      "audio": {
+                                                        "type": "string"
                                                       },
                                                       "createdAt": {
                                                         "type": "string",
@@ -10714,8 +10744,8 @@
                                                             "isVictory": {
                                                               "type": "boolean"
                                                             },
-                                                            "isSameOutcome": {
-                                                              "type": "boolean"
+                                                            "audio": {
+                                                              "type": "string"
                                                             }
                                                           }
                                                         }
@@ -10742,6 +10772,9 @@
                                                             }
                                                           }
                                                         }
+                                                      },
+                                                      "audio": {
+                                                        "type": "string"
                                                       },
                                                       "createdAt": {
                                                         "type": "string",
@@ -11444,8 +11477,8 @@
                                                             "isVictory": {
                                                               "type": "boolean"
                                                             },
-                                                            "isSameOutcome": {
-                                                              "type": "boolean"
+                                                            "audio": {
+                                                              "type": "string"
                                                             }
                                                           }
                                                         }
@@ -11472,6 +11505,9 @@
                                                             }
                                                           }
                                                         }
+                                                      },
+                                                      "audio": {
+                                                        "type": "string"
                                                       },
                                                       "createdAt": {
                                                         "type": "string",
@@ -12141,8 +12177,8 @@
                                                             "isVictory": {
                                                               "type": "boolean"
                                                             },
-                                                            "isSameOutcome": {
-                                                              "type": "boolean"
+                                                            "audio": {
+                                                              "type": "string"
                                                             }
                                                           }
                                                         }
@@ -12169,6 +12205,9 @@
                                                             }
                                                           }
                                                         }
+                                                      },
+                                                      "audio": {
+                                                        "type": "string"
                                                       },
                                                       "createdAt": {
                                                         "type": "string",
@@ -12610,8 +12649,8 @@
                                                                           "isVictory": {
                                                                             "type": "boolean"
                                                                           },
-                                                                          "isSameOutcome": {
-                                                                            "type": "boolean"
+                                                                          "audio": {
+                                                                            "type": "string"
                                                                           }
                                                                         }
                                                                       }
@@ -12638,6 +12677,9 @@
                                                                           }
                                                                         }
                                                                       }
+                                                                    },
+                                                                    "audio": {
+                                                                      "type": "string"
                                                                     },
                                                                     "createdAt": {
                                                                       "type": "string",
@@ -13336,8 +13378,8 @@
                                                                           "isVictory": {
                                                                             "type": "boolean"
                                                                           },
-                                                                          "isSameOutcome": {
-                                                                            "type": "boolean"
+                                                                          "audio": {
+                                                                            "type": "string"
                                                                           }
                                                                         }
                                                                       }
@@ -13364,6 +13406,9 @@
                                                                           }
                                                                         }
                                                                       }
+                                                                    },
+                                                                    "audio": {
+                                                                      "type": "string"
                                                                     },
                                                                     "createdAt": {
                                                                       "type": "string",
@@ -14095,8 +14140,8 @@
                                                                           "isVictory": {
                                                                             "type": "boolean"
                                                                           },
-                                                                          "isSameOutcome": {
-                                                                            "type": "boolean"
+                                                                          "audio": {
+                                                                            "type": "string"
                                                                           }
                                                                         }
                                                                       }
@@ -14123,6 +14168,9 @@
                                                                           }
                                                                         }
                                                                       }
+                                                                    },
+                                                                    "audio": {
+                                                                      "type": "string"
                                                                     },
                                                                     "createdAt": {
                                                                       "type": "string",
@@ -14821,8 +14869,8 @@
                                                                           "isVictory": {
                                                                             "type": "boolean"
                                                                           },
-                                                                          "isSameOutcome": {
-                                                                            "type": "boolean"
+                                                                          "audio": {
+                                                                            "type": "string"
                                                                           }
                                                                         }
                                                                       }
@@ -14849,6 +14897,9 @@
                                                                           }
                                                                         }
                                                                       }
+                                                                    },
+                                                                    "audio": {
+                                                                      "type": "string"
                                                                     },
                                                                     "createdAt": {
                                                                       "type": "string",
@@ -15940,8 +15991,8 @@
                                                             "isVictory": {
                                                               "type": "boolean"
                                                             },
-                                                            "isSameOutcome": {
-                                                              "type": "boolean"
+                                                            "audio": {
+                                                              "type": "string"
                                                             }
                                                           }
                                                         }
@@ -15968,6 +16019,9 @@
                                                             }
                                                           }
                                                         }
+                                                      },
+                                                      "audio": {
+                                                        "type": "string"
                                                       },
                                                       "createdAt": {
                                                         "type": "string",
@@ -16679,8 +16733,8 @@
                                                             "isVictory": {
                                                               "type": "boolean"
                                                             },
-                                                            "isSameOutcome": {
-                                                              "type": "boolean"
+                                                            "audio": {
+                                                              "type": "string"
                                                             }
                                                           }
                                                         }
@@ -16707,6 +16761,9 @@
                                                             }
                                                           }
                                                         }
+                                                      },
+                                                      "audio": {
+                                                        "type": "string"
                                                       },
                                                       "createdAt": {
                                                         "type": "string",
@@ -17451,8 +17508,8 @@
                                                             "isVictory": {
                                                               "type": "boolean"
                                                             },
-                                                            "isSameOutcome": {
-                                                              "type": "boolean"
+                                                            "audio": {
+                                                              "type": "string"
                                                             }
                                                           }
                                                         }
@@ -17479,6 +17536,9 @@
                                                             }
                                                           }
                                                         }
+                                                      },
+                                                      "audio": {
+                                                        "type": "string"
                                                       },
                                                       "createdAt": {
                                                         "type": "string",
@@ -18190,8 +18250,8 @@
                                                             "isVictory": {
                                                               "type": "boolean"
                                                             },
-                                                            "isSameOutcome": {
-                                                              "type": "boolean"
+                                                            "audio": {
+                                                              "type": "string"
                                                             }
                                                           }
                                                         }
@@ -18218,6 +18278,9 @@
                                                             }
                                                           }
                                                         }
+                                                      },
+                                                      "audio": {
+                                                        "type": "string"
                                                       },
                                                       "createdAt": {
                                                         "type": "string",
