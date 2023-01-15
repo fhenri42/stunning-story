@@ -25,7 +25,7 @@ export default function Header() {
             {navigation.map((link) => (
               <a
                 key={link.name}
-                target={link.target}
+                // target={link.target}
                 href={link.href}
                 className={`text-base font-medium text-white hover:text-indigo-50 ${link.href === router.pathname ? 'underline underline-offset-2 decoration-[#8ecccc]' : ''}`}
               >
