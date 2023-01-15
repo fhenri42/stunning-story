@@ -47,6 +47,15 @@ export default function Reader(props: any) {
             >
               <div className="absolute top-3 right-10">
                 <Button
+                  label="Restart"
+                  size="small"
+                  background="bg-blue-600"
+                  onClick={() => {
+                    setCurrentNode(storyGraph[0]);
+                  }}
+                  className="z-10 mr-3"
+                />
+                <Button
                   label="Quit"
                   type="danger"
                   size="small"

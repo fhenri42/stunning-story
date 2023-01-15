@@ -5,7 +5,7 @@ import qs from 'qs';
 import Header from '@components/Header';
 import FeatureDisplay from '@components/Home/FeatureDisplay/indexs';
 import TopStories from '@components/Home/TopStories';
-import Footer from '@components/Home/Footer';
+import Footer from '@components/Footer';
 import useTranslation from 'next-translate/useTranslation';
 
 export default function Home(props: any) {

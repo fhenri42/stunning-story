@@ -195,7 +195,7 @@ export default function Diagram(props: any) {
               label={!story.publishedAt ? <p className="w-20">Draft</p> : <p className="w-20">Published</p>}
             />
           </div>
-          <div className="absolute bottom-2 ml-3 flex flex-row bg-gray-500 rounded-xl p-2">
+          <div className="absolute bottom-2 ml-3 flex flex-row bg-gray-500 rounded-xl p-2 z-50">
             <MagnifyingGlassMinusIcon
               className="w-7 h-7 mr-2 cursor-pointer"
               onClick={() => {

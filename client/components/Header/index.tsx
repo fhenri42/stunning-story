@@ -13,7 +13,6 @@ export default function Header() {
     { name: t('header.story'), href: '/stories' },
     { name: t('header.builder'), href: '/builder' },
     { name: t('header.doc'), href: '/doc' },
-    { name: t('header.roadmap'), href: 'https://stunning-story.canny.io/', target: '_blank' },
   ];
   return (
     <header className="bg-[#3a4042]">
