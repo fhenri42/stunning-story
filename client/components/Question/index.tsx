@@ -4,7 +4,6 @@ import React, { useEffect } from 'react';
 
 interface Props {
   children: any;
-  text: string;
   className: string;
   audioUrl: string;
 }

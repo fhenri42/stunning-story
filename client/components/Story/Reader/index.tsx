@@ -71,7 +71,7 @@ export default function Reader(props: any) {
               />
               )}
 
-              <Question audioUrl={currentNode.audio} text={currentNode.text} className="w-3/4 lg:w-1/2 lg:text-lg text-sm text-center mb-5 lg:mb-10 mt-auto">
+              <Question audioUrl={currentNode.audio} className="w-3/4 lg:w-1/2 lg:text-lg text-sm text-center mb-5 lg:mb-10 mt-auto">
                 {currentNode.text}
               </Question>
             </motion.div>

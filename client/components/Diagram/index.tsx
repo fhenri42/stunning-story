@@ -74,7 +74,7 @@ export default function Diagram(props: any) {
     }
   };
   const cheackIfCanRemove = (sourceId: any) => {
-    for (let index = 0; index < tmpStoryGraph.length; index++) {
+    for (let index = 0; index < tmpStoryGraph.length; index += 1) {
       const node = tmpStoryGraph[index];
       const outputIndex = node.outputs.findIndex((o) => o.sourceId === sourceId && o.type === 'node' && o.canBeRemove);
       if (outputIndex !== -1) {

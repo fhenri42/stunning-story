@@ -64,7 +64,7 @@ const removeNode = (node) => {
     return;
   }
   const allInfo = [];
-  for (let i = 0; i < nodesTest.length; i++) {
+  for (let i = 0; i < nodesTest.length; i += 1) {
     const element = nodesTest[i];
     allInfo.push(element.input);
     allInfo.push([...element.outputs]);
