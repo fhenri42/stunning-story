@@ -256,50 +256,52 @@ export default function Diagram(props: any) {
       >
         <Xwrapper>
           {storyGraph.length > 0
-            && storyGraph.map((node: any) => node.outputs.map((output: any, outputIndex: number) => {
-              if (output.type === 'target') {
-                return (
-                  <Xarrow
-                    labels={(
-                      <p className="text-xs  text-ellipsis w-20 text-center line-clamp-2">
-                        {output.value}
-                      </p>
-                      )}
-                    start={node.sourceId}
-                    end={output.id}
-                    color="green"
-                    key={`${output.id}`}
-                  />
-                );
-              }
-              if (output.type === 'node') {
-                return (
-                  <Xarrow
-                    labels={(
-                      <div className="flex flex-row items-center justify-center w-20">
-                        {output.canBeRemove && (
-                        <TrashIcon
-                          className="text-red-400 h-5 w-5 mr-2 cursor-pointer z-50"
-                          onClick={() => {
-                            removeDupicateNode(node.sourceId, outputIndex);
-                          }}
-                        />
-                        )}
-                        <p className="text-xs  text-ellipsis  text-center line-clamp-2">
+            && storyGraph.map((node: any) => node.outputs.map(
+              (output: any, outputIndex: number) => {
+                if (output.type === 'target') {
+                  return (
+                    <Xarrow
+                      labels={(
+                        <p className="text-xs  text-ellipsis w-20 text-center line-clamp-2">
                           {output.value}
                         </p>
-                      </div>
                       )}
-                    start={node.sourceId}
-                    end={output.sourceId}
-                    color="purple"
-                    key={`${output.id}`}
-                  />
-                );
-              }
+                      start={node.sourceId}
+                      end={output.id}
+                      color="green"
+                      key={`${output.id}`}
+                    />
+                  );
+                }
+                if (output.type === 'node') {
+                  return (
+                    <Xarrow
+                      labels={(
+                        <div className="flex flex-row items-center justify-center w-20">
+                          {output.canBeRemove && (
+                          <TrashIcon
+                            className="text-red-400 h-5 w-5 mr-2 cursor-pointer z-50"
+                            onClick={() => {
+                              removeDupicateNode(node.sourceId, outputIndex);
+                            }}
+                          />
+                          )}
+                          <p className="text-xs  text-ellipsis  text-center line-clamp-2">
+                            {output.value}
+                          </p>
+                        </div>
+                      )}
+                      start={node.sourceId}
+                      end={output.sourceId}
+                      color="purple"
+                      key={`${output.id}`}
+                    />
+                  );
+                }
 
-              return null;
-            }))}
+                return null;
+              },
+            ))}
         </Xwrapper>
       </div>
       {addNewNodeModal && (

@@ -32,6 +32,22 @@ The goal of the website is to be accessible to both experienced gamebook creator
 
 <img src="https://raw.githubusercontent.com/O-Plums/stunning-story/main/repo_info/build.png" width="auto" height="auto" />
 
+
+# Getting Started
+
+```
+git clone https://github.com/O-Plums/stunning-story
+```
+* Client: The front is build using [NextJS](https://nextjs.org/) and [tailwindcss](https://tailwindcss.com/)
+
+* Cms: to power the cms we use [Strapi](https://github.com/strapi/strapi) as are web server
+# Requirements
+
+Node v16.13.0
+The DB use postgresql
+# Contributing
+
+Please read our [Contributing Guide](https://github.com/O-Plums/stunning-story/blob/main/CONTRIBUTING.md) before submitting a Pull Request to the project.
 ## Road map
 * [Road map](https://stunning-story.canny.io/)
 
