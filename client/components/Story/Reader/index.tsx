@@ -6,6 +6,9 @@ import { useRouter } from 'next/router';
 import DeviceOrientation, { Orientation } from 'react-screen-orientation';
 import { motion } from 'framer-motion';
 import useTranslation from 'next-translate/useTranslation';
+import { SpeakerWaveIcon, SpeakerXMarkIcon } from '@heroicons/react/24/outline';
+
+const audio = new Audio();
 
 export default function Reader(props: any) {
   const { story } = props;
@@ -13,6 +16,8 @@ export default function Reader(props: any) {
   const storyGraph = story.storyGraph || [];
   const [changeNode, setChangeNode] = useState(true);
   const [currentNode, setCurrentNode] = useState(storyGraph[0]);
+  const [isPlaying, setIsPlaying] = React.useState(false);
+
   const router = useRouter();
   const variants = {
     hidden: { opacity: 0, x: 200, y: 0 },
@@ -24,7 +29,12 @@ export default function Reader(props: any) {
     if (!changeNode) {
       setChangeNode(true);
     }
+    audio.src = story.audio;
+    return () => {
+      audio.pause();
+    };
   }, [changeNode]);
+
   return (
     <DeviceOrientation lockOrientation="landscape">
       <Orientation orientation="portrait" alwaysRender={false}>
@@ -43,7 +53,29 @@ export default function Reader(props: any) {
               transition={{ ztype: 'linear' }}
               className="h-3/5 lg:h-3/4 flex flex-col items-center justify-center relative"
             >
-              <div className="absolute top-3 right-10">
+              <div className="absolute top-3 right-10 flex flex-row items-center">
+                {story.audio && isPlaying && (
+                  <div className="p-2 mr-2 bg-green-500 z-50 rounded-lg">
+                    <SpeakerWaveIcon
+                      onClick={() => {
+                        setIsPlaying(!isPlaying);
+                        audio.pause();
+                      }}
+                      className="h-5 w-5 text-white"
+                    />
+                  </div>
+                )}
+                {story.audio && !isPlaying && (
+                  <div className="p-2 mr-2 bg-red-500 z-50 rounded-lg">
+                    <SpeakerXMarkIcon
+                      onClick={() => {
+                        setIsPlaying(!isPlaying);
+                        audio.play();
+                      }}
+                      className="h-5 w-5 text-white"
+                    />
+                  </div>
+                )}
                 <Button
                   label="Restart"
                   size="small"

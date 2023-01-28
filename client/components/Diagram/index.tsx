@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable consistent-return */
 import React, { useState, useEffect } from 'react';
@@ -13,6 +14,7 @@ import {
 import EditStory from '@components/Story/EditStory';
 import Switch from '@components/Switch';
 import useTranslation from 'next-translate/useTranslation';
+import { useRouter } from 'next/router';
 import DisplayNodes from './displayNode';
 import Target from './target';
 
@@ -25,6 +27,7 @@ A node can connect back to the story.
 */
 export default function Diagram(props: any) {
   const { t } = useTranslation('common');
+  const router = useRouter();
 
   const [story, setStory] = useState(props.story);
   const updateXarrow = useXarrow();
@@ -179,32 +182,43 @@ export default function Diagram(props: any) {
             updateXarrow();
           }}
         >
-          <div
-            className={`absolute top-0 flex flex-row ${
-              !story.publishedAt ? 'bg-gray-500' : 'bg-green-600'
-            } rounded-br-xl p-2`}
-          >
-            <Switch
-              checked={story.publishedAt}
-              onChange={async () => {
-                await updateStory({
-                  ...story,
-                  publishedAt: !story.publishedAt ? new Date() : null,
-                });
-                setStory({
-                  ...story,
-                  publishedAt: !story.publishedAt ? new Date() : null,
-                });
+          <div className="flex absolute top-0">
+            <div
+              className={` flex flex-row ${
+                !story.publishedAt ? 'bg-gray-500' : 'bg-green-600'
+              } rounded-br-xl p-2`}
+            >
+              <Switch
+                checked={story.publishedAt}
+                onChange={async () => {
+                  await updateStory({
+                    ...story,
+                    publishedAt: !story.publishedAt ? new Date() : null,
+                  });
+                  setStory({
+                    ...story,
+                    publishedAt: !story.publishedAt ? new Date() : null,
+                  });
+                }}
+                label={
+                  !story.publishedAt ? (
+                    <p className="w-20">{t('builder.draft')}</p>
+                  ) : (
+                    <p className="w-20">{t('builder.published')}</p>
+                  )
+                }
+              />
+            </div>
+            <Button
+              label="Preview"
+              className=" ml-2 rounded-t-none"
+              size="small"
+              onClick={() => {
+                router.push(`/builder/preview/${story.slug}`);
               }}
-              label={
-                !story.publishedAt ? (
-                  <p className="w-20">{t('builder.draft')}</p>
-                ) : (
-                  <p className="w-20">{t('builder.published')}</p>
-                )
-              }
             />
           </div>
+
           <div className="absolute bottom-2 ml-3 flex flex-row bg-gray-500 rounded-xl p-2 z-50">
             <MagnifyingGlassMinusIcon
               className="w-7 h-7 mr-2 cursor-pointer"
@@ -256,52 +270,50 @@ export default function Diagram(props: any) {
       >
         <Xwrapper>
           {storyGraph.length > 0
-            && storyGraph.map((node: any) => node.outputs.map(
-              (output: any, outputIndex: number) => {
-                if (output.type === 'target') {
-                  return (
-                    <Xarrow
-                      labels={(
-                        <p className="text-xs  text-ellipsis w-20 text-center line-clamp-2">
-                          {output.value}
-                        </p>
+            && storyGraph.map((node: any) => node.outputs.map((output: any, outputIndex: number) => {
+              if (output.type === 'target') {
+                return (
+                  <Xarrow
+                    labels={(
+                      <p className="text-xs  text-ellipsis w-20 text-center line-clamp-2">
+                        {output.value}
+                      </p>
                       )}
-                      start={node.sourceId}
-                      end={output.id}
-                      color="green"
-                      key={`${output.id}`}
-                    />
-                  );
-                }
-                if (output.type === 'node') {
-                  return (
-                    <Xarrow
-                      labels={(
-                        <div className="flex flex-row items-center justify-center w-20">
-                          {output.canBeRemove && (
+                    start={node.sourceId}
+                    end={output.id}
+                    color="green"
+                    key={`${output.id}`}
+                  />
+                );
+              }
+              if (output.type === 'node') {
+                return (
+                  <Xarrow
+                    labels={(
+                      <div className="flex flex-row items-center justify-center w-20">
+                        {output.canBeRemove && (
                           <TrashIcon
                             className="text-red-400 h-5 w-5 mr-2 cursor-pointer z-50"
                             onClick={() => {
                               removeDupicateNode(node.sourceId, outputIndex);
                             }}
                           />
-                          )}
-                          <p className="text-xs  text-ellipsis  text-center line-clamp-2">
-                            {output.value}
-                          </p>
-                        </div>
+                        )}
+                        <p className="text-xs  text-ellipsis  text-center line-clamp-2">
+                          {output.value}
+                        </p>
+                      </div>
                       )}
-                      start={node.sourceId}
-                      end={output.sourceId}
-                      color="purple"
-                      key={`${output.id}`}
-                    />
-                  );
-                }
+                    start={node.sourceId}
+                    end={output.sourceId}
+                    color="purple"
+                    key={`${output.id}`}
+                  />
+                );
+              }
 
-                return null;
-              },
-            ))}
+              return null;
+            }))}
         </Xwrapper>
       </div>
       {addNewNodeModal && (

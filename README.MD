@@ -9,9 +9,9 @@
  Stunning-story is an open source website that provides a digital interface for playing and creating gamebooks. Gamebooks are interactive novels where the reader makes choices that determine the outcome of the story. The website allows users to play existing gamebooks or create their own using a user-friendly interface. The scope of the project includes providing an easy-to-use platform for gamebook enthusiasts to play and create their own stories.
 
 The goal of the website is to be accessible to both experienced gamebook creators and those new to the format, providing a platform for players and creators to share and experience a wide range of interactive stories.
-## A Ui to play a gamebook Stories:
+## Play:
 
-* The gamebook UI is a digital interface that allows users to interact with a gamebook story. It's includes features such as a text-based narrative, choices for the user to make, and the ability to track progress through the story. 
+* The gamebook UI is a digital interface that allows users to interact with a gamebook story. It's includes features such as a text-based narrative, choices for the user to make, and the ability to track progress through the story.
 
 * The digital interface for playing gamebooks is the interface that users interact with when they are reading and playing a gamebook. It includes features such as a navigation system for moving through the different sections of the gamebook, a display for the text and media elements of the story, and a way for the user to make choices and see the outcome of those choices.
 * It also include features such as bookmarks to save the user's progress, the ability to go back to previous choices, and settings for adjusting the appearance of the interface, such as text size and background color.
@@ -20,7 +20,7 @@ The goal of the website is to be accessible to both experienced gamebook creator
 
 <img src="https://raw.githubusercontent.com/O-Plums/stunning-story/main/repo_info/read.png" width="auto" height="auto" />
 
-## A Builder to build gamebook Stoies:
+## Build:
 
 * The builder allows users to create their own gamebooks. It is a user-friendly interface that guides the user through the process of creating a gamebook, from writing the story to adding choices and determining the outcome of those choices.
 
@@ -37,6 +37,21 @@ The goal of the website is to be accessible to both experienced gamebook creator
 
 ```
 git clone https://github.com/O-Plums/stunning-story
+vim dev.env 
+```
+```bash
+export accessKeyId=key
+export secretAccessKey=key
+export GOOGLE_CLIENT_ID=key
+export GOOGLE_CLIENT_SECRET=key
+export STRAPI_URL=http://localhost:1337
+export STRAPI_TOKEN=key
+export DISCORD_CLIENT_ID=key
+export DISCORD_CLIENT_SECRET=key
+export SECRET=key
+```
+``` 
+source dev.env
 ```
 * Client: The front is build using [NextJS](https://nextjs.org/) and [tailwindcss](https://tailwindcss.com/)
 
