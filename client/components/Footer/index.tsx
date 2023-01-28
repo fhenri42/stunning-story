@@ -6,11 +6,17 @@ export default function Footer() {
 
   const navigation = {
     main: [
-      { name: 'About', href: '#' },
-      { name: t('header.roadmap'), href: 'https://stunning-story.canny.io/', target: '_blank' },
-      { name: 'Terms & Conditions', href: '/legals/termsandconditions' },
-      { name: 'Privacy Policy', href: '/legals/privacypolicy' },
-
+      { name: t('footer.about'), href: '#' },
+      {
+        name: t('header.roadmap'),
+        href: 'https://stunning-story.canny.io/',
+        target: '_blank',
+      },
+      {
+        name: t('footer.terms_conditions'),
+        href: '/legals/termsandconditions',
+      },
+      { name: t('footer.privacy_policy'), href: '/legals/privacypolicy' },
     ],
     social: [
       {
@@ -63,7 +69,10 @@ export default function Footer() {
             </a>
           ))}
         </div>
-        <p className="mt-8 text-center text-base text-gray-400">&copy; 2020 Stunning-story, Inc. All rights reserved.</p>
+        <p className="mt-8 text-center text-base text-gray-400">
+          &copy;
+          {t('footer.brand')}
+        </p>
       </div>
     </footer>
   );

@@ -7,6 +7,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { isMobile } from 'react-device-detect';
 import Modal from '@components/Modal';
 import { useRouter } from 'next/router';
+import useTranslation from 'next-translate/useTranslation';
 
 const Diagram = dynamic(() => import('@components/Diagram'), {
   ssr: false,
@@ -15,6 +16,7 @@ const Diagram = dynamic(() => import('@components/Diagram'), {
 export default function Builder(props: any) {
   const { story } = props;
   const router = useRouter();
+  const { t } = useTranslation('common');
 
   const [openIsMobile, setOpenIsMobile] = useState(false);
   useEffect(() => {
@@ -26,10 +28,9 @@ export default function Builder(props: any) {
   return (
     <div className="h-screen w-screen overflow-hidden">
       {!isMobile && (
-
-      <DndProvider backend={HTML5Backend}>
-        {story && <Diagram story={story} />}
-      </DndProvider>
+        <DndProvider backend={HTML5Backend}>
+          {story && <Diagram story={story} />}
+        </DndProvider>
       )}
       <Modal
         width="100%"
@@ -43,7 +44,7 @@ export default function Builder(props: any) {
           backgroundColor: '#1B263B',
         }}
       >
-        <p> Soorry the builder is not mobile friendly</p>
+        <p>{t('builder.note_mobile_device')}</p>
       </Modal>
     </div>
   );

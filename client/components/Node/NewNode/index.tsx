@@ -10,11 +10,14 @@ import { TrashIcon } from '@heroicons/react/24/solid';
 import { fileUpload, updateStory } from '@http/self';
 import Switch from '@components/Switch';
 import { InputFile } from '@components/Input/inputFile';
+import useTranslation from 'next-translate/useTranslation';
 
 export default function NewNode(props: any) {
   const {
     addNewNodeModal, setAddNewNodeModal, story, setStory,
   } = props;
+  const { t } = useTranslation('common');
+
   const [buttonLoading, setButtonLoading] = useState(false);
   const [outputs, setOutputs] = useState([]);
   const [isVictory, setIsVictory] = useState(false);
@@ -72,7 +75,9 @@ export default function NewNode(props: any) {
   return (
     <Modal
       visible={addNewNodeModal}
-      onCancel={() => { setAddNewNodeModal(false); }}
+      onCancel={() => {
+        setAddNewNodeModal(false);
+      }}
       bodyStyle={{
         backgroundColor: '#1B263B',
         width: '100%',
@@ -81,17 +86,19 @@ export default function NewNode(props: any) {
       }}
     >
       {image !== '' && (
-      <img className="absolute w-full h-full opacity-30 -z-10" src={image} alt="bg-node" />
-
+        <img
+          className="absolute w-full h-full opacity-30 -z-10"
+          src={image}
+          alt="bg-node"
+        />
       )}
       <form
         className="flex flex-col items-center justify-center w-full p-5"
         onSubmit={handleSubmit(addNewNode)}
       >
         <div className="flex flex-col w-full my-5">
-          <p>
-            Text
-          </p>
+          <p>{t('builder.edit_save_node.text')}</p>
+
           <Input
             className="w-full min-h-64"
             type="textarea"
@@ -103,12 +110,10 @@ export default function NewNode(props: any) {
           />
         </div>
         <div className="flex flex-col w-full mb-5">
-          <p>
-            Upload an audio file read by the narrator:
-          </p>
+          <p>{t('builder.edit_save_node.upload_audio')}</p>
           <InputFile
             loading={buttonLoading}
-            label="Upload audio"
+            label={t('builder.edit_save_node.upload_audio_button')}
             onChange={async (formData) => {
               setButtonLoading(true);
               const data = await fileUpload(formData);
@@ -121,12 +126,10 @@ export default function NewNode(props: any) {
           />
         </div>
         <div className="flex flex-col w-full mb-5">
-          <p>
-            Upload the image of your node:
-          </p>
+          <p>{t('builder.edit_save_node.upload_image')}</p>
           <InputFile
             loading={buttonLoading}
-            label="Upload image"
+            label={t('builder.edit_save_node.upload_image_button')}
             onChange={async (formData) => {
               setButtonLoading(true);
               const data = await fileUpload(formData);
@@ -142,11 +145,12 @@ export default function NewNode(props: any) {
         <Divider />
         <div className="flex flex-row items-start justify-between w-full py-5">
           <div className="flex flex-col w-3/5">
-            <p className="">
-              Add to 4 output to your node:
-            </p>
+            <p>{t('builder.edit_save_node.add_output')}</p>
             {outputs.map((answer, key) => (
-              <div className="flex flex-row items-center justify-center w-full mt-2 mb-2" key={answer.id}>
+              <div
+                className="flex flex-row items-center justify-center w-full mt-2 mb-2"
+                key={answer.id}
+              >
                 <TrashIcon
                   className="text-red-400 h-5 w-5 mr-2 cursor-pointer"
                   onClick={() => {
@@ -162,14 +166,14 @@ export default function NewNode(props: any) {
                     setOutputs([...outputs]);
                   }}
                   className="w-full"
-                  placeholder={`Answer ${key}`}
+                  placeholder={`${t('builder.edit_save_node.answer')} ${key}`}
                 />
               </div>
             ))}
           </div>
 
           <Button
-            label="Add answer"
+            label={t('builder.edit_save_node.output_button')}
             className="w-2/6"
             disabled={outputs.length >= 4}
             onClick={() => {
@@ -177,7 +181,6 @@ export default function NewNode(props: any) {
               setOutputs([...outputs]);
             }}
           />
-
         </div>
 
         <Divider />
@@ -189,20 +192,24 @@ export default function NewNode(props: any) {
               onChange={(e) => {
                 setIsVictory(e);
               }}
-              label={isVictory ? 'Victory' : 'Defeat'}
+              label={
+                isVictory
+                  ? t('builder.edit_save_node.victory')
+                  : t('builder.edit_save_node.defeat')
+              }
             />
-          ) : <div />}
+          ) : (
+            <div />
+          )}
           <Button
             loading={buttonLoading}
             type="primary"
             htmlType="submit"
-            label="Create"
+            label={t('builder.edit_save_node.save')}
             size="medium"
           />
         </div>
-
       </form>
-
     </Modal>
   );
 }

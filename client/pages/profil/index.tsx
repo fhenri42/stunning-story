@@ -77,6 +77,12 @@ export default function Profile() {
   return (
     <div>
       <Header />
+      Comming soon
+    </div>
+  );
+  return (
+    <div>
+      <Header />
       <Transition.Root show={mobileMenuOpen} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden" onClose={setMobileMenuOpen}>
           <Transition.Child

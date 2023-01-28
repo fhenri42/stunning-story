@@ -9,21 +9,21 @@ import { isMobile } from 'react-device-detect';
 import getConfig from 'next/config';
 import { fetchMe } from '@lib/me';
 import NewStory from '@components/Story/NewStory';
+import useTranslation from 'next-translate/useTranslation';
 
 const { serverRuntimeConfig } = getConfig();
 export default function Builder(props: any) {
   const { stories } = props;
-
+  const { t } = useTranslation('common');
   const [openModalStory, setOpenModalStory] = useState(false);
 
   return (
     <div className="bg-[#212121]">
       <Header />
       <div className="flex flex-row items-center justify-center mx-20 mt-10">
-        <h1 className="text-3xl text-center">List of all your stories</h1>
+        <h1 className="text-3xl text-center">{t('builder.title')}</h1>
         {!isMobile && (
-        <Button className="ml-auto" onClick={() => setOpenModalStory(true)} label="Create a new story" />
-
+        <Button className="ml-auto" onClick={() => setOpenModalStory(true)} label={t('builder.button_create_story')} />
         )}
       </div>
       <div className="relative mt-14 px-6 lg:px-8 lg:mx-16">
@@ -41,7 +41,7 @@ export default function Builder(props: any) {
               </Link>
             ))}
             {stories?.length === 0 && (
-            <h1> No story yet. Use the button to start bulding</h1>
+            <h1>{t('builder.no_story')}</h1>
             )}
           </div>
         </div>

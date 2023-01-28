@@ -1,29 +1,96 @@
 {
-   "name": "Stunning-story",
-   "header": {
-      "home": "Home",
-      "story": "Play",
-      "builder": "Build",
-      "doc": "Docs",
-      "roadmap": "Roadmap",
-      "signin": "Sign in"
-   },
-   "home": {
-      "title": "Take control of your stories",
-      "subTitle": "Start playing with our imersive stories",
-      "stories": {
-         "descriptionTitle": "Chosse the story that fit your style",
-         "descriptionBody": "Are stories offer an immersive and interactive reading experience that allows the reader to become the protagonist and actively shape the outcome of the story. With gamebooks, you get to experience the thrill of adventure, the rush of making critical decisions, and the satisfaction of seeing how your choices play out in the story. Are stories are perfect for people who want to be more than just a passive reader and want to be in control of the story.",
-         "button": "Browse stories"
-      },
-      "builder": {
-         "descriptionTitle": "A gamebook builder",
-         "descriptionBody": "The builder will allows you to create interactive fiction stories in the format of a 'choose-your-own-adventure' book. Use the visual editor that allows you to organize and connect different sections of your story, as well as options for incorporating various types of multimedia, such as images and sound effects. You are also  able to define conditions and results that branches the story path depending on the choice taken by the reader.",
-         "button": "Start building"
-      },
-      "topStories": {
-         "descriptionTitle": "Are most played story",
-         "descriptionBody": "Check out the mosted played story of the platform"
-      }
-      }
+  "name": "Stunning-story",
+  "dismiss": "Dismiss",
+  "learn_more": "Learn more",
+  "header": {
+    "home": "Home",
+    "story": "Play",
+    "builder": "Build",
+    "doc": "Docs",
+    "roadmap": "Roadmap",
+    "signin": "Sign in"
+  },
+  "home": {
+    "title": "Take control of your stories",
+    "subTitle": "Start playing with our imersive stories",
+    "stories": {
+      "descriptionTitle": "Chosse the story that fit your style",
+      "descriptionBody": "Are stories offer an immersive and interactive reading experience that allows the reader to become the protagonist and actively shape the outcome of the story. With gamebooks, you get to experience the thrill of adventure, the rush of making critical decisions, and the satisfaction of seeing how your choices play out in the story. Are stories are perfect for people who want to be more than just a passive reader and want to be in control of the story.",
+      "button": "Browse stories"
+    },
+    "builder": {
+      "descriptionTitle": "A gamebook builder",
+      "descriptionBody": "The builder will allows you to create interactive fiction stories in the format of a 'choose-your-own-adventure' book. Use the visual editor that allows you to organize and connect different sections of your story, as well as options for incorporating various types of multimedia, such as images and sound effects. You are also  able to define conditions and results that branches the story path depending on the choice taken by the reader.",
+      "button": "Start building"
+    },
+    "topStories": {
+      "descriptionTitle": "Are most played story",
+      "descriptionBody": "Check out the mosted played story of the platform"
+    }
+  },
+  "banner": {
+    "title": "We announced a new product!",
+    "subTitle": "Big news! We re excited to announce a brand new product."
+  },
+  "builder": {
+    "title": "List of all your stories",
+    "no_story": "No story yet. Use the button to start bulding",
+    "button_create_story": "Create a story",
+    "nodes": "Nodes:",
+    "draft": "Draft",
+    "published": "Published",
+    "drop_zone": "Drop here",
+    "edit_save_story": {
+      "title": "Title",
+      "placeholder_title": "The title of your story",
+      "title_required": "The title is required",
+      "description": "Description",
+      "placeholder_description": "The description of your story",
+      "description_required": "The description is required",
+      "tags": "Add Tags:",
+      "placeholder_tags": "Tags must be separated by commas",
+      "tags_required": "One tag is required",
+      "audio": "Upload an audio file as a music theme:",
+      "audio_button": "Upload audio",
+      "cover": "Upload the Cover of your story:",
+      "cover_button": "Upload cover",
+      "remove_button": "Remove story",
+      "save": "Save changes",
+      "create": "Create story"
+    },
+    "edit_save_node": {
+      "text": "Text",
+      "placeholder_text": "The text displayed to the user",
+      "text_required": "The text is required",
+      "upload_audio": "Upload an audio file read by the narrator:",
+      "upload_audio_button": "Upload audio",
+      "upload_image": "Upload the image of your node:",
+      "upload_image_button": "Upload image",
+      "add_output": "Add to 4 output to your node:",
+      "output_button": "Add output",
+      "answer": "Answer",
+      "remove_node": "Remove node",
+      "victory": "Victory",
+      "defeat": "Defeat",
+      "save": "Save changes"
+    },
+    "note_mobile_device": "Note: This feature is not available on mobile devices"
+  },
+  "reader": {
+    "title": "Chosse the story you like to play",
+    "no_story": "No story yet",
+    "rotate_message": "Plz rotate your device to play",
+    "victory_title": "Victory",
+    "defeat_title": "Defeat",
+    "play_again": "Play again",
+    "quit": "Quit",
+    "live": "Live",
+    "draft": "Draft"
+  },
+  "footer": {
+    "about": "About",
+    "terms_conditions": "Terms & Conditions",
+    "privacy_policy": "Privacy policy",
+    "brand": "2020 Stunning-story, Inc. All rights reserved."
+  }
 }

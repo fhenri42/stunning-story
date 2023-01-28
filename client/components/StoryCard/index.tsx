@@ -1,15 +1,20 @@
 import dayjs from 'dayjs';
+import useTranslation from 'next-translate/useTranslation';
 
 export default function StroyCard(props: any) {
   const { story } = props;
+  const { t } = useTranslation('common');
   const author = story?.author?.data.attributes;
   return (
     <div className="flex flex-col overflow-hidden rounded-lg shadow-lg  w-full relative">
       {story.publishedAt ? (
-        <p className="bg-green-400 px-4 rounded-xl absolute top-3 right-3">Live</p>
-
+        <p className="bg-green-400 px-4 rounded-xl absolute top-3 right-3">
+          {t('reader.live')}
+        </p>
       ) : (
-        <p className="bg-gray-400 px-4 rounded-xl absolute top-3 right-3">Draft</p>
+        <p className="bg-gray-400 px-4 rounded-xl absolute top-3 right-3">
+          {t('reader.draft')}
+        </p>
       )}
       <img className="h-64 w-full object-cover" src={story.cover} alt="" />
       <div className="flex flex-col  bg-white px-3 pt-3 h-[300px]">
@@ -21,28 +26,34 @@ export default function StroyCard(props: any) {
           ))}
         </div>
         <p className="text-xl font-semibold text-gray-900">{story.title}</p>
-        <p className="mt-3 text-base text-gray-500 text-ellipsis line-clamp-4">{story.description}</p>
+        <p className="mt-3 text-base text-gray-500 text-ellipsis line-clamp-4">
+          {story.description}
+        </p>
         <div className="mt-auto flex items-center pb-5">
           <div className="flex-shrink-0">
             <span className="sr-only">{author?.username}</span>
-            <img className="h-10 w-10 rounded-full" src={author?.image} alt="" />
+            <img
+              className="h-10 w-10 rounded-full"
+              src={author?.image}
+              alt=""
+            />
           </div>
           <div className="ml-3">
             <p className="text-sm font-medium text-gray-900">
               {author?.username}
             </p>
             <div className="flex space-x-1 text-sm text-gray-500">
-              <time dateTime={
-                dayjs(story.publishedAt || story.cretedAt).format('DD/MM/YYYY')
-                }
+              <time
+                dateTime={dayjs(story.publishedAt || story.cretedAt).format(
+                  'DD/MM/YYYY',
+                )}
               >
-                { dayjs(story.publishedAt || story.cretedAt).format('DD/MM/YYYY')}
-
+                {dayjs(story.publishedAt || story.cretedAt).format(
+                  'DD/MM/YYYY',
+                )}
               </time>
               <span aria-hidden="true">&middot;</span>
-              <span>
-                30 minute play
-              </span>
+              <span>10 minute play</span>
             </div>
           </div>
         </div>

@@ -86,7 +86,7 @@ export default function FeatureDisplay() {
               <img
                 className="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 lg:absolute lg:right-0 lg:h-full lg:w-auto lg:max-w-none"
                 src="/images/builder-exp.png"
-                alt="Customer profile user interface"
+                alt="builder-bg"
               />
             </div>
           </div>

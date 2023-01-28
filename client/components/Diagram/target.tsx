@@ -1,3 +1,4 @@
+import useTranslation from 'next-translate/useTranslation';
 import { useCallback, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
@@ -12,6 +13,7 @@ const style = {
 function TargetBox({
   onDrop, addingNode, input, targetId, value,
 }: any) {
+  const { t } = useTranslation('common');
   const [node, setNode] = useState({
     content: null,
   });
@@ -54,13 +56,9 @@ function TargetBox({
       className="bg-red-400 p-2 ml-14 mt-14"
       style={{ ...style, opacity }}
     >
-      {!node.content && (
-      <p className="p-0 m-0">Drop here.</p>
-      )}
+      {!node.content && <p className="p-0 m-0">{t('builder.drop_zone')}</p>}
 
-      {node && node.content && (
-      <NodeCard node={node} />
-      )}
+      {node && node.content && <NodeCard node={node} />}
     </div>
   );
 }

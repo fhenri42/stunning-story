@@ -11,11 +11,13 @@ import { useForm } from 'react-hook-form';
 import { TrashIcon } from '@heroicons/react/24/solid';
 import { toast } from 'react-toastify';
 import { InputFile } from '@components/Input/inputFile';
+import useTranslation from 'next-translate/useTranslation';
 
 export default function EditNode(props: any) {
   const {
     editNodeModal, setEditNodeModal, story, node, setStory,
   } = props;
+  const { t } = useTranslation('common');
   const { sourceId } = node;
   const [buttonLoading, setButtonLoading] = useState(false);
   const [outputs, setOutputs] = useState(node.outputs);
@@ -47,7 +49,7 @@ export default function EditNode(props: any) {
       nodes: [...story.nodes],
     });
   };
-  const editNode = async (data: any) => {
+  const saveChange = async (data: any) => {
     try {
       setButtonLoading(true);
       const index = story.nodes.findIndex((n:any) => n.sourceId === sourceId);
@@ -91,7 +93,9 @@ export default function EditNode(props: any) {
   return (
     <Modal
       visible={editNodeModal}
-      onCancel={() => { setEditNodeModal(false); }}
+      onCancel={() => {
+        setEditNodeModal(false);
+      }}
       bodyStyle={{
         backgroundColor: '#1B263B',
         padding: '0px',
@@ -99,33 +103,33 @@ export default function EditNode(props: any) {
       }}
     >
       {image !== '' && (
-        <img className="absolute w-full h-full opacity-30 " src={image} alt="node-bg" />
+        <img
+          className="absolute w-full h-full opacity-30 "
+          src={image}
+          alt="node-bg"
+        />
       )}
       <form
         className="flex flex-col items-center justify-center w-full p-5"
-        onSubmit={handleSubmit(editNode)}
+        onSubmit={handleSubmit(saveChange)}
       >
         <div className="flex flex-col w-full my-5">
-          <p>
-            Text
-          </p>
+          <p>{t('builder.edit_save_node.text')}</p>
           <Input
             className="w-full min-h-64"
             type="textarea"
             register={register}
             name="text"
-            placeholder="The text displayed to the user"
+            placeholder={t('builder.edit_save_node.text_placeholder')}
             required
-            error={errors.text ? 'text is required' : ''}
+            error={errors.text ? t('builder.edit_save_node.text_required') : ''}
           />
         </div>
         <div className="flex flex-col w-full mb-5">
-          <p>
-            Upload an audio file read by the narrator:
-          </p>
+          <p>{t('builder.edit_save_node.upload_audio')}</p>
           <InputFile
             loading={buttonLoading}
-            label="Upload audio"
+            label={t('builder.edit_save_node.upload_audio_button')}
             onChange={async (formData) => {
               setButtonLoading(true);
               const data = await fileUpload(formData);
@@ -138,12 +142,10 @@ export default function EditNode(props: any) {
           />
         </div>
         <div className="flex flex-col w-full mb-5">
-          <p>
-            Upload the image of your node:
-          </p>
+          <p>{t('builder.edit_save_node.upload_image')}</p>
           <InputFile
             loading={buttonLoading}
-            label="Upload image"
+            label={t('builder.edit_save_node.upload_image_button')}
             onChange={async (formData) => {
               setButtonLoading(true);
               const data = await fileUpload(formData);
@@ -160,11 +162,12 @@ export default function EditNode(props: any) {
         <Divider />
         <div className="flex flex-row items-start justify-between w-full py-5">
           <div className="flex flex-col w-3/5">
-            <p className="">
-              Add to 4 output to your node:
-            </p>
+            <p>{t('builder.edit_save_node.add_output')}</p>
             {outputs.map((output, key) => (
-              <div className="flex flex-row items-center justify-center w-full mt-2 mb-2 z-10" key={output.id}>
+              <div
+                className="flex flex-row items-center justify-center w-full mt-2 mb-2 z-10"
+                key={output.id}
+              >
                 <TrashIcon
                   className="text-red-400 h-5 w-5 mr-2 cursor-pointer"
                   onClick={() => {
@@ -181,14 +184,14 @@ export default function EditNode(props: any) {
                   }}
                   defaultValue={output.value}
                   className="w-full"
-                  placeholder={`Answer ${key}`}
+                  placeholder={`${t('builder.edit_save_node.answer')} ${key}`}
                 />
               </div>
             ))}
           </div>
 
           <Button
-            label="Add output"
+            label={t('builder.edit_save_node.output_button')}
             className="w-2/6"
             disabled={outputs.length >= 4}
             onClick={() => {
@@ -196,7 +199,6 @@ export default function EditNode(props: any) {
               setOutputs([...outputs]);
             }}
           />
-
         </div>
 
         <Divider />
@@ -205,7 +207,7 @@ export default function EditNode(props: any) {
             loading={buttonLoading}
             type="danger"
             onClick={removeNode}
-            label="Remove node"
+            label={t('builder.edit_save_node.remove_node')}
             size="medium"
           />
           {outputs.length === 0 ? (
@@ -214,20 +216,24 @@ export default function EditNode(props: any) {
               onChange={(e) => {
                 setIsVictory(e);
               }}
-              label={isVictory ? 'Victory' : 'Defeat'}
+              label={
+                isVictory
+                  ? t('builder.edit_save_node.victory')
+                  : t('builder.edit_save_node.defeat')
+              }
             />
-          ) : <div />}
+          ) : (
+            <div />
+          )}
           <Button
             loading={buttonLoading}
             type="primary"
             htmlType="submit"
-            label="Edit node"
+            label={t('builder.edit_save_node.save')}
             size="medium"
           />
         </div>
-
       </form>
-
     </Modal>
   );
 }

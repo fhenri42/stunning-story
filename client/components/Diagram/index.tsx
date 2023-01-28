@@ -1,6 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable consistent-return */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useTransition } from 'react';
 import NodeCard from '@components/Diagram/nodeCard';
 import Button from '@components/Button';
 import Xarrow, { Xwrapper, useXarrow } from 'react-xarrows';
@@ -12,6 +12,7 @@ import {
 } from '@heroicons/react/24/outline';
 import EditStory from '@components/Story/EditStory';
 import Switch from '@components/Switch';
+import useTranslation from 'next-translate/useTranslation';
 import DisplayNodes from './displayNode';
 import Target from './target';
 
@@ -23,6 +24,8 @@ Eiting a node edit all node, Check if the answer can be remove.
 A node can connect back to the story.
 */
 export default function Diagram(props: any) {
+  const { t } = useTranslation('common');
+
   const [story, setStory] = useState(props.story);
   const updateXarrow = useXarrow();
   const [storyGraph, setStoryGraph] = useState(story.storyGraph || []);
@@ -139,9 +142,7 @@ export default function Diagram(props: any) {
       <div className="flex flex-row items-start justify-start">
         <div className="flex flex-col items-center  w-1/6 h-screen ">
           <div className="flex flex-row items-center h-16  bg-slate-700 w-full relative">
-            <h1 className="text-lg mx-auto text-center">
-              {story.title}
-            </h1>
+            <h1 className="text-lg mx-auto text-center">{story.title}</h1>
             <PencilSquareIcon
               onClick={() => {
                 setOpenModalStory(true);
@@ -150,7 +151,7 @@ export default function Diagram(props: any) {
             />
           </div>
           <div className="flex flex-row justify-between items-center w-full px-5 pt-5">
-            <h1 className="text-2xl">Nodes:</h1>
+            <h1 className="text-2xl">{t('builder.nodes')}</h1>
             <Button
               size="small"
               icon={<DocumentPlusIcon className="w-4 h-4 mr-2" />}
@@ -162,16 +163,16 @@ export default function Diagram(props: any) {
           </div>
 
           <div className="overflow-auto w-full pb-20">
-            {story.nodes.length > 0 && story.nodes.map((node) => (
-              <NodeCard
-                key={node.sourceId}
-                node={node}
-                story={story}
-                setStory={setStory}
-              />
-            ))}
+            {story.nodes.length > 0
+              && story.nodes.map((node) => (
+                <NodeCard
+                  key={node.sourceId}
+                  node={node}
+                  story={story}
+                  setStory={setStory}
+                />
+              ))}
           </div>
-
         </div>
         <div
           className="h-screen w-5/6 overflow-auto"
@@ -179,7 +180,11 @@ export default function Diagram(props: any) {
             updateXarrow();
           }}
         >
-          <div className={`absolute top-0 flex flex-row ${!story.publishedAt ? 'bg-gray-500' : 'bg-green-600'} rounded-br-xl p-2`}>
+          <div
+            className={`absolute top-0 flex flex-row ${
+              !story.publishedAt ? 'bg-gray-500' : 'bg-green-600'
+            } rounded-br-xl p-2`}
+          >
             <Switch
               checked={story.publishedAt}
               onChange={async () => {
@@ -192,7 +197,13 @@ export default function Diagram(props: any) {
                   publishedAt: !story.publishedAt ? new Date() : null,
                 });
               }}
-              label={!story.publishedAt ? <p className="w-20">Draft</p> : <p className="w-20">Published</p>}
+              label={
+                !story.publishedAt ? (
+                  <p className="w-20">{t('builder.draft')}</p>
+                ) : (
+                  <p className="w-20">{t('builder.draft')}</p>
+                )
+              }
             />
           </div>
           <div className="absolute bottom-2 ml-3 flex flex-row bg-gray-500 rounded-xl p-2 z-50">
@@ -224,7 +235,6 @@ export default function Diagram(props: any) {
               zoom,
             }}
           >
-
             {storyGraph.length > 0 ? (
               <DisplayNodes
                 story={story}
@@ -233,14 +243,9 @@ export default function Diagram(props: any) {
                 addingNode={addingNode}
                 removeNode={removeNode}
               />
-            )
-              : (
-                <Target
-                  input="null"
-                  addingNode={addingNode}
-                />
-              )}
-
+            ) : (
+              <Target input="null" addingNode={addingNode} />
+            )}
           </div>
           <div className="absolute bg-grid opacity-50 top-0" />
         </div>
@@ -252,47 +257,50 @@ export default function Diagram(props: any) {
       >
         <Xwrapper>
           {storyGraph.length > 0
-            && storyGraph.map((node: any) => node.outputs.map(
-              (output: any, outputIndex: number) => {
-                if (output.type === 'target') {
-                  return (
-                    <Xarrow
-                      labels={<p className="text-xs  text-ellipsis w-20 text-center line-clamp-2">{output.value}</p>}
-                      start={node.sourceId}
-                      end={output.id}
-                      color="green"
-                      key={`${output.id}`}
-                    />
-                  );
-                }
-                if (output.type === 'node') {
-                  return (
-                    <Xarrow
-                      labels={(
-                        <div className="flex flex-row items-center justify-center w-20">
-                          {output.canBeRemove && (
-                          <TrashIcon
-                            className="text-red-400 h-5 w-5 mr-2 cursor-pointer z-50"
-                            onClick={() => {
-                              removeDupicateNode(node.sourceId, outputIndex);
-                            }}
-                          />
-                          )}
-                          <p className="text-xs  text-ellipsis  text-center line-clamp-2">{output.value}</p>
+            && storyGraph.map((node: any) => node.outputs.map((output: any, outputIndex: number) => {
+              if (output.type === 'target') {
+                return (
+                  <Xarrow
+                    labels={(
+                      <p className="text-xs  text-ellipsis w-20 text-center line-clamp-2">
+                        {output.value}
+                      </p>
+                      )}
+                    start={node.sourceId}
+                    end={output.id}
+                    color="green"
+                    key={`${output.id}`}
+                  />
+                );
+              }
+              if (output.type === 'node') {
+                return (
+                  <Xarrow
+                    labels={(
+                      <div className="flex flex-row items-center justify-center w-20">
+                        {output.canBeRemove && (
+                        <TrashIcon
+                          className="text-red-400 h-5 w-5 mr-2 cursor-pointer z-50"
+                          onClick={() => {
+                            removeDupicateNode(node.sourceId, outputIndex);
+                          }}
+                        />
+                        )}
+                        <p className="text-xs  text-ellipsis  text-center line-clamp-2">
+                          {output.value}
+                        </p>
+                      </div>
+                      )}
+                    start={node.sourceId}
+                    end={output.sourceId}
+                    color="purple"
+                    key={`${output.id}`}
+                  />
+                );
+              }
 
-                        </div>
-                  )}
-                      start={node.sourceId}
-                      end={output.sourceId}
-                      color="purple"
-                      key={`${output.id}`}
-                    />
-                  );
-                }
-
-                return null;
-              },
-            ))}
+              return null;
+            }))}
         </Xwrapper>
       </div>
       {addNewNodeModal && (
