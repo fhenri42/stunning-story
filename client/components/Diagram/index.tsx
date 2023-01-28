@@ -1,6 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable consistent-return */
-import React, { useState, useEffect, useTransition } from 'react';
+import React, { useState, useEffect } from 'react';
 import NodeCard from '@components/Diagram/nodeCard';
 import Button from '@components/Button';
 import Xarrow, { Xwrapper, useXarrow } from 'react-xarrows';
@@ -138,10 +138,10 @@ export default function Diagram(props: any) {
     }
   }, []);
   return (
-    <div>
-      <div className="flex flex-row items-start justify-start">
-        <div className="flex flex-col items-center  w-1/6 h-screen ">
-          <div className="flex flex-row items-center h-16  bg-slate-700 w-full relative">
+    <div className="overflow-x-hidden">
+      <div className="flex flex-row items-start justify-start z-50 overflow-hidden">
+        <div className="flex flex-col items-center w-1/6 h-screen z-50">
+          <div className="flex flex-row items-center h-16 z-50  bg-slate-700 w-full relative">
             <h1 className="text-lg mx-auto text-center">{story.title}</h1>
             <PencilSquareIcon
               onClick={() => {
@@ -161,8 +161,7 @@ export default function Diagram(props: any) {
               }}
             />
           </div>
-
-          <div className="overflow-auto w-full pb-20">
+          <div className="overflow-auto overflow-x-hidden w-full pb-20">
             {story.nodes.length > 0
               && story.nodes.map((node) => (
                 <NodeCard
@@ -201,7 +200,7 @@ export default function Diagram(props: any) {
                 !story.publishedAt ? (
                   <p className="w-20">{t('builder.draft')}</p>
                 ) : (
-                  <p className="w-20">{t('builder.draft')}</p>
+                  <p className="w-20">{t('builder.published')}</p>
                 )
               }
             />
@@ -247,7 +246,7 @@ export default function Diagram(props: any) {
               <Target input="null" addingNode={addingNode} />
             )}
           </div>
-          <div className="absolute bg-grid opacity-50 top-0" />
+          <div className="absolute bg-grid opacity-50 top-0 w-5/6" />
         </div>
       </div>
       <div
