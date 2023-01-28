@@ -6,10 +6,9 @@
   <h1 align='center'>Stunning-story</h1>
 </p>
 
-Stunning-story is open source app that provide Ui to play a build gamebooks
+ Stunning-story is an open source application that provides a digital interface for playing and creating gamebooks. Gamebooks are interactive novels where the reader makes choices that determine the outcome of the story. The website allows users to play existing gamebooks or create their own using a user-friendly interface. The scope of the project includes providing an easy-to-use platform for gamebook enthusiasts to play and create their own stories.
 
-
-
+The goal of the website is to be accessible to both experienced gamebook creators and those new to the format, providing a platform for players and creators to share and experience a wide range of interactive stories. Additionally, the website can be extended with new features by the community, and it is also likely that the website will be available for multiple platforms like desktop, mobile, and web.
 ## A Ui to play a gamebook Stories:
 
 * The gamebook UI is a digital interface that allows users to interact with a gamebook story. It's includes features such as a text-based narrative, choices for the user to make, and the ability to track progress through the story. 
