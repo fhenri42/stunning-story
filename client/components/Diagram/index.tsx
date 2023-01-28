@@ -210,7 +210,7 @@ export default function Diagram(props: any) {
               />
             </div>
             <Button
-              label="Preview"
+              label={t('builder.preview')}
               className=" ml-2 rounded-t-none"
               size="small"
               onClick={() => {

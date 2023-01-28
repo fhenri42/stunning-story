@@ -23,18 +23,3 @@ module.exports = nextTranslate(
     },
   },
 );
-
-/* HARD */
-// TODO Ajouter un système d'inventaire.
-
-// TODO Save the state of the story for the player. be able to resume the story.
-// TODO Comment faire pour l'edtion des iputs des nodes ??
-
-/* EASY */
-// TODO Ecrire l'histoire d'expemle.
-// TODO I18n all the text.
-// TODO add difficulty to story.
-// TODO add docs part.
-// TODO add a Profile page.
-// TODO change footer
-// TODO Instagram account
