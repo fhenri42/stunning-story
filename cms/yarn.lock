@@ -1844,6 +1844,11 @@
     "@strapi/utils" "4.5.0"
     lodash "4.17.21"
 
+"@strapi/plugin-open-ai@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@strapi/plugin-open-ai/-/plugin-open-ai-1.0.0.tgz#1d1383b60d8adc53604a1991451eeba50ce9beb1"
+  integrity sha512-jUKdE+gsmIML0E1z6tygVg3/+kSU5WXT+i1CbmiYkrUQIoGXJPPFWToxoUdhzVAWwkp4XwGj3VJtN/gUj4XEug==
+
 "@strapi/plugin-upload@4.5.0":
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/@strapi/plugin-upload/-/plugin-upload-4.5.0.tgz#bbf1877b3d2fa4e7311c8cb5039ecfd1fafda8f4"
