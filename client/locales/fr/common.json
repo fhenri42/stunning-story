@@ -89,7 +89,22 @@
       "base_dmg": "Base DMG",
       "base_dmg_placeholder": "The base DMG of the player",
       "base_dmg_required": "The base DMG is required"
+    },
+    "item_view": {
+      "name": "Name",
+      "name_placeholder": "The name of the item",
+      "name_required": "The name is required",
+      "description": "Description",
+      "description_placeholder": "The description of the item",
+      "dmg": "DMG (DICE + BASE)",
+      "dmg_placeholder": "base dommage of the item",
+      "image": "Image of the item",
+      "image_button": "Upload image",
+      "remove_button": "Remove item",
+      "save": "Save changes",
+      "create": "Create item"
     }
+    
   },
   "reader": {
     "title": "Chosse the story you like to play",

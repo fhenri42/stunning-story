@@ -6,11 +6,15 @@ import Button from '@components/Button';
 import useTranslation from 'next-translate/useTranslation';
 import { useForm } from 'react-hook-form';
 import Divider from '@components/Divider';
+import { InputFile } from '@components/Input/inputFile';
+import { fileUpload } from '@http/self';
+import Select from '@components/Select';
 
 export default function ItemView(props: any) {
   const { t } = useTranslation('common');
   const [buttonLoading, setButtonLoading] = useState(false);
   const [newItemOpen, setNewItemOpen] = useState(false);
+  const [image, setImage] = useState(false);
 
   const {
     openView, setOpenView,
@@ -21,8 +25,10 @@ export default function ItemView(props: any) {
     formState: { errors },
   } = useForm();
 
-  const editPlayerBaseInfo = async (data: any) => {
+  const createItem = async (data: any) => {
+    console.log(data);
   };
+
   return (
     <Modal
       bodyStyle={{
@@ -58,30 +64,55 @@ export default function ItemView(props: any) {
       >
         <form
           className="flex flex-col items-center justify-center w-full p-5"
-          onSubmit={handleSubmit(editPlayerBaseInfo)}
+          onSubmit={handleSubmit(createItem)}
         >
+          <h1 className="text-2xl">New item</h1>
+
           <div className="flex flex-col w-full my-5">
-            <p>{t('builder.player_view.base_hp')}</p>
+            <p>{t('builder.item_view.name')}</p>
             <Input
               className="w-full"
               register={register}
-              name="baseHp"
-              placeholder={t('builder.player_view.base_hp_placeholder')}
+              name="name"
+              placeholder={t('builder.item_view.name_placeholder')}
               required
-              error={
-                errors.baseHp ? t('builder.player_view.base_hp_required') : ''
-              }
+              error={errors.name ? t('builder.item_view.name_required') : ''}
             />
-            <p>{t('builder.player_view.base_dmg')}</p>
+            <p className="pt-3">{t('builder.item_view.description')}</p>
             <Input
               className="w-full"
               register={register}
-              name="baseDmg"
-              placeholder={t('builder.player_view.base_dmg_placeholder')}
-              required
-              error={
-                errors.baseDmg ? t('builder.player_view.base_dmg_required') : ''
-              }
+              name="description"
+              placeholder={t('builder.item_view.description_placeholder')}
+              required={false}
+            />
+            <p className="pt-3">{t('builder.item_view.dmg')}</p>
+            <div className="flex flex-row items-center">
+              <div className="w-1/3">
+                <Select />
+              </div>
+
+              <Input
+                className="w-full"
+                register={register}
+                name="description"
+                placeholder={t('builder.item_view.dmg_placeholder')}
+                required={false}
+              />
+            </div>
+            <p className="pt-3">{t('builder.item_view.image')}</p>
+            <InputFile
+              loading={buttonLoading}
+              label={t('builder.edit_save_node.upload_image_button')}
+              onChange={async (formData) => {
+                setButtonLoading(true);
+                const data = await fileUpload(formData);
+                setButtonLoading(false);
+                setImage(data.url);
+              }}
+              allowMultipleFiles={false}
+              uploadFileName="bg-image"
+              className="w-2/6"
             />
           </div>
 
@@ -92,7 +123,7 @@ export default function ItemView(props: any) {
               loading={buttonLoading}
               type="primary"
               htmlType="submit"
-              label={t('builder.edit_save_node.save')}
+              label={t('builder.item_view.create')}
               size="medium"
             />
           </div>
