@@ -69,14 +69,3 @@ Please read our [Contributing Guide](https://github.com/O-Plums/stunning-story/b
 # License
 
 Stunning-story is [MIT](https://github.com/O-Plums/stunning-story/blob/main/LICENSE) licensed.
-
-# Small Todo
-
-* Add a inventory systeme.
-* Add a combat synteme using dice.
-* Save the progretion of the player.
-* How to fix the edition of input ? 
-* Builder have a bug some time so storyGraph get lost, (add a json view for user to fix by hands).
-* Add a documentation for the user.
-* Create the profil page.
-* Add the multiplayer mode.
