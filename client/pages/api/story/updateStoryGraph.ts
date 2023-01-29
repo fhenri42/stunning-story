@@ -9,10 +9,11 @@ const { serverRuntimeConfig } = getConfig();
 
 async function updateStorySchema(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const session: any = await getToken({ req, secret: serverRuntimeConfig.SECRET });
-
+    const session: any = await getToken({
+      req,
+      secret: serverRuntimeConfig.SECRET,
+    });
     const { body } = req;
-
     const cmsQuery = qs.stringify(
       {
         filters: {
@@ -26,12 +27,9 @@ async function updateStorySchema(req: NextApiRequest, res: NextApiResponse) {
         encodeValuesOnly: true,
       },
     );
-    const [story] = await fetchCMS(
-      `/api/stories?${cmsQuery}&publicationState=preview`,
-    );
-
+    const [story] = await fetchCMS(`/api/stories?${cmsQuery}&publicationState=preview`);
     await fetchCMS(`/api/stories/${body.id}`, 'PUT', session.jwt, {
-      data: { ...body, storyGraph: story.storyGraph },
+      data: { ...story, publishedAt: null, storyGraph: body.storyGraph },
     });
 
     res.json('OK');

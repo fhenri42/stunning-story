@@ -38,6 +38,7 @@
     "button_create_story": "Create a story",
     "nodes": "Nodes:",
     "draft": "Draft",
+    "preview": "Preview",
     "published": "Published",
     "drop_zone": "Drop here",
     "edit_save_story": {
@@ -74,7 +75,13 @@
       "defeat": "Defeat",
       "save": "Save changes"
     },
-    "note_mobile_device": "Note: This feature is not available on mobile devices"
+    "note_mobile_device": "Note: This feature is not available on mobile devices",
+    "debug_tool": {
+      "title": "DANGER ZONE",
+      "sub_title": "No rollback of any kind, be sure of what you are doing",
+      "apply": "validate",
+      "open": "Open debug tool"
+    }
   },
   "reader": {
     "title": "Chosse the story you like to play",

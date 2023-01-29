@@ -35,7 +35,7 @@ function TargetBox({
         newItem.outputs = [...outputs];
         onDrop(monitor.getItemType());
         setNode(newItem);
-        addingNode(newItem, targetId, item.story);
+        addingNode(newItem, targetId);
         return undefined;
       },
       collect: (monitor) => ({

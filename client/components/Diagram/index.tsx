@@ -7,7 +7,7 @@ import Button from '@components/Button';
 import Xarrow, { Xwrapper, useXarrow } from 'react-xarrows';
 import NewNode from '@components/Node/NewNode';
 import { MagnifyingGlassMinusIcon, MagnifyingGlassPlusIcon } from '@heroicons/react/24/solid';
-import { updateStory } from '@http/self';
+import { updateOnlyStoryGraph, updateStory } from '@http/self';
 import {
   DocumentPlusIcon, MinusIcon, PencilSquareIcon, TrashIcon,
 } from '@heroicons/react/24/outline';
@@ -17,6 +17,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import DisplayNodes from './displayNode';
 import Target from './target';
+import JsonView from './jsonView';
 
 let tmpStoryGraph: any = [];
 
@@ -34,11 +35,11 @@ export default function Diagram(props: any) {
   const [storyGraph, setStoryGraph] = useState(story.storyGraph || []);
   const [addNewNodeModal, setAddNewNodeModal] = useState(false);
   const [openModalStory, setOpenModalStory] = useState(false);
+  const [openJsonView, setOpenJsonView] = useState(false);
   const [zoom, setZoom] = useState('100%');
-  const addingNode = (node: any, targetId: any, incStory:any) => {
+  const addingNode = (node: any, targetId: any) => {
     try {
       const indexSourceId = tmpStoryGraph.findIndex((n: any) => n.sourceId === node.sourceId);
-
       if (node.input !== 'null') {
         const indexInput = tmpStoryGraph.findIndex((n: any) => n.sourceId === node.input);
         if (indexInput !== -1) {
@@ -56,24 +57,18 @@ export default function Diagram(props: any) {
 
       if (indexSourceId !== -1) {
         tmpStoryGraph = [...tmpStoryGraph];
-        const newStory = {
-          ...incStory,
-          publishedAt: null,
-          storyGraph: [...tmpStoryGraph],
-        };
-        updateStory(newStory);
-        setStory(newStory);
+        updateOnlyStoryGraph({
+          id: story.id,
+          storyGraph: tmpStoryGraph,
+        });
         setStoryGraph([...tmpStoryGraph]);
         return;
       }
       tmpStoryGraph = [...tmpStoryGraph, { ...node }];
-      const newStory = {
-        ...incStory,
-        publishedAt: null,
-        storyGraph: [...tmpStoryGraph],
-      };
-      updateStory(newStory);
-      setStory(newStory);
+      updateOnlyStoryGraph({
+        id: story.id,
+        storyGraph: tmpStoryGraph,
+      });
       setStoryGraph([...tmpStoryGraph]);
     } catch (error) {
       console.log(error);
@@ -104,17 +99,11 @@ export default function Diagram(props: any) {
         tmpStoryGraph[indexParent].outputs[indexOutput].type = 'target';
       }
       tmpStoryGraph.splice(index, 1);
+      updateOnlyStoryGraph({
+        id: story.id,
+        storyGraph: [...tmpStoryGraph],
+      });
       setStoryGraph([...tmpStoryGraph]);
-      updateStory({
-        ...story,
-        publishedAt: null,
-        storyGraph: [...tmpStoryGraph],
-      });
-      setStory({
-        ...story,
-        publishedAt: null,
-        storyGraph: [...tmpStoryGraph],
-      });
     }
   };
 
@@ -122,17 +111,11 @@ export default function Diagram(props: any) {
     const index = tmpStoryGraph.findIndex((n:any) => n.sourceId === nodeId);
     if (index !== -1) {
       tmpStoryGraph[index].outputs[outputIndex].type = 'target';
+      updateOnlyStoryGraph({
+        id: story.id,
+        storyGraph: [...tmpStoryGraph],
+      });
       setStoryGraph([...tmpStoryGraph]);
-      updateStory({
-        ...story,
-        publishedAt: null,
-        storyGraph: [...tmpStoryGraph],
-      });
-      setStory({
-        ...story,
-        publishedAt: null,
-        storyGraph: [...tmpStoryGraph],
-      });
     }
   };
   useEffect(() => {
@@ -140,6 +123,7 @@ export default function Diagram(props: any) {
       tmpStoryGraph = story.storyGraph;
     }
   }, []);
+
   return (
     <div className="overflow-x-hidden">
       <div className="flex flex-row items-start justify-start z-50 overflow-hidden">
@@ -201,12 +185,12 @@ export default function Diagram(props: any) {
                   });
                 }}
                 label={
-                  !story.publishedAt ? (
-                    <p className="w-20">{t('builder.draft')}</p>
-                  ) : (
-                    <p className="w-20">{t('builder.published')}</p>
-                  )
-                }
+                    !story.publishedAt ? (
+                      <p className="w-20">{t('builder.draft')}</p>
+                    ) : (
+                      <p className="w-20">{t('builder.published')}</p>
+                    )
+                  }
               />
             </div>
             <Button
@@ -215,6 +199,16 @@ export default function Diagram(props: any) {
               size="small"
               onClick={() => {
                 router.push(`/builder/preview/${story.slug}`);
+              }}
+            />
+
+            <Button
+              label={t('builder.debug_tool.open')}
+              background="bg-red-500"
+              className=" ml-2 rounded-t-none"
+              size="small"
+              onClick={() => {
+                setOpenJsonView(true);
               }}
             />
           </div>
@@ -250,7 +244,6 @@ export default function Diagram(props: any) {
           >
             {storyGraph.length > 0 ? (
               <DisplayNodes
-                story={story}
                 currentNode={storyGraph[0]}
                 storyGraph={storyGraph}
                 addingNode={addingNode}
@@ -292,12 +285,12 @@ export default function Diagram(props: any) {
                     labels={(
                       <div className="flex flex-row items-center justify-center w-20">
                         {output.canBeRemove && (
-                          <TrashIcon
-                            className="text-red-400 h-5 w-5 mr-2 cursor-pointer z-50"
-                            onClick={() => {
-                              removeDupicateNode(node.sourceId, outputIndex);
-                            }}
-                          />
+                        <TrashIcon
+                          className="text-red-400 h-5 w-5 mr-2 cursor-pointer z-50"
+                          onClick={() => {
+                            removeDupicateNode(node.sourceId, outputIndex);
+                          }}
+                        />
                         )}
                         <p className="text-xs  text-ellipsis  text-center line-clamp-2">
                           {output.value}
@@ -330,6 +323,21 @@ export default function Diagram(props: any) {
           setStory={setStory}
           openModalStory={openModalStory}
           setOpenModalStory={setOpenModalStory}
+        />
+      )}
+      {openJsonView && (
+        <JsonView
+          openJsonView
+          setOpenJsonView={setOpenJsonView}
+          storyGraph={story.storyGraph}
+          onStoryGraphChange={(newStoryGraph) => {
+            setOpenJsonView(false);
+            updateOnlyStoryGraph({
+              id: story.id,
+              storyGraph: newStoryGraph,
+            });
+            setStoryGraph([...newStoryGraph]);
+          }}
         />
       )}
     </div>

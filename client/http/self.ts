@@ -53,6 +53,22 @@ export async function updateStory(data: any) {
     throw e;
   }
 }
+
+export async function updateOnlyStoryGraph(data: any) {
+  try {
+    const res = await fetch(`${selfUrl}/api/story/updateStoryGraph`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+
+    const json = await res.json();
+    return json;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+}
 export async function fileUpload(formData: any) {
   try {
     const config = {

@@ -79,3 +79,4 @@ Stunning-story is [MIT](https://github.com/O-Plums/stunning-story/blob/main/LICE
 * Builder have a bug some time so storyGraph get lost, (add a json view for user to fix by hands).
 * Add a documentation for the user.
 * Create the profil page.
+* Add the multiplayer mode.
