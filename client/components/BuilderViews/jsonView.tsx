@@ -12,7 +12,7 @@ export default function JsonView(props: any) {
   const { t } = useTranslation('common');
 
   const {
-    storyGraph, openJsonView, setOpenJsonView, onStoryGraphChange,
+    storyGraph, openView, setOpenView, onStoryGraphChange,
   } = props;
   const [json, setJson] = useState(JSON.stringify(storyGraph, null, 2));
   return (
@@ -20,9 +20,9 @@ export default function JsonView(props: any) {
       bodyStyle={{
         padding: 0,
       }}
-      visible={openJsonView}
+      visible={openView}
       onCancel={() => {
-        setOpenJsonView(false);
+        setOpenView(false);
       }}
     >
       <div className="w-full h-full relative bg-black ">

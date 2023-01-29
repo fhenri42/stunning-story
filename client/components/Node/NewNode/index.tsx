@@ -104,9 +104,9 @@ export default function NewNode(props: any) {
             type="textarea"
             register={register}
             name="text"
-            placeholder="The text displayed to the user"
+            placeholder={t('builder.edit_save_node.placeholder_text')}
             required
-            error={errors.text ? 'text is required' : ''}
+            error={errors.text ? t('builder.edit_save_node.text_required') : ''}
           />
         </div>
         <div className="flex flex-col w-full mb-5">

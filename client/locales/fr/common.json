@@ -81,7 +81,14 @@
       "sub_title": "No rollback of any kind, be sure of what you are doing",
       "apply":"validate",
       "open":"Open debug tool"
-
+    },
+    "player_view": {
+      "base_hp": "Base HP",
+      "base_hp_placeholder": "The base HP of the player",
+      "base_hp_required": "The base HP is required",
+      "base_dmg": "Base DMG",
+      "base_dmg_placeholder": "The base DMG of the player",
+      "base_dmg_required": "The base DMG is required"
     }
   },
   "reader": {

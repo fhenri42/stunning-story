@@ -7,17 +7,15 @@ import Button from '@components/Button';
 import Xarrow, { Xwrapper, useXarrow } from 'react-xarrows';
 import NewNode from '@components/Node/NewNode';
 import { MagnifyingGlassMinusIcon, MagnifyingGlassPlusIcon } from '@heroicons/react/24/solid';
-import { updateOnlyStoryGraph, updateStory } from '@http/self';
+import { updateOnlyStoryGraph } from '@http/self';
 import {
   DocumentPlusIcon, MinusIcon, PencilSquareIcon, TrashIcon,
 } from '@heroicons/react/24/outline';
 import EditStory from '@components/Story/EditStory';
-import Switch from '@components/Switch';
 import useTranslation from 'next-translate/useTranslation';
-import { useRouter } from 'next/router';
 import DisplayNodes from './displayNode';
 import Target from './target';
-import JsonView from './jsonView';
+import TopMenu from './topMenu';
 
 let tmpStoryGraph: any = [];
 
@@ -26,17 +24,41 @@ Fix firs time use node bug.
 Eiting a node edit all node, Check if the answer can be remove.
 A node can connect back to the story.
 */
+
+/*
+Perso
+hp de base :
+combat de base :
+argent de base :
+*/
+/*
+Tu construit un item.
+  item:{
+    valeur:
+    dmg:
+    bonusHp:
+    type: only one type of items
+  },
+  ennemi:
+  {
+    hp:
+    dmg:
+  }
+Quand tu ajoute une reponse tu peut ajoute un loot: 1 item ou n item mais alors il sont pris de facon radome.
+Quand tu ajoute une reponse tu peut ajoute un combat: 1 ennemi ou N ennemi.
+
+*/
 export default function Diagram(props: any) {
   const { t } = useTranslation('common');
-  const router = useRouter();
 
   const [story, setStory] = useState(props.story);
   const updateXarrow = useXarrow();
   const [storyGraph, setStoryGraph] = useState(story.storyGraph || []);
   const [addNewNodeModal, setAddNewNodeModal] = useState(false);
   const [openModalStory, setOpenModalStory] = useState(false);
-  const [openJsonView, setOpenJsonView] = useState(false);
+
   const [zoom, setZoom] = useState('100%');
+
   const addingNode = (node: any, targetId: any) => {
     try {
       const indexSourceId = tmpStoryGraph.findIndex((n: any) => n.sourceId === node.sourceId);
@@ -128,13 +150,14 @@ export default function Diagram(props: any) {
     <div className="overflow-x-hidden">
       <div className="flex flex-row items-start justify-start z-50 overflow-hidden">
         <div className="flex flex-col items-center w-1/6 h-screen z-50">
-          <div className="flex flex-row items-center h-16 z-50  bg-slate-700 w-full relative">
-            <h1 className="text-lg mx-auto text-center">{story.title}</h1>
+          <div className="flex flex-row items-center justify-evenly h-16 z-50 bg-slate-700 w-full">
+            <div />
+            <h1 className="text-lg">{story.title}</h1>
             <PencilSquareIcon
               onClick={() => {
                 setOpenModalStory(true);
               }}
-              className="w-6 h-6 absolute top-5 right-5 cursor-pointer"
+              className="w-6 h-6  cursor-pointer"
             />
           </div>
           <div className="flex flex-row justify-between items-center w-full px-5 pt-5">
@@ -166,52 +189,11 @@ export default function Diagram(props: any) {
             updateXarrow();
           }}
         >
-          <div className="flex absolute top-0">
-            <div
-              className={` flex flex-row ${
-                !story.publishedAt ? 'bg-gray-500' : 'bg-green-600'
-              } rounded-br-xl p-2`}
-            >
-              <Switch
-                checked={story.publishedAt}
-                onChange={async () => {
-                  await updateStory({
-                    ...story,
-                    publishedAt: !story.publishedAt ? new Date() : null,
-                  });
-                  setStory({
-                    ...story,
-                    publishedAt: !story.publishedAt ? new Date() : null,
-                  });
-                }}
-                label={
-                    !story.publishedAt ? (
-                      <p className="w-20">{t('builder.draft')}</p>
-                    ) : (
-                      <p className="w-20">{t('builder.published')}</p>
-                    )
-                  }
-              />
-            </div>
-            <Button
-              label={t('builder.preview')}
-              className=" ml-2 rounded-t-none"
-              size="small"
-              onClick={() => {
-                router.push(`/builder/preview/${story.slug}`);
-              }}
-            />
-
-            <Button
-              label={t('builder.debug_tool.open')}
-              background="bg-red-500"
-              className=" ml-2 rounded-t-none"
-              size="small"
-              onClick={() => {
-                setOpenJsonView(true);
-              }}
-            />
-          </div>
+          <TopMenu
+            setStoryGraph={setStoryGraph}
+            story={story}
+            setStory={setStory}
+          />
 
           <div className="absolute bottom-2 ml-3 flex flex-row bg-gray-500 rounded-xl p-2 z-50">
             <MagnifyingGlassMinusIcon
@@ -323,21 +305,6 @@ export default function Diagram(props: any) {
           setStory={setStory}
           openModalStory={openModalStory}
           setOpenModalStory={setOpenModalStory}
-        />
-      )}
-      {openJsonView && (
-        <JsonView
-          openJsonView
-          setOpenJsonView={setOpenJsonView}
-          storyGraph={story.storyGraph}
-          onStoryGraphChange={(newStoryGraph) => {
-            setOpenJsonView(false);
-            updateOnlyStoryGraph({
-              id: story.id,
-              storyGraph: newStoryGraph,
-            });
-            setStoryGraph([...newStoryGraph]);
-          }}
         />
       )}
     </div>
