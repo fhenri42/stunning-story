@@ -19,7 +19,7 @@
     "description": {
       "type": "richtext"
     },
-    "variables": {
+    "items": {
       "type": "json"
     },
     "slug": {
@@ -47,6 +47,12 @@
     },
     "audio": {
       "type": "string"
+    },
+    "ennemies": {
+      "type": "json"
+    },
+    "player": {
+      "type": "json"
     }
   }
 }
