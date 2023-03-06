@@ -26,7 +26,7 @@ export default function ItemView(props: any) {
   } = useForm();
 
   const createItem = async (data: any) => {
-    console.log(data);
+    console.log(data, image);
   };
 
   return (

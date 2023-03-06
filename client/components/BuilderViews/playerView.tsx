@@ -26,6 +26,7 @@ export default function PlayerView(props: any) {
   });
 
   const editPlayerBaseInfo = async (data: any) => {
+    setButtonLoading(data);
   };
   return (
     <Modal

@@ -8,7 +8,19 @@ import { useRouter } from 'next/router';
 import JsonView from '@components/BuilderViews/jsonView';
 import PlayerView from '@components/BuilderViews/playerView';
 import ItemView from '@components/BuilderViews/itemView';
+import { toast } from 'react-toastify';
 
+function exportToJsonFile(jsonData) {
+  const dataStr = JSON.stringify(jsonData);
+  const dataUri = `data:application/json;charset=utf-8,${encodeURIComponent(dataStr)}`;
+
+  const exportFileDefaultName = 'data.json';
+
+  const linkElement = document.createElement('a');
+  linkElement.setAttribute('href', dataUri);
+  linkElement.setAttribute('download', exportFileDefaultName);
+  linkElement.click();
+}
 export default function TopMenu(props: any) {
   const { story, setStory, setStoryGraph } = props;
   const router = useRouter();
@@ -55,12 +67,22 @@ export default function TopMenu(props: any) {
         }}
       />
       <Button
+        label={t('builder.export')}
+        background="bg-blue-400"
+        className="ml-10 rounded-t-none"
+        size="small"
+        onClick={() => {
+          exportToJsonFile(story.storyGraph);
+        }}
+      />
+      <Button
         label="Player info"
         background="bg-blue-400"
         className="ml-10 rounded-t-none"
         size="small"
         onClick={() => {
-          setOpenPlayerView(true);
+          toast.info('Not implemented yet, comming soon!');
+          // setOpenPlayerView(true);
         }}
       />
       <Button
@@ -69,7 +91,8 @@ export default function TopMenu(props: any) {
         className="ml-2 rounded-t-none"
         size="small"
         onClick={() => {
-          setOpenItemView(true);
+          toast.info('Not implemented yet, comming soon!');
+          // setOpenItemView(true);
         }}
       />
       <Button
@@ -78,10 +101,10 @@ export default function TopMenu(props: any) {
         className="ml-2 rounded-t-none"
         size="small"
         onClick={() => {
-          setOpenJsonView(true);
+          toast.info('Not implemented yet, comming soon!');
+          // setOpenJsonView(true);
         }}
       />
-
       <Button
         label={t('builder.debug_tool.open')}
         background="bg-red-500"

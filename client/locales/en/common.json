@@ -81,7 +81,8 @@
       "sub_title": "No rollback of any kind, be sure of what you are doing",
       "apply": "validate",
       "open": "Open debug tool"
-    }
+    },
+    "export": "Export story"
   },
   "reader": {
     "title": "Chosse the story you like to play",
@@ -92,7 +93,10 @@
     "play_again": "Play again",
     "quit": "Quit",
     "live": "Live",
-    "draft": "Draft"
+    "draft": "Draft",
+    "restart": "Restart",
+    "restart_title": "Êtes-vous sûr(e) de vouloir vous recomencer ?",
+    "restart_message": "Si vous recommencez, vous perdrez votre progression."
   },
   "footer": {
     "about": "About",

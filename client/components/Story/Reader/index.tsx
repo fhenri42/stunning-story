@@ -7,6 +7,7 @@ import DeviceOrientation, { Orientation } from 'react-screen-orientation';
 import { motion } from 'framer-motion';
 import useTranslation from 'next-translate/useTranslation';
 import { SpeakerWaveIcon, SpeakerXMarkIcon } from '@heroicons/react/24/outline';
+import PopConfirm from '@components/PopConfirm';
 
 const audio = new Audio();
 
@@ -15,6 +16,8 @@ export default function Reader(props: any) {
   const { t } = useTranslation('common');
   const storyGraph = story.storyGraph || [];
   const [changeNode, setChangeNode] = useState(true);
+  const [restartOpen, setRestartOpen] = useState(false);
+
   const [currentNode, setCurrentNode] = useState(storyGraph[0]);
   const [isPlaying, setIsPlaying] = React.useState(false);
 
@@ -29,6 +32,11 @@ export default function Reader(props: any) {
     if (!changeNode) {
       setChangeNode(true);
     }
+    const data: any = JSON.parse(localStorage.getItem(story.slug));
+    if (data.index) {
+      setCurrentNode(storyGraph[data.index]);
+    }
+
     audio.src = story.audio;
     return () => {
       audio.pause();
@@ -81,9 +89,23 @@ export default function Reader(props: any) {
                   size="small"
                   background="bg-blue-600"
                   onClick={() => {
-                    setCurrentNode(storyGraph[0]);
+                    setRestartOpen(true);
                   }}
                   className="z-10 mr-3"
+                />
+                <PopConfirm
+                  title={t('reader.restart_title')}
+                  text={t('reader.restart_message')}
+                  isOpen={restartOpen}
+                  setIsOpen={setRestartOpen}
+                  okText="Oui"
+                  cancelText="Non"
+                  type="danger"
+                  confirm={async () => {
+                    setCurrentNode(storyGraph[0]);
+                    const newData = JSON.stringify({ index: 0 });
+                    localStorage.setItem(story.slug, newData);
+                  }}
                 />
                 <Button
                   label="Quit"
@@ -143,6 +165,8 @@ export default function Reader(props: any) {
                     );
                     setChangeNode(false);
                     setCurrentNode(storyGraph[index]);
+                    const newData = JSON.stringify({ index });
+                    localStorage.setItem(story.slug, newData);
                   }}
                 >
                   <p className="text-xs lg:text-lg">{a.value}</p>

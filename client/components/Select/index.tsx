@@ -46,13 +46,13 @@ export default function Select() {
                   )}
                   value={person}
                 >
-                  {({ selected, active }) => (
+                  {({ newSelected, active }: any) => (
                     <>
-                      <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
+                      <span className={classNames(newSelected ? 'font-semibold' : 'font-normal', 'block truncate')}>
                         {person.name}
                       </span>
 
-                      {selected ? (
+                      {newSelected ? (
                         <span
                           className={classNames(
                             active ? 'text-black' : 'text-indigo-600',
