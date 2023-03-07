@@ -23,8 +23,21 @@ export default function Builder(props: any) {
       <Header />
       <div className="flex flex-row items-center justify-center mx-20 mt-10">
         <h1 className="text-3xl text-center">{t('builder.title')}</h1>
+
         {!isMobile && (
-        <Button className="ml-auto" onClick={() => setOpenModalStory(true)} label={t('builder.button_create_story')} />
+          <div className="ml-auto flex flex-row items-center justify-center">
+            <Button
+              onClick={() => setOpenModalStory(true)}
+              label={t('builder.button_create_story')}
+            />
+            <Link
+              type="link"
+              href="/doc"
+              className="ml-5"
+            >
+              {t('header.doc')}
+            </Link>
+          </div>
         )}
       </div>
       <div className="relative mt-14 px-6 lg:px-8 lg:mx-16">
@@ -33,17 +46,13 @@ export default function Builder(props: any) {
         </div>
         <div className="max-w-8xl">
           <div className="grid  mx-auto max-w-lg gap-5 lg:max-w-none lg:grid-cols-4">
-            {stories?.length > 0 && stories.map((story: any) => (
-              <Link
-                key={story.slug}
-                href={`/builder/${story.slug}`}
-              >
-                <StroyCard story={story} />
-              </Link>
-            ))}
-            {stories?.length === 0 && (
-            <h1>{t('builder.no_story')}</h1>
-            )}
+            {stories?.length > 0
+              && stories.map((story: any) => (
+                <Link key={story.slug} href={`/builder/${story.slug}`}>
+                  <StroyCard story={story} />
+                </Link>
+              ))}
+            {stories?.length === 0 && <h1>{t('builder.no_story')}</h1>}
           </div>
         </div>
       </div>

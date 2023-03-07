@@ -33,7 +33,7 @@ export default function Reader(props: any) {
       setChangeNode(true);
     }
     const data: any = JSON.parse(localStorage.getItem(story.slug));
-    if (data.index) {
+    if (data?.index) {
       setCurrentNode(storyGraph[data.index]);
     }
 
@@ -43,6 +43,22 @@ export default function Reader(props: any) {
     };
   }, [changeNode]);
 
+  if (!currentNode || !currentNode.text) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <p className="text-2xl">{t('reader.no_story')}</p>
+        <Button
+          label="Quit"
+          type="danger"
+          size="small"
+          onClick={() => {
+            router.replace('/stories');
+          }}
+          className="z-10"
+        />
+      </div>
+    );
+  }
   return (
     <DeviceOrientation lockOrientation="landscape">
       <Orientation orientation="portrait" alwaysRender={false}>
@@ -117,17 +133,17 @@ export default function Reader(props: any) {
                   className="z-10"
                 />
               </div>
-              {currentNode.bgUrl && (
+              {currentNode?.bgUrl && (
                 <img
                   className="absolute h-full w-full blur-xl flex flec-col items-center justify-center bg-black"
-                  src={currentNode.bgUrl}
+                  src={currentNode?.bgUrl}
                   alt="bg-bgUrl"
                 />
               )}
-              {currentNode.bgUrl && (
+              {currentNode?.bgUrl && (
                 <img
                   className="absolute h-full flex flec-col items-center justify-center bg-black"
-                  src={currentNode.bgUrl}
+                  src={currentNode?.bgUrl}
                   alt="bg-bgUrl"
                 />
               )}

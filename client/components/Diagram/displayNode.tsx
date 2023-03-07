@@ -24,10 +24,10 @@ export default function DisplayNodes(props: any) {
         }}
         className="h-28  p-2 ml-10 mr-20 mt-20 relative rounded-lg w-[150px] flex flex-col items-center justify-center cursor-pointer"
       >
-        {currentNode.bgUrl && (
+        {currentNode?.bgUrl && (
           <img
             className="absolute rounded-lg w-full h-full opacity-30"
-            src={currentNode.bgUrl}
+            src={currentNode?.bgUrl}
             alt="bg-bgUrl"
           />
         )}
