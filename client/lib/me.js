@@ -1,5 +1,4 @@
 import getConfig from 'next/config';
-import fetch from 'node-fetch';
 
 const { serverRuntimeConfig } = getConfig();
 

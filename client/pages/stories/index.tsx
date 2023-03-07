@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Header from '@components/Header';
 import StroyCard from '@components/StoryCard';
 import useTranslation from 'next-translate/useTranslation';
+import Footer from '@components/Footer';
 
 export default function Home(props: any) {
   const { stories } = props;
@@ -34,6 +35,7 @@ export default function Home(props: any) {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

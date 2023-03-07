@@ -1,10 +1,15 @@
 import dayjs from 'dayjs';
 import useTranslation from 'next-translate/useTranslation';
 
+const duration = require('dayjs/plugin/duration');
+
+dayjs.extend(duration);
+
 export default function StroyCard(props: any) {
   const { story } = props;
   const { t } = useTranslation('common');
   const author = story?.author?.data.attributes;
+
   return (
     <div className="flex flex-col overflow-hidden rounded-lg shadow-lg  w-full relative">
       {story.publishedAt ? (
@@ -53,7 +58,11 @@ export default function StroyCard(props: any) {
                 )}
               </time>
               <span aria-hidden="true">&middot;</span>
-              <span>10 minute play</span>
+              <span>
+                {dayjs
+                  .duration(story.storyGraph.length * 15000)
+                  .format('m [min] s [sec of game time]')}
+              </span>
             </div>
           </div>
         </div>

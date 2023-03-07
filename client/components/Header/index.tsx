@@ -12,7 +12,7 @@ export default function Header() {
     { name: t('header.home'), href: '/' },
     { name: t('header.story'), href: '/stories' },
     { name: t('header.builder'), href: '/builder' },
-    { name: t('header.doc'), href: '/doc' },
+    // { name: t('header.doc'), href: '/doc' },
   ];
   return (
     <header className="bg-[#3a4042]">

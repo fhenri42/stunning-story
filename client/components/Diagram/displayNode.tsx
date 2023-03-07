@@ -19,30 +19,33 @@ export default function DisplayNodes(props: any) {
         style={{
           backgroundColor: '#1B263B',
         }}
-        className="h-28  p-2 ml-10 mr-20 mt-20 relative rounded-lg w-[150px] flex flex-col items-center justify-center cursor-pointer"
         onClick={() => {
           setOpenDetails(!openDetails);
         }}
+        className="h-28  p-2 ml-10 mr-20 mt-20 relative rounded-lg w-[150px] flex flex-col items-center justify-center cursor-pointer"
       >
         {currentNode.bgUrl && (
-          <img className="absolute rounded-lg w-full h-full opacity-30" src={currentNode.bgUrl} alt="bg-bgUrl" />
+          <img
+            className="absolute rounded-lg w-full h-full opacity-30"
+            src={currentNode.bgUrl}
+            alt="bg-bgUrl"
+          />
         )}
-        {currentNode.outputs.findIndex((n: any) => n.type === 'node') === -1 && (
-        <TrashIcon
-          className="text-red-400 h-5 w-5 mr-2 cursor-pointer z-50 absolute top-1 left-1"
-          onClick={() => {
-            removeNode(currentNode.sourceId);
-          }}
-        />
+        {currentNode.outputs.findIndex((n: any) => n.type === 'node')
+          === -1 && (
+          <TrashIcon
+            className="text-red-400 h-5 w-5 mr-2 cursor-pointer z-50 absolute top-1 left-1"
+            onClick={() => {
+              console.log('remove');
+              removeNode(currentNode.sourceId);
+            }}
+          />
         )}
         <p className="text-center text-ellipsis text-xs line-clamp-2">
           {currentNode.text}
-
         </p>
       </div>
-      <div
-        className="flex flex-col"
-      >
+      <div className="flex flex-col">
         {currentNode.outputs.map((output: any) => {
           if (output.type === 'target') {
             return (
@@ -69,7 +72,9 @@ export default function DisplayNodes(props: any) {
 
       <Modal
         visible={openDetails}
-        onCancel={() => { setOpenDetails(false); }}
+        onCancel={() => {
+          setOpenDetails(false);
+        }}
         bodyStyle={{
           backgroundColor: '#1B263B',
           width: '100%',
@@ -77,17 +82,12 @@ export default function DisplayNodes(props: any) {
       >
         <p>{currentNode.text}</p>
         <div className="flex flex-row mt-3">
-
           {currentNode.outputs.map((output: any) => (
-            <p
-              className="p-2 m-2 bg-red-400 rounded-lg"
-              key={output.id}
-            >
+            <p className="p-2 m-2 bg-red-400 rounded-lg" key={output.id}>
               {output.value}
             </p>
           ))}
         </div>
-
       </Modal>
     </div>
   );

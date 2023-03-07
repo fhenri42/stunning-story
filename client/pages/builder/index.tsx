@@ -10,6 +10,7 @@ import getConfig from 'next/config';
 import { fetchMe } from '@lib/me';
 import NewStory from '@components/Story/NewStory';
 import useTranslation from 'next-translate/useTranslation';
+import Footer from '@components/Footer';
 
 const { serverRuntimeConfig } = getConfig();
 export default function Builder(props: any) {
@@ -50,6 +51,7 @@ export default function Builder(props: any) {
         openModalStory={openModalStory}
         setOpenModalStory={setOpenModalStory}
       />
+      <Footer />
     </div>
   );
 }
