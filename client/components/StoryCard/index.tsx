@@ -1,7 +1,7 @@
-import dayjs from 'dayjs';
 import useTranslation from 'next-translate/useTranslation';
 
-const duration = require('dayjs/plugin/duration');
+const dayjs: any = require('dayjs');
+const duration: any = require('dayjs/plugin/duration');
 
 dayjs.extend(duration);
 
