@@ -22,7 +22,9 @@ function exportToJsonFile(jsonData) {
   linkElement.click();
 }
 export default function TopMenu(props: any) {
-  const { story, setStory, setStoryGraph } = props;
+  const {
+    story, setStory, setStoryGraph, storyGraph,
+  } = props;
   const router = useRouter();
 
   const { t } = useTranslation('common');
@@ -72,7 +74,7 @@ export default function TopMenu(props: any) {
         className="ml-10 rounded-t-none"
         size="small"
         onClick={() => {
-          exportToJsonFile(story.storyGraph);
+          exportToJsonFile(storyGraph);
         }}
       />
       <Button
@@ -118,7 +120,7 @@ export default function TopMenu(props: any) {
         <JsonView
           openView={openJsonView}
           setOpenView={setOpenJsonView}
-          storyGraph={story.storyGraph}
+          storyGraph={storyGraph}
           onStoryGraphChange={(newStoryGraph) => {
             setOpenJsonView(false);
             updateOnlyStoryGraph({

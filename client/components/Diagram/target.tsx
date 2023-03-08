@@ -7,7 +7,7 @@ import NodeCard from './nodeCard';
 const style = {
   border: '2px dashed green',
   height: '70px',
-  width: '100px',
+  width: '170px',
   zIndex: 100,
 };
 function TargetBox({

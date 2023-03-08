@@ -30,17 +30,14 @@ export default function Builder(props: any) {
               onClick={() => setOpenModalStory(true)}
               label={t('builder.button_create_story')}
             />
-            <Link
-              type="link"
-              href="/doc"
-              className="ml-5"
-            >
+            <Link type="link" href="/doc" className="ml-5">
               {t('header.doc')}
             </Link>
           </div>
         )}
       </div>
-      <div className="relative mt-14 px-6 lg:px-8 lg:mx-16">
+
+      <div className="relative mt-14 px-6 lg:px-8 lg:mx-16 min-h-screen">
         <div className="absolute inset-0">
           <div className="h-1/3  sm:h-2/3" />
         </div>
@@ -52,9 +49,11 @@ export default function Builder(props: any) {
                   <StroyCard story={story} />
                 </Link>
               ))}
-            {stories?.length === 0 && <h1>{t('builder.no_story')}</h1>}
           </div>
         </div>
+        {stories?.length === 0 && (
+          <h1 className="text-6xl text-gray-400">{t('builder.no_story')}</h1>
+        )}
       </div>
       <NewStory
         openModalStory={openModalStory}

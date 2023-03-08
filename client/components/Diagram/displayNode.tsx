@@ -36,7 +36,6 @@ export default function DisplayNodes(props: any) {
           <TrashIcon
             className="text-red-400 h-5 w-5 mr-2 cursor-pointer z-50 absolute top-1 left-1"
             onClick={() => {
-              console.log('remove');
               removeNode(currentNode.sourceId);
             }}
           />

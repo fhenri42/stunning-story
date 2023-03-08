@@ -16,7 +16,7 @@ export default function Home(props: any) {
       <div className="flex flex-row items-center justify-center mx-20 mt-10">
         <h1 className="text-3xl text-center">{t('reader.title')}</h1>
       </div>
-      <div className="relative mt-14 px-6 lg:px-8 lg:mx-16">
+      <div className="relative mt-14 px-6 lg:px-8 lg:mx-16 min-h-screen">
         <div className="absolute inset-0">
           <div className="h-1/3  sm:h-2/3" />
         </div>
@@ -31,7 +31,9 @@ export default function Home(props: any) {
                   <StroyCard story={story.attributes} />
                 </Link>
               ))}
-            {stories?.length === 0 && <h1>{t('reader.no_story')}</h1>}
+            {stories?.length === 0 && (
+              <h1 className="text-2xl text-gray-400">{t('reader.no_story')}</h1>
+            )}
           </div>
         </div>
       </div>

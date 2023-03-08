@@ -40,7 +40,7 @@
     "draft": "Draft",
     "preview": "Preview",
     "published": "Published",
-    "drop_zone": "Drop here",
+    "drop_zone": "Drop a node here",
     "edit_save_story": {
       "title": "Title",
       "placeholder_title": "The title of your story",

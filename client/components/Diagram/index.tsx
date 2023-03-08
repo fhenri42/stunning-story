@@ -56,6 +56,7 @@ export default function Diagram(props: any) {
   const [storyGraph, setStoryGraph] = useState(story.storyGraph || []);
   const [addNewNodeModal, setAddNewNodeModal] = useState(false);
   const [openModalStory, setOpenModalStory] = useState(false);
+  const [editNodeModal, setEditNodeModal] = useState(false);
 
   const [zoom, setZoom] = useState('100%');
 
@@ -172,13 +173,15 @@ export default function Diagram(props: any) {
             />
           </div>
           <div className="overflow-auto overflow-x-hidden w-full pb-20">
-            {story.nodes.length > 0
+            {!editNodeModal && story.nodes.length > 0
               && story.nodes.map((node) => (
                 <NodeCard
                   key={node.sourceId}
                   node={node}
                   story={story}
                   setStory={setStory}
+                  editNodeModal={editNodeModal}
+                  setEditNodeModal={setEditNodeModal}
                 />
               ))}
           </div>
@@ -193,6 +196,9 @@ export default function Diagram(props: any) {
             setStoryGraph={setStoryGraph}
             story={story}
             setStory={setStory}
+            storyGraph={
+              tmpStoryGraph.length > 0 ? tmpStoryGraph : story.storyGraph
+            }
           />
 
           <div className="absolute bottom-2 ml-3 flex flex-row bg-gray-500 rounded-xl p-2 z-50">
