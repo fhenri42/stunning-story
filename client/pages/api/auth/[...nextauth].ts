@@ -4,7 +4,7 @@ import DiscordProvider from 'next-auth/providers/discord';
 import getConfig from 'next/config';
 
 const { serverRuntimeConfig } = getConfig();
-const scopes = ['identify', 'email'].join('+');
+const scopes = ['identify', 'email'].join(' ');
 export const authOptions = {
   secret: serverRuntimeConfig.SECRET,
   providers: [
