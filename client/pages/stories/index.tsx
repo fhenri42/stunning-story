@@ -61,7 +61,6 @@ export async function getServerSideProps({ query }) {
       },
     );
     const stories = await fetchCMS(`/api/stories?${cmsQuery}`);
-
     return {
       props: {
         stories,

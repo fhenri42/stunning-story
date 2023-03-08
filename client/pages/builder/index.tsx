@@ -71,20 +71,22 @@ export async function getServerSideProps({ req }: any) {
     const session: any = await getToken({ req, secret: serverRuntimeConfig.SECRET });
     const cmsQuery = qs.stringify(
       {
-
         populate: [
           'stories',
           'stories.cover',
           'stories.slug',
           'stories.author',
-
         ],
       },
       {
         encodeValuesOnly: true,
       },
     );
-    const me: any = await fetchMe(`/api/users/me??${cmsQuery}`, 'GET', session.jwt);
+    const me: any = await fetchMe(
+      `/api/users/me??${cmsQuery}`,
+      'GET',
+      session.jwt,
+    );
     return {
       props: {
         stories: me.stories,
