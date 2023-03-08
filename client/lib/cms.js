@@ -35,7 +35,11 @@ export async function fetchCMS(path, method, jwt, payload) {
 
     headers.append('Content-Type', 'application/json');
     const requestUrl = getStrapiURL(path);
-
+    console.log(requestUrl, {
+      method,
+      headers,
+      body: JSON.stringify(payload),
+    });
     const response = await fetch(requestUrl, {
       method,
       headers,

@@ -18,15 +18,28 @@ async function createStory(req: NextApiRequest, res: NextApiResponse) {
     const data = await fetchCMS('/api/stories?populate[0]=id', 'POST', session.jwt, {
       data: body,
     });
-    const me: any = await fetchMe('/api/users/me?populate[0]=stories', 'GET', session.jwt);
+    if (!data) {
+      throw new Error('Something went wrong');
+    }
+    const me: any = await fetchMe(
+      '/api/users/me?populate[0]=stories',
+      'GET',
+      session.jwt,
+    );
+    let newStories = [];
+    if (me.stories) {
+      newStories = [...me.stories, data.id];
+    } else {
+      newStories = [data.id];
+    }
     await fetchCMS(`/api/users/${session.id}`, 'PUT', session.jwt, {
       ...session.user,
       image: session.picture,
-      stories: [...me.stories, data.id],
+      stories: newStories,
     });
+
     res.json(data);
   } catch (error) {
-    console.log(error);
     res.status(error.status).json({ message: error.message });
   }
 }

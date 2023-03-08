@@ -89,7 +89,7 @@ export async function getServerSideProps({ req }: any) {
     );
     return {
       props: {
-        stories: me.stories,
+        stories: me.stories || [],
       },
     };
   } catch (error) {

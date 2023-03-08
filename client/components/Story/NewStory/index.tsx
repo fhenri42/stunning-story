@@ -34,15 +34,19 @@ export default function NewStory(props: any) {
   });
   const onFinishForm = async (data: any) => {
     setButtonLoading(true);
-    const res = await createStory({
-      ...data,
-      storyGraph: [],
-      cover: image,
-      audio,
-    });
-    router.push(`/builder/${res.attributes.slug}`);
-    setButtonLoading(false);
-    setOpenModalStory(false);
+    try {
+      const res = await createStory({
+        ...data,
+        storyGraph: [],
+        cover: image,
+        audio,
+      });
+      router.push(`/builder/${res.attributes.slug}`);
+      setButtonLoading(false);
+      setOpenModalStory(false);
+    } catch (e) {
+      setButtonLoading(false);
+    }
   };
   return (
     <Modal
