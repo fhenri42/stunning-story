@@ -24,7 +24,7 @@ export default function FeatureDisplay() {
           <div className="mx-auto max-w-xl px-6 lg:mx-0 lg:max-w-none lg:py-16 lg:px-0">
             <div>
               <div>
-                <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#8ecccc]">
+                <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600">
                   <FireIcon className="h-8 w-8 text-white" aria-hidden="true" />
                 </span>
               </div>
@@ -36,7 +36,7 @@ export default function FeatureDisplay() {
                 <div className="mt-6">
                   <Link
                     href="/stories"
-                    className="inline-flex rounded-lg bg-[#8ecccc] px-4 py-1.5 text-base font-semibold leading-7 text-white shadow-sm ring-1 ring-[#8ecccc] hover:bg-indigo-700 hover:ring-indigo-700"
+                    className="inline-flex rounded-lg bg-blue-600 px-4 py-1.5 text-base font-semibold leading-7 text-white shadow-sm ring-1 ring-[#8ecccc] hover:bg-indigo-700 hover:ring-indigo-700"
                   >
                     {t('home.stories.button')}
                   </Link>
@@ -59,7 +59,7 @@ export default function FeatureDisplay() {
       <div className="mt-24">
         <div className="lg:mx-auto lg:grid lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-2 lg:gap-24 lg:px-8">
           <div className="mx-auto max-w-xl px-6 lg:col-start-2 lg:mx-0 lg:max-w-none lg:py-32 lg:px-0">
-            <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#8ecccc]">
+            <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600">
               <PuzzlePieceIcon className="h-8 w-8 text-white" aria-hidden="true" />
             </span>
             <div className="mt-6">
@@ -73,7 +73,7 @@ export default function FeatureDisplay() {
               <div className="mt-6">
                 <Link
                   href="/builder"
-                  className="inline-flex rounded-lg bg-[#8ecccc] px-4 py-1.5 text-base font-semibold leading-7 text-white shadow-sm ring-1 ring-[#8ecccc] hover:bg-indigo-700 hover:ring-indigo-700"
+                  className="inline-flex rounded-lg bg-blue-600 px-4 py-1.5 text-base font-semibold leading-7 text-white shadow-sm ring-1 ring-[#8ecccc] hover:bg-indigo-700 hover:ring-indigo-700"
                 >
                   {t('home.builder.button')}
                 </Link>

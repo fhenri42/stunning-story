@@ -30,8 +30,7 @@ export default function Button(props: Props) {
     ref = null,
     label = 'button',
     onClick,
-    background = 'bg-[#8ecccc]',
-    hoverBackground = 'bg-blue-700',
+    background = 'bg-blue-600',
     count = 0,
     disabled = false,
     size = 'medium',
@@ -55,7 +54,7 @@ export default function Button(props: Props) {
   const types = [
     {
       name: 'primary',
-      style: `${background} hover:${hoverBackground} border-transparent ${labelColor}`,
+      style: `${background}  border-transparent ${labelColor}`,
     },
     { name: 'secondary', style: 'bg-white border-blue-400 text-blue-500' },
     {
@@ -98,7 +97,7 @@ export default function Button(props: Props) {
         background,
       }}
       disabled={disabled}
-      className={`${className} font-semibold border-solid relative inline-flex items-center justify-center ${
+      className={`${className} hover:bg-blue-700 font-semibold border-solid relative inline-flex items-center justify-center ${
         sizes[indexSize].style
       } ${
         types[indexType].style

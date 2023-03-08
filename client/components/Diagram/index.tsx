@@ -9,10 +9,12 @@ import NewNode from '@components/Node/NewNode';
 import { MagnifyingGlassMinusIcon, MagnifyingGlassPlusIcon } from '@heroicons/react/24/solid';
 import { updateOnlyStoryGraph } from '@http/self';
 import {
+  ArrowLeftIcon,
   DocumentPlusIcon, MinusIcon, PencilSquareIcon, TrashIcon,
 } from '@heroicons/react/24/outline';
 import EditStory from '@components/Story/EditStory';
 import useTranslation from 'next-translate/useTranslation';
+import Link from 'next/link';
 import DisplayNodes from './displayNode';
 import Target from './target';
 import TopMenu from './topMenu';
@@ -152,8 +154,11 @@ export default function Diagram(props: any) {
       <div className="flex flex-row items-start justify-start z-50 overflow-hidden">
         <div className="flex flex-col items-center w-1/6 h-screen z-50">
           <div className="flex flex-row items-center justify-evenly h-16 z-50 bg-slate-700 w-full">
-            <div />
-            <h1 className="text-lg">{story.title}</h1>
+            <Link href="/builder">
+              <ArrowLeftIcon className="w-6 h-6  cursor-pointer" />
+            </Link>
+
+            <h1 className="text-lg w-[70%] text-ellipsis overflow-hidden line-clamp-1">{story.title}</h1>
             <PencilSquareIcon
               onClick={() => {
                 setOpenModalStory(true);
@@ -173,7 +178,8 @@ export default function Diagram(props: any) {
             />
           </div>
           <div className="overflow-auto overflow-x-hidden w-full pb-20">
-            {!editNodeModal && story.nodes.length > 0
+            {!editNodeModal
+              && story.nodes.length > 0
               && story.nodes.map((node) => (
                 <NodeCard
                   key={node.sourceId}

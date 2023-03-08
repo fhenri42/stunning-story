@@ -14,7 +14,11 @@ function Auth({ children }: any) {
   const { status } = useSession({ required: true });
 
   if (status === 'loading') {
-    return <div>Loading...</div>;
+    return (
+      <div className="h-screen w-sceen flex flex-col items-center justify-center">
+        <div className="spinner" />
+      </div>
+    );
   }
 
   return children;

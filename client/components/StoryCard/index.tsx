@@ -25,7 +25,7 @@ export default function StroyCard(props: any) {
       <div className="flex flex-col  bg-white px-3 pt-3 h-[300px]">
         <div className="flex flex-row py-2">
           {story.tags?.split(',').map((tag) => (
-            <p className="text-xs font-medium text-white mr-2 capitalize bg-[#8ecccc] px-4 py-1 rounded-full">
+            <p className="text-xs font-medium text-white mr-2 capitalize bg-blue-600 px-4 py-1 rounded-full">
               {tag}
             </p>
           ))}

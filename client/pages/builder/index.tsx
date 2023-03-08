@@ -52,7 +52,7 @@ export default function Builder(props: any) {
           </div>
         </div>
         {stories?.length === 0 && (
-          <h1 className="text-6xl text-gray-400">{t('builder.no_story')}</h1>
+          <h1 className="text-2xl text-gray-400">{t('builder.no_story')}</h1>
         )}
       </div>
       <NewStory

@@ -32,7 +32,7 @@ export default function Home(props: any) {
                 </Link>
               ))}
             {stories?.length === 0 && (
-              <h1 className="text-2xl text-gray-400">{t('reader.no_story')}</h1>
+              <h1 className="text-7xl text-gray-400">{t('reader.no_story')}</h1>
             )}
           </div>
         </div>

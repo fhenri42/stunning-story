@@ -52,6 +52,8 @@ export default function Reader(props: any) {
           type="danger"
           size="small"
           onClick={() => {
+            const newData = JSON.stringify({ index: 0 });
+            localStorage.setItem(story.slug, newData);
             router.replace('/stories');
           }}
           className="z-10"

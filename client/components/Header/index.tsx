@@ -25,7 +25,11 @@ export default function Header() {
               <a
                 key={link.name}
                 href={link.href}
-                className={`text-base font-medium text-white hover:text-indigo-50 ${link.href === router.pathname ? 'underline underline-offset-2 decoration-[#8ecccc]' : ''}`}
+                className={`text-base font-medium text-white hover:text-indigo-50 ${
+                  link.href === router.pathname
+                    ? 'underline underline-offset-2 decoration-[#8ecccc]'
+                    : ''
+                }`}
               >
                 {link.name}
               </a>
@@ -33,34 +37,36 @@ export default function Header() {
           </div>
         </div>
         {session && session.user && session.user.name ? (
-
           <Link
             href="/profil"
             className="ml-10 space-x-4 flex flex-row items-center justify-center"
           >
-            <p>
-              {session.user.name}
-            </p>
-            <img className="h-14 w-auto rounded-lg" src={session?.user?.image} referrerPolicy="no-referrer" alt="google_image" />
+            <p>{session.user.name}</p>
+            <img
+              className="h-14 w-auto rounded-lg"
+              src={session?.user?.image}
+              referrerPolicy="no-referrer"
+              alt="google_image"
+            />
           </Link>
         ) : (
-
           <div className="ml-10 space-x-4">
-
             <Button
               onClick={() => {
                 signIn();
               }}
               label={t('header.signin')}
             />
-
           </div>
         )}
-
       </div>
       <div className="flex flex-wrap justify-center gap-x-6 py-4 lg:hidden">
         {navigation.map((link) => (
-          <a key={link.name} href={link.href} className="text-base font-medium text-white hover:text-indigo-50">
+          <a
+            key={link.name}
+            href={link.href}
+            className="text-base font-medium text-white hover:text-indigo-50"
+          >
             {link.name}
           </a>
         ))}
