@@ -2,6 +2,7 @@ import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import DiscordProvider from 'next-auth/providers/discord';
 import getConfig from 'next/config';
+import { fetchCMS } from '@lib/cms';
 
 const { serverRuntimeConfig } = getConfig();
 const scopes = ['identify', 'email'].join(' ');
@@ -33,7 +34,6 @@ export default NextAuth({
 
     async jwt(data) {
       const { token, user, account } = data;
-      console.log({ token, user, account });
       const isSignIn = !!user;
       if (isSignIn) {
         try {
@@ -42,15 +42,25 @@ export default NextAuth({
           );
 
           const dataR: any = await response.json();
-          dataR.user.username = dataR?.user?.username?.split('#')[0];
-          console.log(dataR.user);
-          console.log(dataR.user.username);
+          if (dataR.user.provider === 'google') {
+            dataR.user.username = token?.name?.split(' ')[0];
+            dataR.user.image = token?.picture || '';
+
+            await fetchCMS(`/api/users/${dataR.user.id}`, 'PUT', dataR.jwt, {
+              ...dataR.user,
+            });
+          } else {
+            dataR.user.username = dataR?.user?.username?.split('#')[0];
+            dataR.user.image = token?.picture || '';
+
+            await fetchCMS(`/api/users/${dataR.user.id}`, 'PUT', dataR.jwt, {
+              ...dataR.user,
+            });
+          }
           token.jwt = dataR.jwt;
           token.id = dataR.user.id;
           token.user = dataR.user;
         } catch (e) {
-          console.log(e);
-
           throw new Error('Eorror');
         }
       }
