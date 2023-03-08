@@ -4,7 +4,7 @@ import DiscordProvider from 'next-auth/providers/discord';
 import getConfig from 'next/config';
 
 const { serverRuntimeConfig } = getConfig();
-const scopes = ['identify'].join(' ');
+const scopes = ['identify', 'email'].join('+');
 export const authOptions = {
   secret: serverRuntimeConfig.SECRET,
   providers: [
@@ -50,6 +50,8 @@ export default NextAuth({
           token.user = dataR.user;
         } catch (e) {
           console.log(e);
+
+          throw new Error('Eorror');
         }
       }
       return token;
