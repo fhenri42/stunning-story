@@ -33,16 +33,24 @@ export default NextAuth({
 
     async jwt(data) {
       const { token, user, account } = data;
+      console.log({ token, user, account });
       const isSignIn = !!user;
       if (isSignIn) {
-        const response = await fetch(
-          `${serverRuntimeConfig.STRAPI_URL}/api/auth/${account?.provider}/callback?access_token=${account?.access_token}`,
-        );
+        try {
+          const response = await fetch(
+            `${serverRuntimeConfig.STRAPI_URL}/api/auth/${account?.provider}/callback?access_token=${account?.access_token}`,
+          );
 
-        const dataR: any = await response.json();
-        token.jwt = dataR.jwt;
-        token.id = dataR.user.id;
-        token.user = dataR.user;
+          const dataR: any = await response.json();
+          dataR.user.username = dataR?.user?.username?.split('#')[0];
+          console.log(dataR.user);
+          console.log(dataR.user.username);
+          token.jwt = dataR.jwt;
+          token.id = dataR.user.id;
+          token.user = dataR.user;
+        } catch (e) {
+          console.log(e);
+        }
       }
       return token;
     },

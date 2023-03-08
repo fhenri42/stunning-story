@@ -194,6 +194,8 @@ export default function Reader(props: any) {
                     className="w-[47%] bg-green-500"
                     onClick={() => {
                       setChangeNode(false);
+                      const newData = JSON.stringify({ index: 0 });
+                      localStorage.setItem(story.slug, newData);
                       setCurrentNode(storyGraph[0]);
                     }}
                   >
