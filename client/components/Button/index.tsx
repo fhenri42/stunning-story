@@ -10,7 +10,6 @@ interface Props {
   // eslint-disable-next-line no-unused-vars
   onClick?: (event: React.MouseEvent<HTMLElement>) => void;
   background?: string;
-  hoverBackground?: string;
   count?: number;
   disabled?: boolean;
   size?: 'extra-small' | 'small' | 'medium' | 'large' | 'extra-large';
