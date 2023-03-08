@@ -8,7 +8,7 @@ const selfUrl = publicRuntimeConfig.SELF_URL;
 
 export async function createStory(data: any) {
   try {
-    const res = await fetch(`${selfUrl}/api/story/create`, {
+    const res = await fetch('/api/story/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -26,7 +26,7 @@ export async function createStory(data: any) {
 
 export async function deleteStory(id: any) {
   try {
-    const res = await fetch(`${selfUrl}/api/story/delete/${id}`, {
+    const res = await fetch(`/api/story/delete/${id}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
     });
@@ -40,7 +40,7 @@ export async function deleteStory(id: any) {
 }
 export async function updateStory(data: any) {
   try {
-    const res = await fetch(`${selfUrl}/api/story/update`, {
+    const res = await fetch('/api/story/update', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -56,7 +56,7 @@ export async function updateStory(data: any) {
 
 export async function updateOnlyStoryGraph(data: any) {
   try {
-    const res = await fetch(`${selfUrl}/api/story/updateStoryGraph`, {
+    const res = await fetch('/api/story/updateStoryGraph', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -78,7 +78,7 @@ export async function fileUpload(formData: any) {
       },
     };
 
-    const response = await axios.post(`${selfUrl}/api/upload?fileName=${uuidv4()}`, formData, config);
+    const response = await axios.post(`/api/upload?fileName=${uuidv4()}`, formData, config);
     return response.data;
   } catch (e) {
     console.error(e);

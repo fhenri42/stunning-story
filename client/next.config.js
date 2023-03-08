@@ -7,9 +7,6 @@ module.exports = nextTranslate(
   {
     reactStrictMode: false,
     swcMinify: true,
-    publicRuntimeConfig: {
-      SELF_URL: 'http://localhost:3000',
-    },
     serverRuntimeConfig: {
       accessKeyId: process.env.accessKeyId,
       secretAccessKey: process.env.secretAccessKey,
