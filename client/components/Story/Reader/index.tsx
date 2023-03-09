@@ -54,6 +54,10 @@ export default function Reader(props: any) {
           onClick={() => {
             const newData = JSON.stringify({ index: 0 });
             localStorage.setItem(story.slug, newData);
+            if (router.pathname.includes('preview')) {
+              router.back();
+              return;
+            }
             router.replace('/stories');
           }}
           className="z-10"
@@ -77,7 +81,7 @@ export default function Reader(props: any) {
               exit="exit"
               variants={variants}
               transition={{ ztype: 'linear' }}
-              className="h-3/5 lg:h-3/4 flex flex-col items-center justify-center relative"
+              className="h-3/5 lg:h-4/6 flex flex-col items-center justify-center relative"
             >
               <div className="absolute top-3 right-10 flex flex-row items-center">
                 {story.audio && isPlaying && (
@@ -130,6 +134,10 @@ export default function Reader(props: any) {
                   type="danger"
                   size="small"
                   onClick={() => {
+                    if (router.pathname.includes('preview')) {
+                      router.back();
+                      return;
+                    }
                     router.replace('/stories');
                   }}
                   className="z-10"
@@ -161,7 +169,7 @@ export default function Reader(props: any) {
             <div className="h-3/5 lg:h-3/4 flex flex-col items-center justify-center relative" />
           )}
 
-          <div className="flex flex-col w-full items-center justify-evenly bg-black bg-opacity-50 p-2 lg:p-10 lg:h-1/4 h-2/5">
+          <div className="flex flex-col w-full items-center justify-evenly bg-black bg-opacity-50 p-2 lg:p-5 h-2/5 lg:h-2/6 ">
             {currentNode.outputs.length === 0 && currentNode.isVictory && (
               <h1 className="text-green-300 text-3xl text-center ">
                 {t('reader.victory_title')}
@@ -172,11 +180,11 @@ export default function Reader(props: any) {
                 {t('reader.defeat_title')}
               </h1>
             )}
-            <div className="flex flex-row w-full lg:px-3 justify-evenly items-center flex-wrap h-full">
+            <div className="flex flex-row w-full justify-evenly  items-center h-full">
               {currentNode.outputs.map((a: any) => (
                 <Answer
                   key={a.id}
-                  className="w-[47%] lg:h-1/3"
+                  className="w-[47%] overflow-scroll max-h-full"
                   onClick={() => {
                     const index = storyGraph.findIndex(
                       (n) => n.sourceId === a.sourceId,
@@ -187,7 +195,7 @@ export default function Reader(props: any) {
                     localStorage.setItem(story.slug, newData);
                   }}
                 >
-                  <p className="text-xs lg:text-lg">{a.value}</p>
+                  <p className="text-xs lg:text-base">{a.value}</p>
                 </Answer>
               ))}
               {currentNode.outputs.length === 0 && (
@@ -206,6 +214,10 @@ export default function Reader(props: any) {
                   <Answer
                     className="w-[47%] bg-red-500"
                     onClick={() => {
+                      if (router.pathname.includes('preview')) {
+                        router.back();
+                        return;
+                      }
                       router.replace('/stories');
                     }}
                   >

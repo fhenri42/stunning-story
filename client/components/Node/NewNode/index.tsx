@@ -40,15 +40,19 @@ export default function NewNode(props: any) {
       const sourcdId = uuidv4();
       await updateStory({
         ...story,
-        nodes: [...story.nodes, {
-          ...data,
-          isVictory,
-          outputs,
-          outputsNbr: outputs.length,
-          sourceId: sourcdId,
-          bgUrl: image,
-          audio,
-        }],
+        nodes: [
+          ...story.nodes,
+          {
+            ...data,
+            isVictory,
+            outputs,
+            outputsNbr: outputs.length,
+            sourceId: sourcdId,
+            bgUrl: image,
+            audio,
+          },
+        ],
+        needFindStoryGraph: true,
       });
       setStory({
         ...story,

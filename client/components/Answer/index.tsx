@@ -14,7 +14,7 @@ export default function Answer(props: Props) {
   } = props;
 
   return (
-    <div onClick={onClick} className={` ${className} rounded-lg border-[#eaeaea] border-2 p-2 m-2 hover:border-[#0070f3] hover:text-[#0070f3] flex flex-row items-center justify-center cursor-pointer`}>
+    <div onClick={onClick} className={`${className} rounded-lg border-[#eaeaea] border-2 p-2 m-2  hover:border-[#0070f3] flex flex-row items-start justify-center cursor-pointer `}>
       {children}
     </div>
   );

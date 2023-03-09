@@ -1,10 +1,5 @@
 import axios from 'axios';
-import getConfig from 'next/config';
 import { v4 as uuidv4 } from 'uuid';
-
-const { publicRuntimeConfig } = getConfig();
-
-const selfUrl = publicRuntimeConfig.SELF_URL;
 
 export async function createStory(data: any) {
   try {

@@ -20,16 +20,3 @@ module.exports = nextTranslate(
     },
   },
 );
-
-/*
-AJouter google analytics
-Finir la mise en prod du backend
-Faire les confirmation google + discord
-Faire la video selon se script:
-  * Presentation du projet.
-  * Presentation du git
-  * Jouer a une histoir
-  * Aller voir le builder de cette histoire
-  * Cree une nouvelle histoire.
-  * Presenter midjourner + l'autoi pour les audios
-*/

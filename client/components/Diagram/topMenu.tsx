@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Button from '@components/Button';
 import useTranslation from 'next-translate/useTranslation';
 import Switch from '@components/Switch';
-import { updateOnlyStoryGraph, updateStory } from '@http/self';
+import { updateStory } from '@http/self';
 import { useRouter } from 'next/router';
 import JsonView from '@components/BuilderViews/jsonView';
 import PlayerView from '@components/BuilderViews/playerView';
@@ -23,7 +23,7 @@ function exportToJsonFile(jsonData) {
 }
 export default function TopMenu(props: any) {
   const {
-    story, setStory, setStoryGraph, storyGraph,
+    story, setStory, storyGraph, forceUpadateStoryGraph,
   } = props;
   const router = useRouter();
 
@@ -123,11 +123,7 @@ export default function TopMenu(props: any) {
           storyGraph={storyGraph}
           onStoryGraphChange={(newStoryGraph) => {
             setOpenJsonView(false);
-            updateOnlyStoryGraph({
-              id: story.id,
-              storyGraph: newStoryGraph,
-            });
-            setStoryGraph([...newStoryGraph]);
+            forceUpadateStoryGraph(story.id, newStoryGraph);
           }}
         />
       )}

@@ -13,6 +13,7 @@ async function updateStorySchema(req: NextApiRequest, res: NextApiResponse) {
 
     const { body } = req;
 
+    // if (body.needFindStoryGraph) {
     const cmsQuery = qs.stringify(
       {
         filters: {
@@ -33,6 +34,11 @@ async function updateStorySchema(req: NextApiRequest, res: NextApiResponse) {
     await fetchCMS(`/api/stories/${body.id}`, 'PUT', session.jwt, {
       data: { ...body, storyGraph: story.storyGraph },
     });
+    // } else {
+    //   await fetchCMS(`/api/stories/${body.id}`, 'PUT', session.jwt, {
+    //     data: { ...body },
+    //   });
+    // }
 
     res.json('OK');
   } catch (error) {

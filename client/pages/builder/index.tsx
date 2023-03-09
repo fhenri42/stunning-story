@@ -74,7 +74,6 @@ export async function getServerSideProps({ req }: any) {
           'stories',
           'stories.cover',
           'stories.slug',
-          'stories.author',
         ],
       },
       {
@@ -86,6 +85,18 @@ export async function getServerSideProps({ req }: any) {
       'GET',
       session.jwt,
     );
+    me.stories = me.stories.map((story: any) => ({
+      ...story,
+      author: {
+        data: {
+          attributes: {
+            username: me.username,
+            image: me.image,
+          },
+        },
+      },
+    }));
+    console.log(me);
     return {
       props: {
         stories: me.stories || [],

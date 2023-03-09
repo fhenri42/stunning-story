@@ -9,7 +9,6 @@ export default function StroyCard(props: any) {
   const { story } = props;
   const { t } = useTranslation('common');
   const author = story?.author?.data.attributes;
-
   return (
     <div className="flex flex-col overflow-hidden rounded-lg shadow-lg  w-full relative">
       {story.publishedAt ? (

@@ -48,40 +48,25 @@ function NodeDrag(props: any) {
 }
 export default function NodeCard(props: any) {
   const {
-    node,
-    story,
-    setStory,
+    node, story, setStory, tmpStoryGraph, forceUpadateStoryGraph,
   } = props;
   const [editNodeModal, setEditNodeModal] = useState(false);
-  const [{ isDragging }, drag] = useDrag(
-    () => ({
-      item: {
-        node,
-        story,
-      },
-      type: 'blue',
-      collect: (monitor) => ({
-        isDragging: monitor.isDragging(),
-      }),
-    }),
-    [],
-  );
   return (
     <div
       onClick={() => {
         setEditNodeModal(true);
       }}
     >
-      {!editNodeModal && (
-        <NodeDrag node={node} story={story} />
-      )}
+      {!editNodeModal && <NodeDrag node={node} story={story} />}
       {editNodeModal && (
         <EditNode
+          tmpStoryGraph={tmpStoryGraph}
           node={node}
           story={story}
           setStory={setStory}
           editNodeModal={editNodeModal}
           setEditNodeModal={setEditNodeModal}
+          forceUpadateStoryGraph={forceUpadateStoryGraph}
         />
       )}
     </div>

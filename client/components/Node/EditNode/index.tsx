@@ -1,23 +1,28 @@
 /* eslint-disable consistent-return */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { fileUpload, updateStory } from '@http/self';
 import Button from '@components/Button';
-import { v4 as uuidv4 } from 'uuid';
 import Modal from '@components/Modal';
 import Input from '@components/Input';
 import Switch from '@components/Switch';
 import Divider from '@components/Divider';
 import { useForm } from 'react-hook-form';
-import { TrashIcon } from '@heroicons/react/24/solid';
 import { toast } from 'react-toastify';
 import { InputFile } from '@components/Input/inputFile';
 import useTranslation from 'next-translate/useTranslation';
 
 export default function EditNode(props: any) {
   const {
-    editNodeModal, setEditNodeModal, story, node, setStory,
+    editNodeModal,
+    setEditNodeModal,
+    story,
+    node,
+    setStory,
+    tmpStoryGraph,
+    forceUpadateStoryGraph,
   } = props;
   const { t } = useTranslation('common');
+
   const { sourceId } = node;
   const [buttonLoading, setButtonLoading] = useState(false);
   const [outputs, setOutputs] = useState(node.outputs);
@@ -25,6 +30,14 @@ export default function EditNode(props: any) {
   const [image, setImage] = useState(node.bgUrl);
   const [audio, setAudio] = useState('');
 
+  useEffect(() => {
+    const indexStoryGraph = tmpStoryGraph.findIndex(
+      (n: any) => n.sourceId === sourceId,
+    );
+    if (indexStoryGraph !== -1) {
+      setOutputs(tmpStoryGraph[indexStoryGraph].outputs);
+    }
+  }, []);
   const {
     register,
     handleSubmit,
@@ -39,16 +52,25 @@ export default function EditNode(props: any) {
   const removeNode = async () => {
     setButtonLoading(true);
     const index = story.nodes.findIndex((n:any) => n.sourceId === sourceId);
+    const indexInStoryGraph = tmpStoryGraph.findIndex((n:any) => n.sourceId === sourceId);
+    if (indexInStoryGraph !== -1) {
+      toast.error('You can not delete a node that is in the story graph');
+      setButtonLoading(false);
+      return;
+    }
     story.nodes.splice(index, 1);
+
     await updateStory({
       ...story,
       nodes: [...story.nodes],
     });
+    forceUpadateStoryGraph(story.id, tmpStoryGraph);
     setStory({
       ...story,
       nodes: [...story.nodes],
     });
   };
+
   const saveChange = async (data: any) => {
     try {
       setButtonLoading(true);
@@ -62,14 +84,15 @@ export default function EditNode(props: any) {
         bgUrl: image,
         audio,
       };
-      const indexStoryGraph = story.storyGraph.findIndex((n:any) => n.sourceId === sourceId);
+      const indexStoryGraph = tmpStoryGraph.findIndex((n:any) => n.sourceId === sourceId);
 
       if (indexStoryGraph !== -1) {
-        story.storyGraph[indexStoryGraph] = {
-          ...story.storyGraph[indexStoryGraph],
+        tmpStoryGraph[indexStoryGraph] = {
+          ...tmpStoryGraph[indexStoryGraph],
           ...data,
           isVictory,
           bgUrl: image,
+          outputs,
           audio,
         };
       }
@@ -77,6 +100,7 @@ export default function EditNode(props: any) {
         ...story,
         nodes: [...story.nodes],
       });
+      forceUpadateStoryGraph(story.id, tmpStoryGraph);
       setStory({
         ...story,
         nodes: [...story.nodes],
@@ -168,14 +192,6 @@ export default function EditNode(props: any) {
                 className="flex flex-row items-center justify-center w-full mt-2 mb-2 z-10"
                 key={output.id}
               >
-                <TrashIcon
-                  className="text-red-400 h-5 w-5 mr-2 cursor-pointer"
-                  onClick={() => {
-                    const index = outputs.findIndex((a) => a.id === output.id);
-                    outputs.splice(index, 1);
-                    setOutputs([...outputs]);
-                  }}
-                />
                 <Input
                   onChange={(e) => {
                     const index = outputs.findIndex((a) => a.id === output.id);
@@ -189,16 +205,6 @@ export default function EditNode(props: any) {
               </div>
             ))}
           </div>
-
-          <Button
-            label={t('builder.edit_save_node.output_button')}
-            className="w-2/6"
-            disabled={outputs.length >= 4}
-            onClick={() => {
-              outputs.push({ id: uuidv4(), value: '' });
-              setOutputs([...outputs]);
-            }}
-          />
         </div>
 
         <Divider />

@@ -61,6 +61,13 @@ export default function Diagram(props: any) {
   const [editNodeModal, setEditNodeModal] = useState(false);
 
   const [zoom, setZoom] = useState('100%');
+  const forceUpadateStoryGraph = async (id, data) => {
+    await updateOnlyStoryGraph({
+      id,
+      storyGraph: data,
+    });
+    setStoryGraph([...data]);
+  };
 
   const addingNode = (node: any, targetId: any) => {
     try {
@@ -82,19 +89,11 @@ export default function Diagram(props: any) {
 
       if (indexSourceId !== -1) {
         tmpStoryGraph = [...tmpStoryGraph];
-        updateOnlyStoryGraph({
-          id: story.id,
-          storyGraph: tmpStoryGraph,
-        });
-        setStoryGraph([...tmpStoryGraph]);
+        forceUpadateStoryGraph(story.id, tmpStoryGraph);
         return;
       }
       tmpStoryGraph = [...tmpStoryGraph, { ...node }];
-      updateOnlyStoryGraph({
-        id: story.id,
-        storyGraph: tmpStoryGraph,
-      });
-      setStoryGraph([...tmpStoryGraph]);
+      forceUpadateStoryGraph(story.id, tmpStoryGraph);
     } catch (error) {
       console.log(error);
     }
@@ -121,14 +120,13 @@ export default function Diagram(props: any) {
       if (indexParent !== -1) {
         const indexOutput = tmpStoryGraph[indexParent]
           .outputs.findIndex((n:any) => n.sourceId === sourceId);
+
         tmpStoryGraph[indexParent].outputs[indexOutput].type = 'target';
+        delete (tmpStoryGraph[indexParent].outputs[indexOutput].sourceId);
       }
       tmpStoryGraph.splice(index, 1);
-      updateOnlyStoryGraph({
-        id: story.id,
-        storyGraph: [...tmpStoryGraph],
-      });
-      setStoryGraph([...tmpStoryGraph]);
+
+      forceUpadateStoryGraph(story.id, tmpStoryGraph);
     }
   };
 
@@ -136,16 +134,14 @@ export default function Diagram(props: any) {
     const index = tmpStoryGraph.findIndex((n:any) => n.sourceId === nodeId);
     if (index !== -1) {
       tmpStoryGraph[index].outputs[outputIndex].type = 'target';
-      updateOnlyStoryGraph({
-        id: story.id,
-        storyGraph: [...tmpStoryGraph],
-      });
-      setStoryGraph([...tmpStoryGraph]);
+      delete (tmpStoryGraph[index].outputs[outputIndex].sourceId);
+      forceUpadateStoryGraph(story.id, tmpStoryGraph);
     }
   };
   useEffect(() => {
     if (story.storyGraph) {
       tmpStoryGraph = story.storyGraph;
+      setStoryGraph([...story.storyGraph]);
     }
   }, []);
 
@@ -158,7 +154,9 @@ export default function Diagram(props: any) {
               <ArrowLeftIcon className="w-6 h-6  cursor-pointer" />
             </Link>
 
-            <h1 className="text-lg w-[70%] text-ellipsis overflow-hidden line-clamp-1">{story.title}</h1>
+            <h1 className="text-lg w-[70%] text-ellipsis overflow-hidden line-clamp-1">
+              {story.title}
+            </h1>
             <PencilSquareIcon
               onClick={() => {
                 setOpenModalStory(true);
@@ -186,8 +184,10 @@ export default function Diagram(props: any) {
                   node={node}
                   story={story}
                   setStory={setStory}
+                  tmpStoryGraph={tmpStoryGraph}
                   editNodeModal={editNodeModal}
                   setEditNodeModal={setEditNodeModal}
+                  forceUpadateStoryGraph={forceUpadateStoryGraph}
                 />
               ))}
           </div>
@@ -199,7 +199,7 @@ export default function Diagram(props: any) {
           }}
         >
           <TopMenu
-            setStoryGraph={setStoryGraph}
+            forceUpadateStoryGraph={forceUpadateStoryGraph}
             story={story}
             setStory={setStory}
             storyGraph={
@@ -280,7 +280,7 @@ export default function Diagram(props: any) {
                       <div className="flex flex-row items-center justify-center w-20">
                         {output.canBeRemove && (
                         <TrashIcon
-                          className="text-red-400 h-5 w-5 mr-2 cursor-pointer z-50"
+                          className="text-red-400 h-7 w-7 mr-2 cursor-pointer z-50"
                           onClick={() => {
                             removeDupicateNode(node.sourceId, outputIndex);
                           }}

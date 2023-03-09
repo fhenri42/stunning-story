@@ -55,7 +55,6 @@ export async function getServerSideProps({ query }) {
           'cover',
           'slug',
           'author',
-
         ],
       },
       {

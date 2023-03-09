@@ -41,6 +41,7 @@ export default function EditStory(props: any) {
       ...story,
       ...data,
       cover: image,
+      needFindStoryGraph: true,
       audio,
 
     });
