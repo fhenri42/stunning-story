@@ -8,6 +8,8 @@ import { motion } from 'framer-motion';
 import useTranslation from 'next-translate/useTranslation';
 import { SpeakerWaveIcon, SpeakerXMarkIcon } from '@heroicons/react/24/outline';
 import PopConfirm from '@components/PopConfirm';
+import ReactMarkdown from 'react-markdown';
+import gfm from 'remark-gfm';
 
 const audio = new Audio();
 
@@ -160,7 +162,7 @@ export default function Reader(props: any) {
 
               <Question
                 audioUrl={currentNode.audio}
-                className="w-3/4 lg:w-1/2 lg:text-lg text-sm text-center mb-5 lg:mb-10 mt-auto"
+                className="w-3/4 lg:w-1/2 lg:text-lg text-sm text-center mb-5 lg:mb-10 mt-auto whitespace-pre-wrap"
               >
                 {currentNode.text}
               </Question>
@@ -195,7 +197,12 @@ export default function Reader(props: any) {
                     localStorage.setItem(story.slug, newData);
                   }}
                 >
-                  <p className="text-xs lg:text-base">{a.value}</p>
+                  <ReactMarkdown
+                    className="text-xs lg:text-base whitespace-pre-wrap"
+                    remarkPlugins={[gfm]}
+                  >
+                    {a.value}
+                  </ReactMarkdown>
                 </Answer>
               ))}
               {currentNode.outputs.length === 0 && (
