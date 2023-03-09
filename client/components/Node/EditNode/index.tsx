@@ -174,7 +174,6 @@ export default function EditNode(props: any) {
               setButtonLoading(true);
               const data = await fileUpload(formData);
               setButtonLoading(false);
-
               setImage(data.url);
             }}
             allowMultipleFiles={false}
@@ -193,6 +192,7 @@ export default function EditNode(props: any) {
                 key={output.id}
               >
                 <Input
+                  type="textarea"
                   onChange={(e) => {
                     const index = outputs.findIndex((a) => a.id === output.id);
                     outputs[index].value = e.target.value;

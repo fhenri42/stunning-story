@@ -164,6 +164,7 @@ export default function NewNode(props: any) {
                   }}
                 />
                 <Input
+                  type="textarea"
                   onChange={(e) => {
                     const index = outputs.findIndex((a) => a.id === answer.id);
                     outputs[index].value = e.target.value;
