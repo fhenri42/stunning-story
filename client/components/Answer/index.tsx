@@ -1,10 +1,11 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import React from 'react';
 
 interface Props {
   children: any;
   className: string;
   onClick: () => void;
-  audioUrl: string;
+  audioUrl?: string;
 }
 
 export default function Answer(props: Props) {
