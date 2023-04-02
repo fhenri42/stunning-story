@@ -188,7 +188,7 @@ export default function EditNode(props: any) {
             <p>{t('builder.edit_save_node.add_output')}</p>
             {outputs.map((output, key) => (
               <div
-                className="flex flex-row items-center justify-center w-full mt-2 mb-2 z-10"
+                className="flex flex-col items-center justify-center w-full mt-2 mb-2 z-10"
                 key={output.id}
               >
                 <Input
@@ -201,6 +201,21 @@ export default function EditNode(props: any) {
                   defaultValue={output.value}
                   className="w-full"
                   placeholder={`${t('builder.edit_save_node.answer')} ${key}`}
+                />
+                <InputFile
+                  loading={buttonLoading}
+                  label={t('builder.edit_save_node.upload_audio_button')}
+                  onChange={async (formData) => {
+                    setButtonLoading(true);
+                    const index = outputs.findIndex((a) => a.id === output.id);
+                    const data = await fileUpload(formData);
+                    setButtonLoading(false);
+                    outputs[index].audio = data.url;
+                    setOutputs([...outputs]);
+                  }}
+                  allowMultipleFiles={false}
+                  uploadFileName="bg-image"
+                  className="w-full"
                 />
               </div>
             ))}

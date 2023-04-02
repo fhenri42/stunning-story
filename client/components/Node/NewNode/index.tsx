@@ -70,10 +70,7 @@ export default function NewNode(props: any) {
       setButtonLoading(false);
       reset();
     } catch (error) {
-      console.log(error);
       setButtonLoading(false);
-
-    //   toast.error('Slug must be unique');
     }
   };
   return (
@@ -150,29 +147,50 @@ export default function NewNode(props: any) {
         <div className="flex flex-row items-start justify-between w-full py-5">
           <div className="flex flex-col w-3/5">
             <p>{t('builder.edit_save_node.add_output')}</p>
-            {outputs.map((answer, key) => (
+            {outputs.map((output, key) => (
               <div
                 className="flex flex-row items-center justify-center w-full mt-2 mb-2"
-                key={answer.id}
+                key={output.id}
               >
                 <TrashIcon
                   className="text-red-400 h-5 w-5 mr-2 cursor-pointer"
                   onClick={() => {
-                    const index = outputs.findIndex((a) => a.id === answer.id);
+                    const index = outputs.findIndex((a) => a.id === output.id);
                     outputs.splice(index, 1);
                     setOutputs([...outputs]);
                   }}
                 />
-                <Input
-                  type="textarea"
-                  onChange={(e) => {
-                    const index = outputs.findIndex((a) => a.id === answer.id);
-                    outputs[index].value = e.target.value;
-                    setOutputs([...outputs]);
-                  }}
-                  className="w-full"
-                  placeholder={`${t('builder.edit_save_node.answer')} ${key}`}
-                />
+                <div className="flex flex-col w-full mb-5">
+                  <Input
+                    type="textarea"
+                    onChange={(e) => {
+                      const index = outputs.findIndex(
+                        (a) => a.id === output.id,
+                      );
+                      outputs[index].value = e.target.value;
+                      setOutputs([...outputs]);
+                    }}
+                    className="w-full"
+                    placeholder={`${t('builder.edit_save_node.answer')} ${key}`}
+                  />
+                  <InputFile
+                    loading={buttonLoading}
+                    label={t('builder.edit_save_node.upload_audio_button')}
+                    onChange={async (formData) => {
+                      setButtonLoading(true);
+                      const index = outputs.findIndex(
+                        (a) => a.id === output.id,
+                      );
+                      const data = await fileUpload(formData);
+                      setButtonLoading(false);
+                      outputs[index].audio = data.url;
+                      setOutputs([...outputs]);
+                    }}
+                    allowMultipleFiles={false}
+                    uploadFileName="bg-image"
+                    className="w-full"
+                  />
+                </div>
               </div>
             ))}
           </div>

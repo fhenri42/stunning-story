@@ -1,6 +1,8 @@
 import Modal from '@components/Modal';
 import { TrashIcon } from '@heroicons/react/24/solid';
 import React, { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import gfm from 'remark-gfm';
 import Target from './target';
 
 export default function DisplayNodes(props: any) {
@@ -78,13 +80,23 @@ export default function DisplayNodes(props: any) {
           backgroundColor: '#1B263B',
           width: '100%',
         }}
+        width="90%"
       >
         <p>{currentNode.text}</p>
-        <div className="flex flex-row mt-3">
+        <div className="flex flex-row mt-3 h-full">
           {currentNode.outputs.map((output: any) => (
-            <p className="p-2 m-2 bg-red-400 rounded-lg" key={output.id}>
-              {output.value}
-            </p>
+            <div
+              key={output.id}
+              className="p-2 m-2 bg-blue-400 rounded-lg  overflow-x-hidden overflow-y-auto h-full custom-scroll"
+            >
+              <ReactMarkdown
+                className="text-xs lg:text-base whitespace-pre-wrap"
+                remarkPlugins={[gfm]}
+              >
+                {output.value}
+              </ReactMarkdown>
+            </div>
+
           ))}
         </div>
       </Modal>

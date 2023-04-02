@@ -186,7 +186,7 @@ export default function Reader(props: any) {
               {currentNode.outputs.map((a: any) => (
                 <Answer
                   key={a.id}
-                  className="w-[47%] overflow-scroll max-h-full"
+                  className="w-[47%] overflow-x-hidden overflow-y-auto max-h-full custom-scroll"
                   onClick={() => {
                     const index = storyGraph.findIndex(
                       (n) => n.sourceId === a.sourceId,
@@ -196,6 +196,7 @@ export default function Reader(props: any) {
                     const newData = JSON.stringify({ index });
                     localStorage.setItem(story.slug, newData);
                   }}
+                  audioUrl={a.audio}
                 >
                   <ReactMarkdown
                     className="text-xs lg:text-base whitespace-pre-wrap"

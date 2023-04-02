@@ -31,7 +31,7 @@ export default function Question(props: Props) {
             setIsPlaying(!isPlaying);
             audio.pause();
           }}
-          className="h-7 w-7 absolute top-2 right-4"
+          className="h-7 w-7 absolute top-2 right-4  bg-blue-500 rounded-full p-1 z-50"
         />
       )}
       {audioUrl && !isPlaying && (
@@ -40,7 +40,7 @@ export default function Question(props: Props) {
           setIsPlaying(!isPlaying);
           audio.play();
         }}
-        className="h-7 w-7 absolute top-2 right-4"
+        className="h-7 w-7 absolute top-2 right-4  bg-blue-500 rounded-full p-1 z-50"
       />
       )}
 

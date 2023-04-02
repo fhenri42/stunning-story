@@ -14,7 +14,7 @@
     "title": "Take control of your stories",
     "subTitle": "Start playing imersive stories",
     "stories": {
-      "descriptionTitle": "Chosse the story that fit your style",
+      "descriptionTitle": "Choose the story that fit your style",
       "descriptionBody": "The stories build by the community offer an immersive and interactive reading experience that allows the reader to become the protagonist and actively shape the outcome of the story. With gamebooks, you get to experience the thrill of adventure, the rush of making critical decisions, and the satisfaction of seeing how your choices play out in the story. The stories are perfect for people who want to be more than just a passive reader and want to be in control of the story.",
       "button": "Browse stories"
     },
@@ -85,8 +85,8 @@
     "export": "Export story"
   },
   "reader": {
-    "title": "Chosse the story you like to play",
-    "no_story": "No story yet",
+    "title": "Choose the story you like to play",
+    "no_story": "No story yet, to be continued...",
     "rotate_message": "Plz rotate your device to play",
     "victory_title": "Victory",
     "defeat_title": "Defeat",
